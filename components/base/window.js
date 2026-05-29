@@ -99,13 +99,11 @@ export class Window extends Component {
     focusWindow = () => { this.props.focus(this.id); }
 
     minimizeWindow = () => {
-        let posx = -310;
-        if (this.state.maximized) { posx = -510; }
         this.setWinowsPosition();
-        var r = document.querySelector("#sidebar-" + this.id);
-        var sidebBarApp = r.getBoundingClientRect();
-        r = document.querySelector("#" + this.id);
-        r.style.transform = `translate(${posx}px,${sidebBarApp.y.toFixed(1) - 240}px) scale(0.2)`;
+        var r = document.querySelector("#" + this.id);
+        let posx = r.style.getPropertyValue("--window-transform-x");
+        let posy = r.style.getPropertyValue("--window-transform-y");
+        r.style.transform = `translate(${posx},${posy}) scale(0.2)`;
         this.props.hasMinimised(this.id);
     }
 

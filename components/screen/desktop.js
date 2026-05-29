@@ -76,7 +76,7 @@ export class Desktop extends Component {
         // Need to remove any duplicate new-folders from the apps array first to prevent double-rendering
         const storedNewFolders = JSON.parse(localStorage.getItem('new_folders')) || [];
         const validFolderIds = storedNewFolders.map(f => `new-folder-${f.id}`);
-        
+
         // Remove old dynamic folders from the global apps array to prevent duplication
         for (let i = apps.length - 1; i >= 0; i--) {
             if (apps[i].id.startsWith('new-folder-')) {
@@ -194,7 +194,7 @@ export class Desktop extends Component {
         try {
             const stored = localStorage.getItem("trash_items");
             if (stored) trash_items = JSON.parse(stored);
-        } catch(e){}
+        } catch (e) { }
         trash_items.push({ id: appData.id, name: appData.title, icon: appData.icon });
         localStorage.setItem("trash_items", JSON.stringify(trash_items));
 
@@ -208,7 +208,7 @@ export class Desktop extends Component {
                 let new_folders = JSON.parse(localStorage.getItem('new_folders')) || [];
                 new_folders = new_folders.filter(f => f.id !== appId.replace('new-folder-', ''));
                 localStorage.setItem("new_folders", JSON.stringify(new_folders));
-            } catch(e){}
+            } catch (e) { }
 
             // Remove from the global apps array to prevent it from reappearing
             for (let i = apps.length - 1; i >= 0; i--) {
@@ -221,13 +221,13 @@ export class Desktop extends Component {
                 let deleted_apps = JSON.parse(localStorage.getItem("deleted_default_apps")) || [];
                 if (!deleted_apps.includes(appId)) deleted_apps.push(appId);
                 localStorage.setItem("deleted_default_apps", JSON.stringify(deleted_apps));
-            } catch(e){}
+            } catch (e) { }
         }
 
         // Close any context menus
         this.hideAllContextMenu();
         this.setState({ context_menu_target: null });
-        
+
         // Notify trash app to re-render if it's open
         window.dispatchEvent(new Event('ubuntu-trash-changed'));
     }
@@ -257,7 +257,7 @@ export class Desktop extends Component {
         try {
             const stored = localStorage.getItem("deleted_default_apps");
             if (stored) deleted_apps = JSON.parse(stored);
-        } catch(e){}
+        } catch (e) { }
 
         apps.forEach((app) => {
             focused_windows = { ...focused_windows, [app.id]: false };
@@ -279,7 +279,7 @@ export class Desktop extends Component {
         try {
             const stored = localStorage.getItem("deleted_default_apps");
             if (stored) deleted_apps = JSON.parse(stored);
-        } catch(e){}
+        } catch (e) { }
 
         apps.forEach((app) => {
             focused_windows = { ...focused_windows, [app.id]: (this.state.focused_windows[app.id] ?? false) };
@@ -298,13 +298,13 @@ export class Desktop extends Component {
         let appsJsx = [];
         apps.forEach((app, index) => {
             if (this.state.desktop_apps.includes(app.id)) {
-                const props = { 
-                    name: app.title, 
-                    id: app.id, 
-                    icon: app.icon, 
-                    openApp: this.openApp, 
-                    isExternalApp: app.isExternalApp, 
-                    url: app.url, 
+                const props = {
+                    name: app.title,
+                    id: app.id,
+                    icon: app.icon,
+                    openApp: this.openApp,
+                    isExternalApp: app.isExternalApp,
+                    url: app.url,
                     onContextMenu: this.showAppContextMenu,
                     isSelected: this.state.selected_apps[app.id] === true
                 }
@@ -380,12 +380,12 @@ export class Desktop extends Component {
     handleMouseDown = (e) => {
         // Only start selection if clicking directly on the desktop background (data-context="desktop-area")
         if (e.target.dataset.context !== "desktop-area") return;
-        
+
         // Drag selection is left click (0)
         if (e.button !== 0) return;
 
         e.preventDefault();
-        
+
         const rect = e.currentTarget.getBoundingClientRect();
         const startX = e.clientX - rect.left;
         const startY = e.clientY - rect.top;
@@ -542,14 +542,14 @@ export class Desktop extends Component {
         for (let key in focused_windows) {
             if (focused_windows.hasOwnProperty(key)) { if (key !== objId) { focused_windows[key] = false; } }
         }
-        
+
         // Move focused app to top of stack
         let stackIndex = this.app_stack.indexOf(objId);
         if (stackIndex !== -1) {
             this.app_stack.splice(stackIndex, 1);
             this.app_stack.push(objId);
         }
-        
+
         this.setState({ focused_windows });
     }
 
@@ -575,25 +575,25 @@ export class Desktop extends Component {
             }
         }
         let removeCard = () => { this.setState({ showNameBar: false }); }
-        
+
         const isDark = this.props.dark_mode;
-        
+
         return (
             <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={removeCard}>
-                <div 
+                <div
                     className={`w-80 flex flex-col rounded-2xl overflow-hidden shadow-2xl border ${isDark ? 'bg-[#2a2a2a] border-white/10 text-white' : 'bg-white border-gray-200 text-gray-800'}`}
                     onClick={(e) => e.stopPropagation()}
                 >
                     <div className="px-6 pt-6 pb-4">
                         <span className="text-sm font-bold tracking-wide">New Folder</span>
-                        <input 
-                            className={`w-full mt-4 px-3 py-2 text-sm outline-none rounded-lg border-2 transition-colors ${isDark ? 'bg-white/5 border-transparent focus:border-[#e95420] text-white' : 'bg-black/5 border-transparent focus:border-[#e95420] text-gray-900'}`} 
-                            id="folder-name-input" 
-                            type="text" 
+                        <input
+                            className={`w-full mt-4 px-3 py-2 text-sm outline-none rounded-lg border-2 transition-colors ${isDark ? 'bg-white/5 border-transparent focus:border-[#e95420] text-white' : 'bg-black/5 border-transparent focus:border-[#e95420] text-gray-900'}`}
+                            id="folder-name-input"
+                            type="text"
                             placeholder="Folder Name"
-                            autoComplete="off" 
-                            spellCheck="false" 
-                            autoFocus={true} 
+                            autoComplete="off"
+                            spellCheck="false"
+                            autoFocus={true}
                             onKeyDown={(e) => { if (e.key === 'Enter') addFolder(); else if (e.key === 'Escape') removeCard(); }}
                         />
                     </div>
@@ -635,7 +635,7 @@ export class Desktop extends Component {
                             <div className="bg-[#1c1a1a] rounded px-3 py-0.5 text-[6px] text-gray-300 w-32 truncate">google.com/search?q=praneeth+reddy</div>
                         </div>
                         <div className="flex-grow p-2 flex flex-col justify-start space-y-1">
-                            <span className="text-[#8ab4f8] font-bold text-[9px]">Praneeth Reddy - Backend & Systems Engineer</span>
+                            <span className="text-[#8ab4f8] font-bold text-[9px]">Praneeth Reddy - Software Developer and DevOps Engineer</span>
                             <span className="text-gray-400 text-[6px] leading-tight">Highly skilled engineering portfolio specializing in high-performance Go backends, distributed systems, and container orchestration...</span>
                             <div className="flex space-x-2 mt-1">
                                 <span className="border border-gray-700 px-1 py-0.5 rounded text-[5px]">GitHub</span>
@@ -653,9 +653,9 @@ export class Desktop extends Component {
                                 {`  /\\_/\\  \n ( o.o ) \n  > ^ < `}
                             </div>
                             <div className="text-[6px] text-white leading-normal">
-                                <span className="text-orange-500 font-bold">OS:</span> Ubuntu 24.04 LTS<br/>
-                                <span className="text-orange-500 font-bold">Host:</span> Portfolio WebApp<br/>
-                                <span className="text-orange-500 font-bold">Kernel:</span> React-Engine-v2<br/>
+                                <span className="text-orange-500 font-bold">OS:</span> Ubuntu 24.04 LTS<br />
+                                <span className="text-orange-500 font-bold">Host:</span> Portfolio WebApp<br />
+                                <span className="text-orange-500 font-bold">Kernel:</span> React-Engine-v2<br />
                                 <span className="text-orange-500 font-bold">Shell:</span> bash 5.2.21
                             </div>
                         </div>
@@ -759,12 +759,9 @@ export class Desktop extends Component {
     renderWindowCard = (app) => {
         return (
             <div key={app.id} className="relative group">
-                <div 
+                <div
                     onClick={() => {
-                        this.focus(app.id);
-                        let minimized_windows = this.state.minimized_windows;
-                        minimized_windows[app.id] = false;
-                        this.setState({ minimized_windows });
+                        this.openApp(app.id);
                         this.props.toggleActivities();
                     }}
                     className="relative w-64 h-44 rounded-2xl border border-white/10 bg-[#1e1e1e] overflow-hidden flex flex-col shadow-2xl window-card-hover transition-all cursor-pointer"
@@ -794,7 +791,7 @@ export class Desktop extends Component {
     renderActivitiesOverview = () => {
         const activeApps = apps.filter(app => this.state.closed_windows[app.id] === false);
         const searchQuery = (this.state.activitiesSearchQuery || '').toLowerCase().trim();
-        
+
         const filteredActiveApps = searchQuery
             ? activeApps.filter(app => app.title.toLowerCase().includes(searchQuery))
             : activeApps;
@@ -804,11 +801,11 @@ export class Desktop extends Component {
                 const isOpen = this.state.closed_windows[app.id] === false;
                 const matches = app.title.toLowerCase().includes(searchQuery);
                 return !isOpen && matches;
-              })
+            })
             : [];
 
         return (
-            <div 
+            <div
                 className={`fixed inset-0 top-8 bg-[#141414] bg-opacity-95 flex flex-col justify-between items-center py-6 select-none z-[45] transition-all duration-300 ${this.props.activities_overview ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
                 onClick={this.props.toggleActivities}
             >
@@ -827,7 +824,7 @@ export class Desktop extends Component {
                             autoFocus
                         />
                         {this.state.activitiesSearchQuery && (
-                            <button 
+                            <button
                                 onClick={() => this.setState({ activitiesSearchQuery: "" })}
                                 className="text-gray-400 hover:text-white transition-colors"
                             >
@@ -840,7 +837,7 @@ export class Desktop extends Component {
                 </div>
 
                 {/* Main Workspace Carousel (Center) */}
-                <div 
+                <div
                     className="w-[78%] h-[60%] rounded-3xl relative shadow-3xl border border-white/5 overflow-hidden transition-all duration-300 bg-black/40 flex items-center justify-center p-8"
                     onClick={(e) => e.stopPropagation()}
                 >
@@ -867,7 +864,7 @@ export class Desktop extends Component {
                                         <h3 className="text-[10px] uppercase tracking-wider text-gray-450 font-bold mb-3 pl-2">Application Results</h3>
                                         <div className="flex flex-wrap gap-4 items-center">
                                             {filteredSystemApps.map(app => (
-                                                <div 
+                                                <div
                                                     key={app.id}
                                                     onClick={() => {
                                                         this.openApp(app.id);
@@ -904,26 +901,26 @@ export class Desktop extends Component {
                 </div>
 
                 {/* Horizontal Dock at the Bottom */}
-                <div 
+                <div
                     className="bg-[#1e1e1e]/60 backdrop-blur-md px-4 py-2 border border-white/5 shadow-2xl rounded-2xl flex items-center justify-center space-x-3.5 z-20"
                     onClick={(e) => e.stopPropagation()}
                 >
                     {apps.filter(app => this.state.favourite_apps[app.id] !== false).map((app) => {
                         const isOpen = this.state.closed_windows[app.id] === false;
                         return (
-                            <div 
+                            <div
                                 onClick={() => {
                                     this.openApp(app.id);
                                     this.props.toggleActivities();
                                 }}
-                                key={app.id} 
+                                key={app.id}
                                 className="relative w-12 h-12 flex flex-col items-center justify-center rounded-xl bg-white/5 hover:bg-[#2c2c2c]/50 hover:bg-opacity-40 hover:scale-115 active:scale-95 cursor-pointer transition-all group"
                             >
                                 <img src={app.icon} className="w-9 h-9 object-contain" alt={app.title} />
                                 {isOpen && (
-                                    <span 
-                                        className="absolute bottom-0.5 w-1.5 h-1.5 rounded-full shadow-lg" 
-                                        style={{ backgroundColor: 'var(--ubuntu-accent-color, #e95420)' }} 
+                                    <span
+                                        className="absolute bottom-0.5 w-1.5 h-1.5 rounded-full shadow-lg"
+                                        style={{ backgroundColor: 'var(--ubuntu-accent-color, #e95420)' }}
                                     />
                                 )}
                                 {/* GNOME-Style Pinned App Tooltip */}
@@ -938,7 +935,7 @@ export class Desktop extends Component {
                     <div className="w-[1px] h-6 bg-white/10 self-center mx-1" />
 
                     {/* Show Applications Button */}
-                    <div 
+                    <div
                         onClick={() => {
                             this.showAllApps();
                             this.props.toggleActivities();
@@ -962,10 +959,10 @@ export class Desktop extends Component {
                 {/* Window Area */}
                 <div className="absolute h-full w-full bg-transparent" data-context="desktop-area" onMouseDown={this.handleMouseDown}>
                     {this.renderWindows()}
-                    
+
                     {/* Drag Selection Marquee */}
                     {this.state.selectionBox && this.state.selectionBox.visible && (
-                        <div 
+                        <div
                             className="absolute border border-[#e95420] bg-[#e95420]/15 pointer-events-none z-50 rounded"
                             style={{
                                 left: this.state.selectionBox.x,
