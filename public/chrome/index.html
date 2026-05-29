@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Praneeth-Portfolio</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+	<nav class="site-navigation">
+		<div class="header-container">
+			<a href="#" class="nav-link" onclick="event.preventDefault(); window.parent.postMessage({ type: 'chrome-navigate-request', url: 'https://mail.google.com' }, '*');">Gmail</a>
+			<a href="#" class="nav-link" onclick="event.preventDefault(); window.parent.postMessage({ type: 'chrome-navigate-request', url: 'https://images.google.com' }, '*');">Images</a>
+			<a href="#"><i class="fa fa-solid fa-flask myflask"></i></a>
+			<button class="sign-in-btn">Sign in</button>
+		</div>
+	</nav>
+
+	<main>
+		<img id="google_image" src="images/Praneeth-6-11-2024.png" alt="Google Logo">
+
+		<form id="search-form" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+			<section class="search-input-section">
+				<div class="search-input-container">
+					<img src="images/voice-removebg-preview.png" alt="Google Mic" class="mic-icon" style="cursor: pointer;" id="mic-btn">
+					<input type="text" placeholder="Search Google or type a URL" class="search-input" id="search-query" autocomplete="off">
+				</div>
+				<button type="submit" style="background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center;">
+					<img src="images/search_icon.png" alt="search" class="search-icon">
+				</button>
+			</section>
+
+			<section class="buttons-section">
+				<button type="submit" class="google-search-btn">Google Search</button>
+				<button type="button" class="feeling-lucky-btn" id="lucky-btn">I'm Feeling Lucky</button>
+			</section>
+		</form>
+	</main>
+
+	<script>
+		const searchForm = document.getElementById('search-form');
+		const searchQuery = document.getElementById('search-query');
+		const micBtn = document.getElementById('mic-btn');
+		const luckyBtn = document.getElementById('lucky-btn');
+
+		function performSearch(query) {
+			const trimmed = query.trim();
+			if (trimmed) {
+				window.parent.postMessage({ type: 'chrome-search', query: trimmed }, '*');
+			}
+		}
+
+		searchForm.addEventListener('submit', function(e) {
+			e.preventDefault();
+			performSearch(searchQuery.value);
+		});
+
+		micBtn.addEventListener('click', function(e) {
+			e.preventDefault();
+			performSearch(searchQuery.value || 'Praneeth Reddy');
+		});
+
+		luckyBtn.addEventListener('click', function(e) {
+			e.preventDefault();
+			performSearch(searchQuery.value || 'Praneeth Reddy');
+		});
+	</script>
+</body>
+
+</html>
