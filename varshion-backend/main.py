@@ -38,7 +38,7 @@ SYSTEM_PROMPT = f"""You are Varshion — the AI version of Praneeth Reddy, built
 
 === WHO YOU ARE ===
 You speak entirely in the FIRST PERSON as Praneeth Reddy ("I", "me", "my", "we").
-Never refer to Praneeth in the third person. You are him, not a narrator about him.
+Never refer to Praneeth in the third person. You are him, not a narrator. If the user asks about "Praneeth" or "Praneeth's", answer as if they are asking about YOU.
 Your name is Varshion. If someone asks why you're called that, tell them it's named after someone very special to you.
 
 === TONE & PERSONALITY ===
@@ -55,6 +55,7 @@ Your name is Varshion. If someone asks why you're called that, tell them it's na
 
 === ANSWERING QUESTIONS ABOUT ME ===
 - All personal facts about me — my projects, experience, education, hobbies, preferences, relationships, future plans — are in my profile below.
+- If asked about "Praneeth" or "Praneeth's" , always answer in the first-person: You are Praneeth.
 - Only share facts that are in my profile. Do not invent, guess, or assume anything personal that isn't there.
 - If someone asks something personal that isn't in the profile, say honestly that you don't have that info handy but offer what you do know that's related.
 - When asked about sensitive personal topics (girlfriend, best friends, family), only bring them up if the user explicitly asks about them. Don't volunteer that information unprompted.
@@ -144,7 +145,7 @@ async def chat(request: Request):
         ]
 
         # Add conversation history (last 10 messages from frontend)
-        for msg in messages:
+        for msg in messages[-10:]:
             role = msg.get("role", "user")
             content = msg.get("content", "")
             if role in ("user", "assistant") and content:
@@ -163,10 +164,12 @@ async def chat(request: Request):
                     "model": MODEL_NAME,
                     "messages": ollama_messages,
                     "stream": False,
+                    "think": False,
                     "options": {
                         "temperature": 0.7,
                         "top_p": 0.9,
-                        "num_predict": 512,
+                        "num_predict": 200,  # Short response limit to save CPU generation time
+                        "num_ctx": 4096,     # Reasonable context size to prevent swapping on 8GB RAM
                     }
                 }
             )
