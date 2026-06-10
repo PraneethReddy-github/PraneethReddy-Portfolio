@@ -746,6 +746,16 @@ export class Desktop extends Component {
                         <div className="text-right text-[5px] text-gray-400">Line 3, Col 45</div>
                     </div>
                 );
+            case 'varshion':
+                return (
+                    <div className="w-full h-full bg-gradient-to-br from-[#020617] to-[#111827] flex flex-col items-center justify-center text-white p-2">
+                        <div className="w-8 h-8 mb-2 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center border border-white/10 shadow-lg">
+                            <img src="./images/logos/varshion.png" alt="Varshion" className="w-5 h-5 rounded-lg object-cover" />
+                        </div>
+                        <span className="font-bold text-[8px] tracking-wide">Varshion AI</span>
+                        <span className="text-[5px] text-gray-400 mt-0.5">Chat with Praneeth</span>
+                    </div>
+                );
             default:
                 return (
                     <div className="w-full h-full bg-gradient-to-br from-[#2c3e50] to-[#3498db] flex flex-col justify-center items-center text-white p-2 text-[8px] text-center">

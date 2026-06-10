@@ -44,3 +44,12 @@ firebase.json
 
 # Env
 .env*
+varshion-backend/.env
+
+# Python & Virtual Environments
+venv/
+varshion-backend/venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+

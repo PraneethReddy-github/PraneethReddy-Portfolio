@@ -8,6 +8,7 @@ import { displayTrash } from './components/apps/trash';
 import { displayGedit } from './components/apps/gedit';
 import { displayAboutPraneeth } from './components/apps/praneeth';
 import { displayTerminalCalc } from './components/apps/calculator';
+import { displayVarshion } from './components/apps/varshion';
 
 const apps = [
     {
@@ -143,6 +144,15 @@ const apps = [
         isExternalApp: true,
         url: "https://ieeexplore.ieee.org/author/677775936439100",
         screen: () => {},
+    },
+    {
+        id: "varshion",
+        title: "Varshion AI",
+        icon: './images/logos/varshion.png',
+        disabled: false,
+        favourite: false,
+        desktop_shortcut: true,
+        screen: displayVarshion,
     }
 ]
 

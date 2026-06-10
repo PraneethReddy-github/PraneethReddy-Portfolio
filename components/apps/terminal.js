@@ -47,8 +47,14 @@ export class Terminal extends Component {
 
     componentDidUpdate() {
         clearInterval(this.cursor);
-        this.startCursor(this.terminal_rows - 2);
-        
+        let terminalBody = document.getElementById("terminal-body");
+        let windowEl = terminalBody ? terminalBody.closest('.main-window') : null;
+        let isFocused = windowEl && !windowEl.classList.contains('notFocused');
+
+        if (isFocused) {
+            this.startCursor(this.terminal_rows - 2);
+        }
+
         let rowId = this.terminal_rows - 2;
         let inputEl = document.getElementById(`terminal-input-${rowId}`);
         if (inputEl) {
@@ -62,7 +68,7 @@ export class Terminal extends Component {
 
     reStartTerminal = (showHelp = true) => {
         clearInterval(this.cursor);
-        
+
         let initialTerminal = [];
         if (showHelp) {
             initialTerminal.push(
@@ -77,7 +83,7 @@ export class Terminal extends Component {
                         </div>
                         <div className="text-white font-normal tracking-wider">praneeth --help</div>
                     </div>
-                    
+
                     <div style={{ color: "#ffffff", fontWeight: "bold", marginBottom: "4px" }}>Available Commands:</div>
                     <div style={{ paddingLeft: "8px", fontFamily: "monospace" }}>
                         <div><strong style={{ color: "#3465A4" }}>ls</strong> - List files and folders</div>
@@ -89,7 +95,7 @@ export class Terminal extends Component {
                         <div><strong style={{ color: "#3465A4" }}>clear</strong> - Clear terminal screen</div>
                         <div><strong style={{ color: "#3465A4" }}>exit</strong> - Close terminal window</div>
                     </div>
-                    
+
                     <div style={{ color: "#ffffff", fontWeight: "bold", marginTop: "10px", marginBottom: "4px" }}>GUI Applications:</div>
                     <div style={{ paddingLeft: "8px", fontFamily: "monospace" }}>
                         <div><strong style={{ color: "#3465A4" }}>code</strong> - Open VSCode editor</div>
@@ -98,6 +104,7 @@ export class Terminal extends Component {
                         <div><strong style={{ color: "#3465A4" }}>game-2048</strong> - Play 2048 game</div>
                         <div><strong style={{ color: "#3465A4" }}>about-praneeth</strong> - View 'About Me' page</div>
                         <div><strong style={{ color: "#3465A4" }}>sendmsg</strong> - Open Contact Form (gedit)</div>
+                        <div><strong style={{ color: "#3465A4" }}>varshion</strong> - Chat with Praneeth's AI Agent</div>
                     </div>
                 </div>
             );
@@ -185,11 +192,11 @@ export class Terminal extends Component {
             let terminal_row_id = $(e.target).data("row-id");
             let inputVal = $(`input#terminal-input-${terminal_row_id}`).val();
             let words = inputVal.split(' ');
-            
+
             if (words.length === 1) {
                 let query = words[0].toLowerCase();
                 if (query.length > 0) {
-                    const commands = [ "cd", "ls", "pwd", "echo", "clear", "exit", "mkdir", "code", "doom", "game-2048", "chrome", "about-praneeth", "trash", "settings", "sendmsg", "whoami", "uname", "cat", "help", "praneeth", "vi", "vim" ];
+                    const commands = ["cd", "ls", "pwd", "echo", "clear", "exit", "mkdir", "code", "doom", "game-2048", "chrome", "about-praneeth", "trash", "settings", "sendmsg", "varshion", "whoami", "uname", "cat", "help", "praneeth", "vi", "vim"];
                     let matches = commands.filter(c => c.startsWith(query));
                     if (matches.length === 1) {
                         $(`input#terminal-input-${terminal_row_id}`).val(matches[0]);
@@ -200,7 +207,7 @@ export class Terminal extends Component {
                 let cmd = words[0].toLowerCase();
                 let searchStr = inputVal.substring(cmd.length).trimLeft().toLowerCase();
                 let children = this.child_directories[this.curr_dir_name] || [];
-                
+
                 // Filter by command context
                 if (cmd === "cat" || cmd === "vi" || cmd === "vim") {
                     children = children.filter(c => c.endsWith(".txt"));
@@ -361,7 +368,7 @@ export class Terminal extends Component {
                     this.current_directory = pathParts.join("/");
                     this.curr_dir_name = currentDir;
                 }
-                
+
                 break;
             case "vi":
             case "vim":
@@ -438,6 +445,7 @@ export class Terminal extends Component {
   <div><strong style="color: #3465A4;">game-2048</strong> - Play 2048 game</div>
   <div><strong style="color: #3465A4;">about-praneeth</strong> - View 'About Me' page</div>
   <div><strong style="color: #3465A4;">sendmsg</strong> - Open Contact Form (gedit)</div>
+  <div><strong style="color: #3465A4;">varshion</strong> - Chat with Praneeth's AI Agent</div>
 </div>
 `;
                 break;
@@ -538,7 +546,14 @@ export class Terminal extends Component {
                 if (words[0] === "." || words.length === 0) {
                     this.props.openApp("gedit");
                 } else {
-                    result = "Command '" + main + "' not found.<br>Available Commands: [ help, ls, cd, cat, pwd, whoami, uname, clear, exit, code, chrome, doom, game-2048, about-praneeth, sendmsg ]";
+                    result = "Command '" + main + "' not found.<br>Available Commands: [ help, ls, cd, cat, pwd, whoami, uname, clear, exit, code, chrome, doom, game-2048, about-praneeth, sendmsg, varshion ]";
+                }
+                break;
+            case "varshion":
+                if (words[0] === "." || words.length === 0) {
+                    this.props.openApp("varshion");
+                } else {
+                    result = "Command '" + main + "' not found.<br>Available Commands: [ help, ls, cd, cat, pwd, whoami, uname, clear, exit, code, chrome, doom, game-2048, about-praneeth, sendmsg, varshion ]";
                 }
                 break;
             case "clear":
@@ -561,7 +576,7 @@ export class Terminal extends Component {
                 result = "Linux praneeth-Ubuntu-24-04 6.8.0-31-generic #31-Ubuntu SMP PREEMPT_DYNAMIC x86_64 x86_64 x86_64 GNU/Linux";
                 break;
             default:
-                result = "Command '" + main + "' not found.<br>Available Commands: [ help, ls, cd, cat, pwd, whoami, uname, clear, exit, code, chrome, doom, game-2048, about-praneeth, sendmsg ]<br>" + getRandomMeme(linuxMemes);
+                result = "Command '" + main + "' not found.<br>Available Commands: [ help, ls, cd, cat, pwd, whoami, uname, clear, exit, code, chrome, doom, game-2048, about-praneeth, sendmsg, varshion ]<br>" + getRandomMeme(linuxMemes);
         }
         document.getElementById(`row-result-${rowId}`).innerHTML = result;
         this.appendTerminalRow();
@@ -570,7 +585,7 @@ export class Terminal extends Component {
     renderViEditor = () => {
         const { viFile, viContent, viInsertMode, viCommandValue } = this.state;
         const lineCount = viContent.split("\n").length;
-        
+
         return (
             <div className="w-full h-full flex flex-col bg-black text-white font-mono select-none relative" style={{ height: "100%", minHeight: "100%" }}>
                 {/* Editor Content Area */}
@@ -593,7 +608,7 @@ export class Terminal extends Component {
                                 autoFocus
                             />
                         ) : (
-                            <div 
+                            <div
                                 onClick={this.focusViCommand}
                                 className="w-full h-full whitespace-pre-wrap font-mono cursor-text font-normal text-left"
                                 style={{ outline: "none" }}
@@ -656,17 +671,17 @@ export class Terminal extends Component {
             if (cmd.startsWith(":")) {
                 cmd = cmd.slice(1);
             }
-            
+
             if (cmd === "wq") {
                 let fileName = this.state.viFile;
                 let content = this.state.viContent;
-                
+
                 this.file_contents[fileName] = content;
-                
+
                 if (!this.child_directories[this.curr_dir_name].includes(fileName)) {
                     this.child_directories[this.curr_dir_name].push(fileName);
                 }
-                
+
                 this.setState({ viMode: false, viFile: "", viContent: "" }, () => {
                     this.appendTerminalRow();
                 });
