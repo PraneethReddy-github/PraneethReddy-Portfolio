@@ -78,16 +78,15 @@ export class AboutPraneeth extends Component {
                 {links.map((link) => {
                     const isActive = this.state.active_screen === link.id;
                     return (
-                        <div 
+                        <div
                             key={link.id}
-                            id={link.id} 
-                            tabIndex="0" 
-                            onFocus={this.changeScreen} 
-                            className={`w-28 md:w-full md:rounded-none rounded-sm cursor-default outline-none py-2 focus:outline-none duration-100 my-0.5 flex justify-start items-center pl-2 md:pl-3.5 transition-colors ${
-                                isActive 
-                                    ? "bg-ub-orange text-white" 
+                            id={link.id}
+                            tabIndex="0"
+                            onFocus={this.changeScreen}
+                            className={`w-28 md:w-full md:rounded-none rounded-sm cursor-default outline-none py-2 focus:outline-none duration-100 my-0.5 flex justify-start items-center pl-2 md:pl-3.5 transition-colors ${isActive
+                                    ? "bg-ub-orange text-white"
                                     : (isDark ? "text-gray-300 hover:bg-white/5" : "text-gray-700 hover:bg-black/5")
-                            }`}
+                                }`}
                         >
                             <img className="w-3.5 md:w-4 flex-shrink-0" alt={link.label} src={`./themes/Yaru/status/${link.icon}`} />
                             <span className="ml-2 md:ml-3 text-xs md:text-sm font-medium">{link.label}</span>
@@ -155,7 +154,7 @@ function About({ isDark }) {
                         </span>
                     </div>
                     <p className={`mt-4 text-sm md:text-base leading-relaxed max-w-xl ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                        Computer Science Graduate and Software Developer with a strong foundation in full-stack engineering, cloud-native deployments, and machine learning systems. Experienced in automating infrastructure, developing intelligent applications, and building scalable software solutions.
+                        Computer Science Graduate and Software Developer with a strong foundation in full-stack engineering, cloud-native deployments, and machine learning systems. Experienced in automating infrastructure, developing intelligent applications, and building scalable software solutions. Always eager to learn new technologies.
                     </p>
                 </div>
             </div>
@@ -215,13 +214,13 @@ function Education({ isDark }) {
             <h2 className={`text-2xl md:text-3xl font-extrabold mb-8 self-start ${isDark ? 'text-white' : 'text-gray-900'}`}>
                 Education Timeline
             </h2>
-            
+
             <div className="relative border-l-2 border-ub-orange/30 w-full pl-6 md:pl-8 space-y-8 text-left">
                 {education_data.map((edu, idx) => (
                     <div key={idx} className="relative group">
                         {/* Timeline Node Bullet */}
                         <div className="absolute -left-[31px] md:-left-[39px] top-1.5 w-4 h-4 rounded-full border-2 border-ub-orange bg-ub-orange group-hover:scale-125 transition-transform duration-200"></div>
-                        
+
                         {/* Timeline Card */}
                         <div className={`p-5 rounded-2xl border transition-all duration-300 ${isDark ? 'bg-white/5 border-white/10' : 'bg-white border-gray-200'}`}>
                             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2">
@@ -254,27 +253,27 @@ function Skills({ isDark }) {
         {
             title: "Programming Languages",
             icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>,
-            skills: ["Python", "Go", "Java", "C", "C++", "JavaScript", "Shell Scripting", "SQL"]
+            skills: ["Python", "Go", "Java", "C", "C++", "JavaScript", "Shell Scripting", "SQL", "Rust", "PHP"]
         },
         {
             title: "Web & Frameworks",
             icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>,
-            skills: ["React", "Angular", "HTML", "CSS", "Flask", "Streamlit"]
+            skills: ["React", "Angular", "HTML", "CSS", "Flask", "Streamlit", "Node.js", "Next.js", "REST API", "Typescript"]
         },
         {
             title: "Cloud & DevOps",
             icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>,
-            skills: ["AWS", "Docker", "Jenkins", "CI/CD Pipelines", "Virtualization", "Linux SysAdmin"]
+            skills: ["AWS", "Docker", "Jenkins", "CI/CD Pipelines", "Virtualization", "Linux"]
         },
         {
             title: "Machine Learning & Data",
             icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>,
-            skills: ["Scikit-learn", "TensorFlow/Keras", "NumPy", "Pandas", "NLP", "Computer Vision"]
+            skills: ["Scikit-learn", "TensorFlow/Keras", "NumPy", "Pandas", "NLP", "Computer Vision", "XGBoost", "PyTorch", "LangChain"]
         },
         {
             title: "Networking & Security",
             icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" /></svg>,
-            skills: ["TCP/IP", "SSL/TLS", "RSA-AES Cryptography", "Network Simulation", "Distributed Systems"]
+            skills: ["TCP/IP", "SSL/TLS", "RSA-AES Cryptography", "Network Simulation", "Distributed Systems", "Wireshark"]
         },
         {
             title: "IoT & Embedded Systems",
@@ -293,7 +292,7 @@ function Skills({ isDark }) {
             <h2 className={`text-2xl md:text-3xl font-extrabold mb-6 self-start ${isDark ? 'text-white' : 'text-gray-900'}`}>
                 Skills Showcase
             </h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full text-left">
                 {skillGroups.map((group, idx) => (
                     <div key={idx} className={`p-5 rounded-2xl border ${isDark ? 'bg-white/5 border-white/10' : 'bg-white border-gray-200'}`}>
@@ -307,13 +306,12 @@ function Skills({ isDark }) {
                         </div>
                         <div className="flex flex-wrap gap-2">
                             {group.skills.map((skill, sIdx) => (
-                                <span 
-                                    key={sIdx} 
-                                    className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${
-                                        isDark 
-                                            ? 'bg-white/5 border-white/10 text-gray-300' 
+                                <span
+                                    key={sIdx}
+                                    className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${isDark
+                                            ? 'bg-white/5 border-white/10 text-gray-300'
                                             : 'bg-gray-50 border-gray-200 text-gray-700'
-                                    }`}
+                                        }`}
                                 >
                                     {skill}
                                 </span>
@@ -477,16 +475,15 @@ function Projects({ isDark }) {
 
             <div className="grid grid-cols-1 gap-6 w-full text-left">
                 {project_list.map((project, idx) => (
-                    <a 
-                        key={idx} 
-                        href={project.link} 
-                        target="_blank" 
-                        rel="noreferrer" 
-                        className={`group block p-5 rounded-2xl border transition-all duration-300 ${
-                            isDark 
-                                ? 'bg-white/5 border-white/10 hover:border-white/20' 
+                    <a
+                        key={idx}
+                        href={project.link}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={`group block p-5 rounded-2xl border transition-all duration-300 ${isDark
+                                ? 'bg-white/5 border-white/10 hover:border-white/20'
                                 : 'bg-white border-gray-200 shadow-sm'
-                        }`}
+                            }`}
                     >
                         <div className="flex justify-between items-start flex-wrap gap-2 mb-2">
                             <div className="flex items-center space-x-2">
@@ -504,8 +501,8 @@ function Projects({ isDark }) {
                         </p>
                         <div className="flex flex-wrap gap-2">
                             {project.domains.map((domain, dIdx) => (
-                                <span 
-                                    key={dIdx} 
+                                <span
+                                    key={dIdx}
                                     className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${tag_colors[domain] || 'bg-gray-500/10 text-gray-500'}`}
                                 >
                                     {domain}
@@ -531,7 +528,7 @@ function Publications({ isDark }) {
             title: "IoT-Enabled Pharmaceutical Inventory Management System for Hospital Pharmacies",
             type: "Indian Patent",
             year: "2024",
-            description: "Designed an IoT-based smart inventory system to automate pharmaceutical stock management. Implemented barcode scanning, real-time inventory tracking, automated restocking alerts, and expiry monitoring using ESP32, PHP, MySQL, and web-based dashboards."
+            description: "Designed an IoT-based smart inventory system to automate pharmaceutical stock management. Implemented barcode scanning, real-time inventory tracking, automated restocking alerts, and expiry monitoring using ESP32, PHP, MySQL, and web-based dashboards. A major focus was on preventing medication stockouts and reducing manual errors in inventory management."
         }
     ];
 
@@ -540,49 +537,49 @@ function Publications({ isDark }) {
             title: "Multi-Client Server Based Quantum Key Distribution",
             venue: "16th ICCCNT, IIT Indore",
             date: "Jul 2025",
-            description: "Designed a quantum-secure communication framework for distributed systems using Quantum Key Distribution (QKD) to enable scalable and secure key exchange between multiple clients and servers."
+            description: "Designed a quantum-secure communication framework for distributed systems using Quantum Key Distribution (QKD) to enable scalable and secure key exchange between multiple clients and servers. It explored hybrid protocols that combined quantum key distribution with classical authentication to ensure secure data transmission in cloud-based environments."
         },
         {
             title: "Cloud-Based Real-Time Anomaly Detection in Network Traffic",
             venue: "ICOCT, Bengaluru",
             date: "Jun 2025",
             link: "https://ieeexplore.ieee.org/document/11118829",
-            description: "Implemented a machine learning-based anomaly detection system for network traffic monitoring using cloud infrastructure. Built real-time analytics pipelines for detecting suspicious activities in distributed network environments."
+            description: "Implemented a machine learning-based anomaly detection system for network traffic monitoring using cloud infrastructure. Built real-time analytics pipelines for detecting suspicious activities in distributed network environments. The system utilized deep learning models to analyze traffic patterns and identify anomalies with high accuracy."
         },
         {
             title: "CloudShare: Passwordless Cloud-Based File Storage & Sharing Framework",
             venue: "ICOCT, Bengaluru",
             date: "Jun 2025",
             link: "https://ieeexplore.ieee.org/document/11118777/",
-            description: "Developed a secure cloud storage framework eliminating traditional password authentication using asymmetric cryptography and challenge-response protocols. Integrated secure file sharing with AES encryption."
+            description: "Developed a secure cloud storage framework eliminating traditional password authentication using asymmetric cryptography and challenge-response protocols. Integrated secure file sharing with AES encryption. The system enabled secure file storage and sharing without the need for passwords, utilizing cryptographic techniques to protect user data."
         },
         {
             title: "Development of a Robust Emergency Communication System Utilizing LoRa and GPS with Multi-Hop Routing",
             venue: "ICSSAS",
             date: "Oct 2024",
             link: "https://ieeexplore.ieee.org/document/10760890/",
-            description: "Proposed a long-range emergency communication system using LoRa modules and GPS-based location tracking. Implemented a multi-hop mesh routing architecture for transmitting distress signals in disaster scenarios."
+            description: "Proposed a long-range emergency communication system using LoRa modules and GPS-based location tracking. Implemented a multi-hop mesh routing architecture for transmitting distress signals in disaster scenarios. This system was designed to provide reliable communication in areas where traditional infrastructure was damaged or unavailable."
         },
         {
             title: "License Plate Detection and Recognition Using YOLOv8 and OCR",
             venue: "15th ICCCNT, IIT Mandi",
             date: "Jun 2024",
             link: "https://ieeexplore.ieee.org/document/10725878/",
-            description: "Developed a computer vision based automatic license plate recognition system using YOLOv8 object detection and evaluated multiple OCR engines including EasyOCR, PaddleOCR, and Tesseract for character extraction."
+            description: "Developed a computer vision based automatic license plate recognition system using YOLOv8 object detection and evaluated multiple OCR engines including EasyOCR, PaddleOCR, and Tesseract for character extraction. This system enabled automatic detection and recognition of license plates in various lighting conditions and angles."
         },
         {
             title: "Improvising Energy Efficiency of Heterogeneous Servers using AWS Services and Machine Learning Approaches",
             venue: "IEEE ICCCNT",
             date: "Jun 2024",
             link: "https://ieeexplore.ieee.org/document/10724212/",
-            description: "Proposed a machine learning-based approach to optimize energy consumption in cloud infrastructure. Implemented regression models and deployed containerized workloads using AWS EC2 and Docker."
+            description: "Proposed a machine learning-based approach to optimize energy consumption in cloud infrastructure. Implemented regression models and deployed containerized workloads using AWS EC2 and Docker. A major focus was on improving server efficiency and reducing energy consumption in cloud data centers."
         },
         {
             title: "Crop Damage Prediction using Machine Learning Approaches",
             venue: "RAICS",
             date: "Dec 2023",
             link: "https://ieeexplore.ieee.org/document/10690031/",
-            description: "Developed a machine learning model for agricultural crop damage prediction using classification algorithms such as Gradient Boosting and Neural Networks to improve accuracy in crop health analysis."
+            description: "Developed a machine learning model for agricultural crop damage prediction using classification algorithms such as Gradient Boosting and Neural Networks to improve accuracy in crop health analysis. This system enabled early detection of crop diseases and pests, helping farmers to take timely measures to protect their crops."
         }
     ];
 
@@ -598,13 +595,12 @@ function Publications({ isDark }) {
                 </div>
                 <div className="grid grid-cols-1 gap-6 w-full">
                     {patent_list.map((patent, idx) => (
-                        <div 
-                            key={idx} 
-                            className={`p-5 rounded-2xl border ${
-                                isDark 
-                                    ? 'bg-white/5 border-white/10' 
+                        <div
+                            key={idx}
+                            className={`p-5 rounded-2xl border ${isDark
+                                    ? 'bg-white/5 border-white/10'
                                     : 'bg-white border-gray-200'
-                            }`}
+                                }`}
                         >
                             <div className="flex justify-between items-start flex-wrap gap-2 mb-2">
                                 <h3 className={`text-base font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
@@ -640,16 +636,15 @@ function Publications({ isDark }) {
                 </div>
                 <div className="grid grid-cols-1 gap-6 w-full">
                     {publication_list.map((pub, idx) => (
-                        <a 
-                            key={idx} 
+                        <a
+                            key={idx}
                             href={pub.link || "#"}
                             target={pub.link ? "_blank" : "_self"}
                             rel={pub.link ? "noreferrer" : ""}
-                            className={`group block p-5 rounded-2xl border transition-all duration-300 ${
-                                isDark 
-                                    ? 'bg-white/5 border-white/10 hover:border-white/20' 
+                            className={`group block p-5 rounded-2xl border transition-all duration-300 ${isDark
+                                    ? 'bg-white/5 border-white/10 hover:border-white/20'
                                     : 'bg-white border-gray-200 shadow-sm'
-                            }`}
+                                }`}
                         >
                             <div className="flex justify-between items-start flex-wrap gap-2 mb-2">
                                 <h3 className={`text-base font-bold group-hover:text-ub-orange transition-colors ${isDark ? 'text-white' : 'text-gray-900'}`}>
@@ -682,8 +677,8 @@ function Resume({ isDark }) {
                     <svg className="w-5 h-5 text-ub-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                     <span className="font-bold text-sm">Resume.pdf</span>
                 </div>
-                <a 
-                    href="./files/Resume.pdf" 
+                <a
+                    href="./files/Resume.pdf"
                     download="P_Praneeth_Reddy_Resume.pdf"
                     className="flex items-center space-x-1.5 px-4 py-1.5 rounded-lg text-xs font-bold text-white bg-ub-orange hover:bg-opacity-90 active:scale-95 transition-all shadow-sm"
                 >

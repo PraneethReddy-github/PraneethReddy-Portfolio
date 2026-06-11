@@ -21,7 +21,7 @@ load_dotenv()
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 MODEL_NAME = os.getenv("MODEL_NAME", "qwen3:1.7b")
 PORT = int(os.getenv("PORT", "8000"))
-ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:3001").split(",")
+ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,https://praneethreddydev.web.app").split(",")
 RATE_LIMIT = os.getenv("RATE_LIMIT_PER_MINUTE", "10")
 GLOBAL_RATE_LIMIT = os.getenv("GLOBAL_RATE_LIMIT_PER_MINUTE", "100")
 

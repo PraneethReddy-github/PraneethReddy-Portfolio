@@ -1,10 +1,10 @@
 # P Praneeth Reddy — Profile
 
 ## Personal Information
-- **Role:** Software Developer / Backend & Systems Engineer at Simnovus
-- **Location:** Bangalore, India (originally Mangaluru)
+- **Role:** Software Developer and DevOps Engineer at Simnovus
+- **Location:** Bangalore, India
 - **Contact:** connectwithpraneeth@gmail.com | +91 8639564054
-- **Bio:** CS Graduate & Software Developer specializing in full-stack, cloud-native deployments, and machine learning. Built distributed orchestrators and dynamic port allocation systems in GoLang. Has 7 IEEE publications and 2 Indian patents.
+- **Bio:** CS Graduate & Software Developer specializing in full-stack, cloud-native deployments, and machine learning. DevOps Automation & AI agents and Built distributed orchestrators. Has 7 IEEE publications and 2 Indian patents.
 
 ## Education
 - **B.Tech in CS:** Amrita Vishwa Vidyapeetham, Bengaluru (2021-2025) | CPI: 8.01/10 | - Focused on core computing systems, network security, software engineering, and IoT integration.
@@ -15,16 +15,17 @@
 
 ## Work Experience
 - **Simnovus (Backend & Systems Engineer):**
-  - Designed distributed orchestrator in Go for 5G/LTE simulation environments.
-  - Architected dynamic port allocation system replacing legacy static configurations
-  - Implemented real-time performance telemetry using Redis and MySQL
-  - Migrated services to Systemd Quadlets.
-  - Developed Simnovator (v4.0.0), a Bash-based CLI tool with Podman integration.
+  - Currently working on enterprise grade 4G/LTE Network Testing and simulation Platforms.
+  - Currently working on a platform with features of orchestrating tests on multiple UE's, 
+  - Have worked on the DevOps Automation and AI agents and Built distributed orchestrators.
+  - Have good knowledge in 5G, 4G Network Testing and simulation Platforms.
+  - Working on the test orchestration of various 5G/LTE features and scenarios.
+  - Working on performance analysis and optimization of 5G/LTE networks.
 
 ## Technical Skills
 - **Languages:** Go, Python, Java, C, C++, SQL, Shell/Bash, JavaScript
-- **Frameworks:** React, Next.js, Node.js, Flask, Streamlit
-- **DevOps/Infra:** AWS, Docker, Podman, Kubernetes, Systemd Quadlets, Jenkins CI/CD, Linux SysAdmin
+- **Frameworks:** React, Next.js, Node.js, Flask, Streamlit, Angular
+- **DevOps/Infra:** AWS, Docker, Podman, Kubernetes, Systemd Quadlets, Jenkins CI/CD, Linux, Terraform
 - **Data/ML:** Scikit-learn, TensorFlow, NumPy, Pandas, YOLOv8
 - **Databases:** PostgreSQL, MySQL, Redis, MongoDB
 
@@ -60,7 +61,7 @@
  
 **Tools** — VS Code + terminal for everything
  
-**Stack** — Go + Redis + PostgreSQL | Next.js + React + Tailwind | Podman + Systemd
+**Stack** — Go + Redis + PostgreSQL | Next.js + React + Tailwind | Podman + Systemd | Angular, FastAPI, Terraform, AWS, Jenkins, Kubernetes, Docker.
  
 **Books** — *The Pragmatic Programmer*, *Clean Code*, *Deep Work*, *Hitchhiker's Guide*
  
@@ -68,11 +69,11 @@
  
 **Music** — Whatever's trending; lo-fi when coding
  
-**Cricket** — Die-hard RCB fan, Virat Kohli GOAT, huge IPL guy
+**Cricket** — A big fan of cricket, watched most of the ipl matches, a big fan of virat kohli and RCB.
  
 **Food** — South Indian food, dosa/idli/biriyani, pizza anytime
  
-**Travel** — Manali & Kasol (mountains), Western Ghats, South India extensively
+**Travel** — Manali & Kasol (mountains), Western Ghats, South India extensively, planning to visit Europe.
  
 ---
  
@@ -89,7 +90,6 @@
 - Hang out with friends (favourite thing), cricket, horror movies, side projects, food spots, spontaneous outings
 - **Photography/Videography** — Was Office Bearer of EPIC Club; creative outlet for a very technical brain
 - **Karate** — Black Belt, 1st Dan, Shitō-ryū (Jan 2020); trained seriously, taught discipline
-- **Side Projects** — Ubuntu-themed portfolio, Varshion chatbot, weekend hacks
 ---
  
 ## Relationships & Social Life
