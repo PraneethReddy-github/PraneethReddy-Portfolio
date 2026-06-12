@@ -1,0 +1,14 @@
+[Unit]
+Description=Varshion AI Backend
+After=network.target ollama.service
+
+[Service]
+User=praneethreddy
+WorkingDirectory=/home/praneethreddy/Desktop/Praneeth-Portfolio/varshion-backend
+Environment="PATH=/home/praneethreddy/Desktop/Praneeth-Portfolio/varshion-backend/venv/bin"
+ExecStart=/home/praneethreddy/Desktop/Praneeth-Portfolio/varshion-backend/venv/bin/python main.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
