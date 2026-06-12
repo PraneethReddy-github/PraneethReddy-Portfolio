@@ -130,7 +130,7 @@ async def chat(request: Request):
         # Call Ollama API
         start_time = time.time()
 
-        async with httpx.AsyncClient(timeout=120.0) as client:
+        async with httpx.AsyncClient(timeout=300.0) as client:
             response = await client.post(
                 f"{OLLAMA_BASE_URL}/api/chat",
                 json={
@@ -138,6 +138,7 @@ async def chat(request: Request):
                     "messages": ollama_messages,
                     "stream": False,
                     "think": False,
+                    "keep_alive": -1,  # Keep model in memory permanently
                     "options": {
                         "temperature": 0.7,
                         "top_p": 0.9,
