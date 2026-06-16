@@ -106,6 +106,9 @@ export class Terminal extends Component {
                         <div><strong style={{ color: "#3465A4" }}>sendmsg</strong> - Open Contact Form (gedit)</div>
                         <div><strong style={{ color: "#3465A4" }}>varshion</strong> - Chat with Praneeth's AI Agent</div>
                     </div>
+                    <div style={{ color: "#8ae234", marginTop: "12px", fontStyle: "italic", fontSize: "0.85em" }}>
+                        * Psst... the interface transforms if you visit on a mobile device!
+                    </div>
                 </div>
             );
         }
@@ -446,6 +449,9 @@ export class Terminal extends Component {
   <div><strong style="color: #3465A4;">about-praneeth</strong> - View 'About Me' page</div>
   <div><strong style="color: #3465A4;">sendmsg</strong> - Open Contact Form (gedit)</div>
   <div><strong style="color: #3465A4;">varshion</strong> - Chat with Praneeth's AI Agent</div>
+</div>
+<div style="color: #8ae234; margin-top: 12px; font-style: italic; font-size: 0.85em;">
+  * Psst... the interface transforms if you visit on a mobile device!
 </div>
 `;
                 break;
