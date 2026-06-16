@@ -10,7 +10,7 @@ export class Window extends Component {
         this.id = props.id;
         if (this.id === "terminal") {
             this.startX = 500;
-            this.startY = 80;
+            this.startY = 60;
         } else {
             this.startX = 60;
             this.startY = 10;
@@ -58,7 +58,7 @@ export class Window extends Component {
             if (this.id === "calc") {
                 this.setState({ height: 65, width: 25 }, this.resizeBoundries);
             } else if (this.id === "terminal") {
-                this.setState({ height: 65, width: 45 }, this.resizeBoundries);
+                this.setState({ height: 70, width: 50 }, this.resizeBoundries);
             } else {
                 this.setState({ height: 85, width: 60 }, this.resizeBoundries);
             }
@@ -164,7 +164,7 @@ export class Window extends Component {
                         : <WindowMainScreen screen={this.props.screen} title={this.props.title}
                             addFolder={this.props.id === "terminal" ? this.props.addFolder : null}
                             openApp={this.props.openApp} dark_mode={this.props.dark_mode} />)}
-                    
+
                     {/* Transparent overlay to intercept clicks for iframes when the window is unfocused */}
                     {!this.props.isFocused ? <div className="absolute inset-x-0 bottom-0 top-8 z-40 bg-transparent" onClick={this.focusWindow}></div> : null}
                 </div>
@@ -248,10 +248,10 @@ export class WindowMainScreen extends Component {
     }
     render() {
         const { dark_mode } = this.props;
-        const bgStyle = dark_mode 
-            ? (this.state.setDarkBg ? " bg-ub-drk-abrgn text-white " : " bg-ub-cool-grey text-white") 
+        const bgStyle = dark_mode
+            ? (this.state.setDarkBg ? " bg-ub-drk-abrgn text-white " : " bg-ub-cool-grey text-white")
             : " bg-white text-gray-800 ";
-        
+
         let screenElement = null;
         if (this.props.addFolder) {
             const child = displayTerminal(this.props.addFolder, this.props.openApp);
