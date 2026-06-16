@@ -25,19 +25,21 @@ export class AboutPraneeth extends Component {
             "resume": <Resume />,
         }
 
-        let lastVisitedScreen = localStorage.getItem("about-section");
-        if (!lastVisitedScreen || !this.screens[lastVisitedScreen]) {
-            lastVisitedScreen = "about";
+        let startScreen = this.props.initialScreen;
+        if (!startScreen || !this.screens[startScreen]) {
+            startScreen = localStorage.getItem("about-section");
+        }
+        if (!startScreen || !this.screens[startScreen]) {
+            startScreen = "about";
         }
 
-        // Try to focus the last visited screen
-        const element = document.getElementById(lastVisitedScreen);
+        const element = document.getElementById(startScreen);
         if (element) {
             this.changeScreen(element);
         } else {
             this.setState({
-                screen: this.screens[lastVisitedScreen],
-                active_screen: lastVisitedScreen
+                screen: this.screens[startScreen],
+                active_screen: startScreen
             });
         }
     }
@@ -45,10 +47,8 @@ export class AboutPraneeth extends Component {
     changeScreen = (e) => {
         const screen = e.id || e.target.id;
 
-        // store this state
         localStorage.setItem("about-section", screen);
 
-        // google analytics
         ReactGA.send({ hitType: "pageview", page: `/${screen}`, title: "About Section" });
 
         this.setState({
@@ -83,7 +83,7 @@ export class AboutPraneeth extends Component {
                             id={link.id}
                             tabIndex="0"
                             onFocus={this.changeScreen}
-                            className={`w-28 md:w-full md:rounded-none rounded-sm cursor-default outline-none py-2 focus:outline-none duration-100 my-0.5 flex justify-start items-center pl-2 md:pl-3.5 transition-colors ${isActive
+                            className={`w-28 md:w-full md:rounded-none rounded-sm cursor-default outline-none focus:outline-none duration-100 my-0.5 flex justify-start items-center pl-2 md:pl-3.5 transition-colors ${this.props.isMobile ? 'min-h-[44px] py-2.5' : 'py-2'} ${isActive
                                     ? "bg-ub-orange text-white"
                                     : (isDark ? "text-gray-300 hover:bg-white/5" : "text-gray-700 hover:bg-black/5")
                                 }`}
@@ -99,6 +99,7 @@ export class AboutPraneeth extends Component {
 
     render() {
         const isDark = this.props.dark_mode !== false; // true by default
+        const isMobile = this.props.isMobile === true;
 
         return (
             <div className={`w-full h-full flex ${isDark ? 'bg-ub-cool-grey text-white' : 'bg-[#fafafa] text-gray-800'} select-none relative`}>
@@ -107,7 +108,7 @@ export class AboutPraneeth extends Component {
                         {this.renderNavLinks(isDark)}
                     </div>
                 </div>
-                <div onClick={this.showNavBar} className={`md:hidden flex flex-col items-center justify-center absolute ${isDark ? 'bg-ub-cool-grey' : 'bg-gray-200'} rounded w-6 h-6 top-1.5 left-1.5 z-40`}>
+                <div onClick={this.showNavBar} className={`md:hidden flex flex-col items-center justify-center absolute ${isDark ? 'bg-ub-cool-grey' : 'bg-gray-200'} rounded w-7 h-7 top-2 left-2 z-40`}>
                     <div className={`w-3.5 border-t ${isDark ? 'border-white' : 'border-black'}`}></div>
                     <div className={`w-3.5 border-t ${isDark ? 'border-white' : 'border-black'}`} style={{ marginTop: "2pt", marginBottom: "2pt" }}></div>
                     <div className={`w-3.5 border-t ${isDark ? 'border-white' : 'border-black'}`}></div>
@@ -115,7 +116,7 @@ export class AboutPraneeth extends Component {
                         {this.renderNavLinks(isDark)}
                     </div>
                 </div>
-                <div className={`flex flex-col w-full md:w-4/5 justify-start items-center flex-grow ${isDark ? 'bg-ub-grey' : 'bg-white'} overflow-y-auto windowMainScreen`}>
+                <div className={`flex flex-col w-full md:w-4/5 justify-start items-center flex-grow ${isDark ? 'bg-ub-grey' : 'bg-white'} overflow-y-auto windowMainScreen ${isMobile ? 'pb-8' : ''}`} style={isMobile ? { WebkitOverflowScrolling: 'touch' } : {}}>
                     {React.isValidElement(this.state.screen) ? React.cloneElement(this.state.screen, { isDark }) : this.state.screen}
                 </div>
             </div>
@@ -129,18 +130,16 @@ export const displayAboutPraneeth = () => {
     return <AboutPraneeth />;
 }
 
-function About({ isDark }) {
+export function About({ isDark }) {
     return (
         <div className="w-full flex flex-col items-center px-6 py-8 md:px-10 text-center md:text-left md:items-start">
             <div className="flex flex-col md:flex-row items-center md:items-start w-full space-y-6 md:space-y-0 md:space-x-8">
-                {/* Profile Pic/Bitmoji with matching accent border shadow */}
                 <div className="flex-shrink-0">
                     <div className={`w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden ${isDark ? 'bg-[#242424]' : 'bg-white'} border-2 ${isDark ? 'border-white/10' : 'border-gray-300'} p-1.5 flex items-center justify-center`}>
                         <img className="w-full h-full object-cover rounded-full" src="./images/logos/pfp.jpg" alt="Praneeth Logo" />
                     </div>
                 </div>
 
-                {/* Header Information */}
                 <div className="flex flex-col items-center md:items-start justify-center pt-2">
                     <h1 className={`text-3xl md:text-4xl font-extrabold ${isDark ? 'text-white' : 'text-gray-900'} tracking-tight`}>
                         P Praneeth Reddy
@@ -159,10 +158,8 @@ function About({ isDark }) {
                 </div>
             </div>
 
-            {/* Divider line */}
             <div className={`my-8 h-px w-full ${isDark ? 'bg-white/10' : 'bg-gray-200'}`}></div>
 
-            {/* Quick Details List */}
             <div className="w-full text-left">
                 <h3 className={`text-lg font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>Quick Contact Info</h3>
                 <div className={`grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 rounded-xl border ${isDark ? 'bg-white/5 border-white/10 text-gray-300' : 'bg-gray-50 border-gray-200 text-gray-600'}`}>
@@ -218,10 +215,8 @@ function Education({ isDark }) {
             <div className="relative border-l-2 border-ub-orange/30 w-full pl-6 md:pl-8 space-y-8 text-left">
                 {education_data.map((edu, idx) => (
                     <div key={idx} className="relative group">
-                        {/* Timeline Node Bullet */}
                         <div className="absolute -left-[31px] md:-left-[39px] top-1.5 w-4 h-4 rounded-full border-2 border-ub-orange bg-ub-orange group-hover:scale-125 transition-transform duration-200"></div>
 
-                        {/* Timeline Card */}
                         <div className={`p-5 rounded-2xl border transition-all duration-300 ${isDark ? 'bg-white/5 border-white/10' : 'bg-white border-gray-200'}`}>
                             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2">
                                 <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
@@ -389,7 +384,6 @@ function Certifications({ isDark }) {
                 Certifications & Activities
             </h2>
 
-            {/* Certifications Grid */}
             <div className="w-full mb-8">
                 <h3 className={`text-lg font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>Professional Certifications</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -405,7 +399,6 @@ function Certifications({ isDark }) {
                 </div>
             </div>
 
-            {/* Extra-curricular Activities */}
             <div className="w-full">
                 <h3 className={`text-lg font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>Activities & Leadership</h3>
                 <div className={`p-5 rounded-2xl border ${isDark ? 'bg-white/5 border-white/10' : 'bg-white border-gray-200'} space-y-4`}>
@@ -422,7 +415,7 @@ function Certifications({ isDark }) {
     );
 }
 
-function Projects({ isDark }) {
+export function Projects({ isDark }) {
     const project_list = [
         {
             name: "Real-Time System Resource Monitoring Dashboard",
@@ -585,7 +578,6 @@ function Publications({ isDark }) {
 
     return (
         <div className="w-full flex flex-col items-center px-6 py-8 md:px-10">
-            {/* Patents Section */}
             <div className="w-full text-left mb-10">
                 <div className="flex items-center space-x-2.5 mb-6">
                     <svg className="w-6 h-6 text-ub-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>
@@ -623,10 +615,8 @@ function Publications({ isDark }) {
                 </div>
             </div>
 
-            {/* Divider line */}
             <div className={`my-6 h-px w-full ${isDark ? 'bg-white/10' : 'bg-gray-200'}`}></div>
 
-            {/* Publications Section */}
             <div className="w-full text-left">
                 <div className="flex items-center space-x-2.5 mb-6">
                     <svg className="w-6 h-6 text-ub-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
@@ -668,10 +658,9 @@ function Publications({ isDark }) {
     );
 }
 
-function Resume({ isDark }) {
+export function Resume({ isDark }) {
     return (
         <div className="w-full h-full flex flex-col">
-            {/* Action Top bar */}
             <div className={`flex justify-between items-center px-6 py-4 border-b ${isDark ? 'bg-[#242424] border-white/10 text-white' : 'bg-gray-50 border-gray-200 text-gray-800'} select-none`}>
                 <div className="flex items-center space-x-2">
                     <svg className="w-5 h-5 text-ub-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
@@ -687,7 +676,6 @@ function Resume({ isDark }) {
                 </a>
             </div>
 
-            {/* PDF Render Container with #navpanes=0 to hide pages thumbnails sidebar */}
             <div className="flex-grow w-full bg-gray-500">
                 <iframe className="w-full h-full border-none" src="./files/Resume.pdf#navpanes=0" title="P Praneeth Reddy Resume" frameBorder="0"></iframe>
             </div>

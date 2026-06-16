@@ -1,18 +1,21 @@
 import Ubuntu from "../components/ubuntu";
+import IOS from "../components/ios";
+import useDeviceDetect from "../components/hooks/useDeviceDetect";
 import ReactGA from 'react-ga4';
 import Meta from "../components/SEO/Meta";
 
-// Only initialize GA if a tracking ID is provided (optional for local dev)
 const TRACKING_ID = process.env.NEXT_PUBLIC_TRACKING_ID;
 if (TRACKING_ID) {
   ReactGA.initialize(TRACKING_ID);
 }
 
 function App() {
+  const isMobile = useDeviceDetect();
+
   return (
     <>
       <Meta />
-      <Ubuntu />
+      {isMobile ? <IOS /> : <Ubuntu />}
     </>
   )
 }
