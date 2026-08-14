@@ -4,52 +4,7 @@ import Settings from '../apps/settings';
 import ReactGA from 'react-ga4';
 import { displayTerminal } from '../apps/terminal'
 
-const playOSSound = (type) => {
-    try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        if (!AudioCtx) return;
-        const ctx = new AudioCtx();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-
-        const now = ctx.currentTime;
-        if (type === 'snap') {
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(440, now);
-            osc.frequency.exponentialRampToValueAtTime(880, now + 0.08);
-            gain.gain.setValueAtTime(0.12, now);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
-            osc.start(now);
-            osc.stop(now + 0.08);
-        } else if (type === 'open') {
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(523.25, now);
-            osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.1);
-            gain.gain.setValueAtTime(0.08, now);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-            osc.start(now);
-            osc.stop(now + 0.1);
-        } else if (type === 'close') {
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(523.25, now);
-            osc.frequency.exponentialRampToValueAtTime(329.63, now + 0.1);
-            gain.gain.setValueAtTime(0.08, now);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-            osc.start(now);
-            osc.stop(now + 0.1);
-        } else if (type === 'minimize') {
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(600, now);
-            osc.frequency.exponentialRampToValueAtTime(300, now + 0.08);
-            gain.gain.setValueAtTime(0.08, now);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
-            osc.start(now);
-            osc.stop(now + 0.08);
-        }
-    } catch (e) {}
-};
+const playOSSound = () => {};
 
 export class Window extends Component {
     constructor(props) {
@@ -68,6 +23,7 @@ export class Window extends Component {
             height: 85,
             closed: false,
             maximized: false,
+            snapPreview: null,
             parentSize: {
                 height: 100,
                 width: 100
@@ -130,33 +86,118 @@ export class Window extends Component {
 
     changeCursorToDefault = () => { this.setState({ cursorType: "cursor-default" }) }
 
+    handleDrag = (e, data) => {
+        this.checkOverlap();
+        const mouseX = e?.clientX ?? (e?.touches && e?.touches[0] ? e.touches[0].clientX : undefined);
+        const mouseY = e?.clientY ?? (e?.touches && e?.touches[0] ? e.touches[0].clientY : undefined);
+
+        const screenWidth = window.innerWidth;
+        const node = data?.node;
+        const winWidth = node ? node.offsetWidth : (screenWidth * (this.state.width / 100));
+        const winLeft = data ? data.x : undefined;
+        const winRight = (winLeft !== undefined && winWidth) ? (winLeft + winWidth) : undefined;
+        const winTop = data ? data.y : undefined;
+
+        let newSnap = null;
+
+        const isAtTop = (mouseY !== undefined && mouseY < 40) || (winTop !== undefined && winTop <= 5);
+        const isAtLeft = (mouseX !== undefined && mouseX < 40) || (winLeft !== undefined && winLeft <= 5);
+        const isAtRight = (mouseX !== undefined && mouseX > screenWidth - 40) || (winRight !== undefined && winRight >= screenWidth - 5);
+
+        if (isAtTop) {
+            if (isAtLeft || (mouseX !== undefined && mouseX < 90)) newSnap = 'top-left';
+            else if (isAtRight || (mouseX !== undefined && mouseX > screenWidth - 90)) newSnap = 'top-right';
+            else newSnap = 'top';
+        } else if (isAtLeft) {
+            newSnap = 'left';
+        } else if (isAtRight) {
+            newSnap = 'right';
+        }
+
+        if (this.state.snapPreview !== newSnap) {
+            this.setState({ snapPreview: newSnap });
+        }
+    }
+
+    getSnapOverlayStyle = (snap) => {
+        switch (snap) {
+            case 'left':
+                return { top: '28px', left: '0px', width: '50vw', height: 'calc(100vh - 28px)' };
+            case 'right':
+                return { top: '28px', left: '50vw', width: '50vw', height: 'calc(100vh - 28px)' };
+            case 'top':
+                return { top: '28px', left: '0px', width: '100vw', height: 'calc(100vh - 28px)' };
+            case 'top-left':
+                return { top: '28px', left: '0px', width: '50vw', height: 'calc(50vh - 14px)' };
+            case 'top-right':
+                return { top: '28px', left: '50vw', width: '50vw', height: 'calc(50vh - 14px)' };
+            default:
+                return {};
+        }
+    }
+
     handleDragStop = (e, data) => {
         this.changeCursorToDefault();
-        const screenWidth = window.innerWidth;
-        const mouseX = e.clientX;
-        const mouseY = e.clientY;
+        const activeSnap = this.state.snapPreview;
+        this.setState({ snapPreview: null });
 
-        if (mouseX !== undefined && mouseY !== undefined) {
-            // Left edge snap (Tile left 50%)
-            if (mouseX < 25) {
-                var r = document.querySelector("#" + this.id);
+        const screenWidth = window.innerWidth;
+        const mouseX = e?.clientX ?? (e?.touches && e?.touches[0] ? e.touches[0].clientX : undefined);
+        const mouseY = e?.clientY ?? (e?.touches && e?.touches[0] ? e.touches[0].clientY : undefined);
+
+        const node = data?.node;
+        const winWidth = node ? node.offsetWidth : (screenWidth * (this.state.width / 100));
+        const winLeft = data ? data.x : undefined;
+        const winRight = (winLeft !== undefined && winWidth) ? (winLeft + winWidth) : undefined;
+        const winTop = data ? data.y : undefined;
+
+        let targetSnap = activeSnap;
+        if (!targetSnap) {
+            const isAtTop = (mouseY !== undefined && mouseY < 40) || (winTop !== undefined && winTop <= 5);
+            const isAtLeft = (mouseX !== undefined && mouseX < 40) || (winLeft !== undefined && winLeft <= 5);
+            const isAtRight = (mouseX !== undefined && mouseX > screenWidth - 40) || (winRight !== undefined && winRight >= screenWidth - 5);
+
+            if (isAtTop) {
+                if (isAtLeft || (mouseX !== undefined && mouseX < 90)) targetSnap = 'top-left';
+                else if (isAtRight || (mouseX !== undefined && mouseX > screenWidth - 90)) targetSnap = 'top-right';
+                else targetSnap = 'top';
+            } else if (isAtLeft) {
+                targetSnap = 'left';
+            } else if (isAtRight) {
+                targetSnap = 'right';
+            }
+        }
+
+        if (targetSnap) {
+            var r = document.querySelector("#" + this.id);
+            if (targetSnap === 'left') {
                 if (r) r.style.transform = `translate(0px, 0px)`;
-                this.setState({ width: 49.5, height: 96 }, this.resizeBoundries);
+                this.setState({ width: 50, height: 96 }, this.resizeBoundries);
                 playOSSound('snap');
                 return;
             }
-            // Right edge snap (Tile right 50%)
-            if (mouseX > screenWidth - 25) {
-                var r = document.querySelector("#" + this.id);
+            if (targetSnap === 'right') {
                 const leftPos = Math.floor(screenWidth * 0.5);
                 if (r) r.style.transform = `translate(${leftPos}px, 0px)`;
-                this.setState({ width: 49.5, height: 96 }, this.resizeBoundries);
+                this.setState({ width: 50, height: 96 }, this.resizeBoundries);
                 playOSSound('snap');
                 return;
             }
-            // Top edge snap (Maximize)
-            if (mouseY < 15) {
+            if (targetSnap === 'top') {
                 this.maximizeWindow();
+                playOSSound('snap');
+                return;
+            }
+            if (targetSnap === 'top-left') {
+                if (r) r.style.transform = `translate(0px, 0px)`;
+                this.setState({ width: 50, height: 48 }, this.resizeBoundries);
+                playOSSound('snap');
+                return;
+            }
+            if (targetSnap === 'top-right') {
+                const leftPos = Math.floor(screenWidth * 0.5);
+                if (r) r.style.transform = `translate(${leftPos}px, 0px)`;
+                this.setState({ width: 50, height: 48 }, this.resizeBoundries);
                 playOSSound('snap');
                 return;
             }
@@ -223,37 +264,51 @@ export class Window extends Component {
 
     render() {
         return (
-            <Draggable
-                axis="both"
-                handle=".window-title"
-                grid={[1, 1]}
-                scale={1}
-                onStart={this.changeCursorToMove}
-                onStop={this.handleDragStop}
-                onDrag={this.checkOverlap}
-                allowAnyClick={false}
-                defaultPosition={{ x: this.startX, y: this.startY }}
-                bounds={{ left: 0, top: 0, right: this.state.parentSize.width, bottom: this.state.parentSize.height }}
-            >
-                <div style={{ width: `${this.state.width}%`, height: `${this.state.height}%`, zIndex: this.props.zIndex }}
-                    className={this.state.cursorType + " " + (this.state.closed ? " closed-window " : "") + (this.state.maximized ? " duration-300 rounded-none" : " rounded-2xl") + (this.props.minimized ? " opacity-0 invisible duration-200 " : "") + (this.props.isFocused ? "" : " notFocused") + " opened-window overflow-hidden min-w-1/4 min-h-1/4 main-window absolute window-shadow border-opacity-40 border border-t-0 flex flex-col " + (this.props.dark_mode ? "border-black" : "border-gray-300")}
-                    id={this.id}
-                    onClick={this.focusWindow}
+            <React.Fragment>
+                {this.state.snapPreview && (
+                    <div 
+                        className="fixed pointer-events-none transition-all duration-150 ease-out border-2 rounded-xl shadow-sm"
+                        style={{
+                            ...this.getSnapOverlayStyle(this.state.snapPreview),
+                            zIndex: Math.max(1, (this.props.zIndex || 100) - 1),
+                            backgroundColor: 'var(--ubuntu-accent-color, #e95420)',
+                            borderColor: 'var(--ubuntu-accent-color, #e95420)',
+                            opacity: 0.25,
+                        }}
+                    />
+                )}
+                <Draggable
+                    axis="both"
+                    handle=".window-title"
+                    grid={[1, 1]}
+                    scale={1}
+                    onStart={this.changeCursorToMove}
+                    onStop={this.handleDragStop}
+                    onDrag={this.handleDrag}
+                    allowAnyClick={false}
+                    defaultPosition={{ x: this.startX, y: this.startY }}
+                    bounds={{ left: 0, top: 0, right: this.state.parentSize.width, bottom: this.state.parentSize.height }}
                 >
-                    <WindowYBorder resize={this.handleHorizontalResize} />
-                    <WindowXBorder resize={this.handleVerticleResize} />
-                    <WindowTopBar title={this.props.title} dark_mode={this.props.dark_mode} />
-                    <WindowEditButtons minimize={this.minimizeWindow} maximize={this.maximizeWindow} isMaximised={this.state.maximized} close={this.closeWindow} id={this.id} dark_mode={this.props.dark_mode} />
-                    {(this.id === "settings"
-                        ? <Settings changeBackgroundImage={this.props.changeBackgroundImage} currBgImgName={this.props.bg_image_name} dark_mode={this.props.dark_mode} toggleDarkMode={this.props.toggleDarkMode} />
-                        : <WindowMainScreen screen={this.props.screen} title={this.props.title}
-                            addFolder={this.props.id === "terminal" ? this.props.addFolder : null}
-                            openApp={this.props.openApp} dark_mode={this.props.dark_mode} />)}
+                    <div style={{ width: `${this.state.width}%`, height: `${this.state.height}%`, zIndex: this.props.zIndex }}
+                        className={this.state.cursorType + " " + (this.state.closed ? " closed-window " : "") + (this.state.maximized ? " duration-300 rounded-none" : " rounded-2xl") + (this.props.minimized ? " opacity-0 invisible duration-200 " : "") + (this.props.isFocused ? "" : " notFocused") + " opened-window overflow-hidden min-w-1/4 min-h-1/4 main-window absolute window-shadow border-opacity-40 border border-t-0 flex flex-col " + (this.props.dark_mode ? "border-black" : "border-gray-300")}
+                        id={this.id}
+                        onClick={this.focusWindow}
+                    >
+                        <WindowYBorder resize={this.handleHorizontalResize} />
+                        <WindowXBorder resize={this.handleVerticleResize} />
+                        <WindowTopBar title={this.props.title} dark_mode={this.props.dark_mode} />
+                        <WindowEditButtons minimize={this.minimizeWindow} maximize={this.maximizeWindow} isMaximised={this.state.maximized} close={this.closeWindow} id={this.id} dark_mode={this.props.dark_mode} />
+                        {(this.id === "settings"
+                            ? <Settings changeBackgroundImage={this.props.changeBackgroundImage} currBgImgName={this.props.bg_image_name} dark_mode={this.props.dark_mode} toggleDarkMode={this.props.toggleDarkMode} />
+                            : <WindowMainScreen screen={this.props.screen} title={this.props.title}
+                                addFolder={this.props.id === "terminal" ? this.props.addFolder : null}
+                                openApp={this.props.openApp} dark_mode={this.props.dark_mode} />)}
 
-                    {/* Transparent overlay to intercept clicks for iframes when the window is unfocused */}
-                    {!this.props.isFocused ? <div className="absolute inset-x-0 bottom-0 top-8 z-40 bg-transparent" onClick={this.focusWindow}></div> : null}
-                </div>
-            </Draggable >
+                        {/* Transparent overlay to intercept clicks for iframes when the window is unfocused */}
+                        {!this.props.isFocused ? <div className="absolute inset-x-0 bottom-0 top-8 z-40 bg-transparent" onClick={this.focusWindow}></div> : null}
+                    </div>
+                </Draggable >
+            </React.Fragment>
         )
     }
 }

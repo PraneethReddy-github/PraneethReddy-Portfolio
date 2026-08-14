@@ -54,22 +54,28 @@ export class Desktop extends Component {
         this.checkForNewFolders();
         window.addEventListener('keydown', this.handleGlobalKeys);
         window.addEventListener('ubuntu-trash-restored', this.handleTrashRestored);
-
-        // Open default apps after boot sequence
-        setTimeout(() => {
-            this.openApp("chrome");
-            setTimeout(() => {
-                this.openApp("terminal");
-            }, 300); // Slight delay for smoother animation
-        }, 1500);
+        window.addEventListener('ubuntu-unlocked', this.handleUnlocked);
     }
 
     componentWillUnmount() {
         this.removeContextListeners();
         window.removeEventListener('keydown', this.handleGlobalKeys);
         window.removeEventListener('ubuntu-trash-restored', this.handleTrashRestored);
+        window.removeEventListener('ubuntu-unlocked', this.handleUnlocked);
         document.removeEventListener('mousemove', this.handleMouseMove);
         document.removeEventListener('mouseup', this.handleMouseUp);
+    }
+
+    handleUnlocked = () => {
+        if (!this.hasOpenedInitialApps) {
+            this.hasOpenedInitialApps = true;
+            setTimeout(() => {
+                this.openApp("chrome");
+                setTimeout(() => {
+                    this.openApp("terminal");
+                }, 300);
+            }, 300);
+        }
     }
 
     handleTrashRestored = () => {
@@ -326,7 +332,7 @@ export class Desktop extends Component {
                     changeBackgroundImage: this.props.changeBackgroundImage, bg_image_name: this.props.bg_image_name,
                     dark_mode: this.props.dark_mode,
                     toggleDarkMode: this.props.toggleDarkMode,
-                    zIndex: 10 + this.app_stack.indexOf(app.id),
+                    zIndex: 10 + (this.app_stack.indexOf(app.id) * 2),
                 }
                 windowsJsx.push(<Window key={index} {...props} />)
             }

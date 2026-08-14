@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactGA from 'react-ga4';
+import { fetchVarshionResponse } from '../util components/varshionChat';
 
 export default function Varshion() {
     const [messages, setMessages] = useState([]);
@@ -56,7 +57,8 @@ export default function Varshion() {
             textareaRef.current.style.height = 'auto';
         }
         
-        setMessages(prev => [...prev, { role: 'user', content: userMsg }]);
+        const newHistory = [...messages, { role: 'user', content: userMsg }];
+        setMessages(newHistory);
         setIsTyping(true);
 
         ReactGA.event({
@@ -65,25 +67,7 @@ export default function Varshion() {
         });
 
         try {
-            const apiUrl = process.env.NEXT_PUBLIC_CHAT_API_URL;
-            let aiResponse = "";
-
-            if (apiUrl) {
-                const chatHistory = [...messages, { role: 'user', content: userMsg }].slice(-10);
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ messages: chatHistory })
-                });
-
-                if (!response.ok) throw new Error('API error');
-                const data = await response.json();
-                aiResponse = data.response || "I received your message, but the server didn't send a valid response.";
-            } else {
-                await new Promise(resolve => setTimeout(resolve, 1500));
-                aiResponse = "I'm currently running in demo mode. Please connect my FastAPI backend to enable full capabilities.";
-            }
-
+            const aiResponse = await fetchVarshionResponse(newHistory);
             setMessages(prev => [...prev, { role: 'assistant', content: aiResponse }]);
         } catch (error) {
             console.error("Chat API Error:", error);
@@ -156,7 +140,6 @@ export default function Varshion() {
                     <div>
                         <div className="flex items-center space-x-2">
                             <h2 className="text-sm font-semibold tracking-wide text-white">Varshion AI</h2>
-                            <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">Groq Llama 3.1</span>
                         </div>
                         <p className="text-[11px] text-gray-400">Praneeth Reddy's Portfolio Assistant</p>
                     </div>

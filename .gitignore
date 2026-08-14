@@ -42,8 +42,10 @@ next-env.d.ts
 .firebaserc
 firebase.json
 
-# Varshion Backend & Local Helper Scripts
+# Varshion Backend & Local Helper Scripts / APIs
 varshion-backend/
+pages/api/
+components/util components/varshionChat.js
 scripts/
 docker-compose.yml
 

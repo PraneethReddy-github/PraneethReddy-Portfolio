@@ -101,6 +101,7 @@ export default class Ubuntu extends Component {
 		window.removeEventListener('keydown', this.unLockScreen);
 		this.setState({ screen_locked: false });
 		localStorage.setItem('screen-locked', false);
+		window.dispatchEvent(new CustomEvent('ubuntu-unlocked'));
 	};
 
 	changeBackgroundImage = (img_name) => {

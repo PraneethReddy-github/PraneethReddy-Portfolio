@@ -45,7 +45,7 @@ export default function SideBar(props) {
             <div 
                 onMouseEnter={showSideBar}
                 onMouseLeave={hideSideBar}
-                className={(props.hide ? " translate-y-20 opacity-0 pointer-events-none " : "") + " absolute transform duration-300 select-none z-40 bottom-2 left-1/2 -translate-x-1/2 w-auto h-auto flex flex-row justify-center items-center px-4 py-1.5 rounded-2xl bg-[#1e1e1e]/60 backdrop-blur-md border border-white/5 shadow-2xl"}
+                className={(props.hide ? " translate-y-20 opacity-0 pointer-events-none " : "") + " absolute transform duration-300 select-none z-[999] bottom-2 left-1/2 -translate-x-1/2 w-auto h-auto flex flex-row justify-center items-center px-4 py-1.5 rounded-2xl bg-[#1e1e1e]/60 backdrop-blur-md border border-white/5 shadow-2xl"}
             >
                 {/* Pinned Favorite Apps (excluding Chrome) */}
                 {Object.keys(props.closed_windows).length !== 0 ? renderPinnedApps(props) : null}

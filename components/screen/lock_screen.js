@@ -28,7 +28,7 @@ export default function LockScreen(props) {
     }, [props.isLocked, props.unLockScreen]);
 
     return (
-        <div id="ubuntu-lock-screen" style={{ zIndex: "100" }} className={(props.isLocked ? " visible translate-y-0 " : " invisible -translate-y-full ") + " absolute outline-none bg-black bg-opacity-90 transform duration-500 select-none top-0 right-0 overflow-hidden m-0 p-0 h-screen w-screen"}>
+        <div id="ubuntu-lock-screen" style={{ zIndex: "9999" }} className={(props.isLocked ? " visible translate-y-0 " : " invisible -translate-y-full ") + " absolute outline-none bg-black bg-opacity-90 transform duration-500 select-none top-0 right-0 overflow-hidden m-0 p-0 h-screen w-screen"}>
             <div style={{ backgroundImage: `url(${wallpapers[props.bgImgName]})`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center center" }} className="absolute top-0 left-0 w-full h-full transform z-20 blur-md scale-105"></div>
             <div className="w-full h-full z-50 overflow-hidden relative flex flex-col justify-center items-center text-white">
                 <div className=" text-7xl">

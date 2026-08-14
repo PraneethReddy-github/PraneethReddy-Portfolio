@@ -6,7 +6,7 @@ function BootingScreen(props) {
     return (
         <div 
             style={isShowing 
-                ? { zIndex: "100" } 
+                ? { zIndex: "10000" } 
                 : { zIndex: "-20", transition: "opacity 1200ms ease-in-out, z-index 0s 1200ms" }
             } 
             className={(isShowing ? "opacity-100" : "opacity-0 pointer-events-none") + " absolute transition-opacity duration-1000 ease-in-out select-none flex flex-col justify-around items-center top-0 right-0 overflow-hidden m-0 p-0 h-screen w-screen bg-black"}
