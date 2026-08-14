@@ -42,14 +42,16 @@ next-env.d.ts
 .firebaserc
 firebase.json
 
-# Env
-.env*
-varshion-backend/.env
+# Varshion Backend & Local Helper Scripts
+varshion-backend/
+scripts/
+docker-compose.yml
 
 # Python & Virtual Environments
 venv/
-varshion-backend/venv/
 __pycache__/
 *.pyc
 .pytest_cache/
+
+.npmrc
 

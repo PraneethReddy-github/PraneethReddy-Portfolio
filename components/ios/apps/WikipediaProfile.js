@@ -193,10 +193,15 @@ export default function WikipediaProfile({ onNavigate, darkMode }) {
 
                     <SectionHeader id="proj_sec" title="Projects" />
                     <ul style={{ margin: '0.3em 0 0.5em 1.5em', paddingLeft: '1em' }}>
-                        <li style={{ marginBottom: '8px' }}><Link>Real-Time System Resource Monitoring Dashboard</Link> — Designed a real-time tracking interface for virtualization resources using GoLang and React socket interfaces.</li>
-                        <li style={{ marginBottom: '8px' }}><Link>Secure Client-Server Communication</Link> — Programmed encrypted terminal sockets in C++ utilizing hybrid RSA-AES and SSL handshake structures.</li>
-                        <li style={{ marginBottom: '8px' }}><Link>Road Safety and Accident Prevention Using RF</Link> — Assembled an IoT road safety module that actively controls motor speed based on RF zone warnings.</li>
-                        <li><Link>Genetic Algorithm for Vehicle Routing</Link> — Optimized logistics routing using evolutionary computation approaches.</li>
+                        <li style={{ marginBottom: '8px' }}><Link href="https://github.com/Praneethreddy-github/ternix">Ternix</Link> — Cross-platform desktop terminal & remote session manager (SSH, Telnet, Serial, RDP, VNC) with split-pane layout and encrypted SQLite vault.</li>
+                        <li style={{ marginBottom: '8px' }}><Link href="https://bloom-dial.web.app">Bloom 🌸</Link> — Floating radial glass desktop launcher & focus workspace featuring local Whisper AI voice dictation.</li>
+                        <li style={{ marginBottom: '8px' }}><Link href="https://github.com/Praneethreddy-github/DevFlow">DevFlow 🤖</Link> — Autonomous AI engineering platform connecting Jira & GitHub via MCP with Gemini CLI FixAgent.</li>
+                        <li style={{ marginBottom: '8px' }}><Link href="https://github.com/Praneethreddy-github/Morphix">Morphix</Link> — Desktop file conversion & media toolkit for docs, video (ffmpeg), audio, images, and PDFs.</li>
+                        <li style={{ marginBottom: '8px' }}><Link href="https://github.com/Praneethreddy-github/Resume">Resume Screener</Link> — AI candidate triage platform with Gemini 2.5 Pro recruiter agent and client-side rule engine.</li>
+                        <li style={{ marginBottom: '8px' }}><Link>Real-Time System Resource Monitoring Dashboard</Link> — Designed a real-time tracking interface for Linux system resources.</li>
+                        <li style={{ marginBottom: '8px' }}><Link>Road Safety and Accident Prevention Speed Zones</Link> — Assembled an IoT road safety module that actively controls motor speed in RF restriction zones.</li>
+                        <li style={{ marginBottom: '8px' }}><Link>Secure Client-Server Communication (SSL)</Link> — Programmed encrypted client-server sockets utilizing hybrid RSA-AES and SSL.</li>
+                        <li><Link>Genetic Algorithm for Vehicle Routing</Link> — Optimized logistics routing solving the VRP using evolutionary computation.</li>
                     </ul>
 
                     <SectionHeader id="pub_sec" title="Publications & Patents" />

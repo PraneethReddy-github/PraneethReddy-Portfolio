@@ -4,6 +4,53 @@ import Settings from '../apps/settings';
 import ReactGA from 'react-ga4';
 import { displayTerminal } from '../apps/terminal'
 
+const playOSSound = (type) => {
+    try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        const now = ctx.currentTime;
+        if (type === 'snap') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(440, now);
+            osc.frequency.exponentialRampToValueAtTime(880, now + 0.08);
+            gain.gain.setValueAtTime(0.12, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+            osc.start(now);
+            osc.stop(now + 0.08);
+        } else if (type === 'open') {
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(523.25, now);
+            osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.1);
+            gain.gain.setValueAtTime(0.08, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+            osc.start(now);
+            osc.stop(now + 0.1);
+        } else if (type === 'close') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(523.25, now);
+            osc.frequency.exponentialRampToValueAtTime(329.63, now + 0.1);
+            gain.gain.setValueAtTime(0.08, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+            osc.start(now);
+            osc.stop(now + 0.1);
+        } else if (type === 'minimize') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(600, now);
+            osc.frequency.exponentialRampToValueAtTime(300, now + 0.08);
+            gain.gain.setValueAtTime(0.08, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+            osc.start(now);
+            osc.stop(now + 0.08);
+        }
+    } catch (e) {}
+};
+
 export class Window extends Component {
     constructor(props) {
         super(props);
@@ -31,6 +78,7 @@ export class Window extends Component {
     componentDidMount() {
         this.id = this.props.id;
         this.setDefaultWindowDimenstion();
+        playOSSound('open');
         ReactGA.send({ hitType: "pageview", page: `/${this.id}`, title: "Custom Title" });
         window.addEventListener('resize', this.resizeBoundries);
         if (this.id === "doom") {
@@ -82,6 +130,39 @@ export class Window extends Component {
 
     changeCursorToDefault = () => { this.setState({ cursorType: "cursor-default" }) }
 
+    handleDragStop = (e, data) => {
+        this.changeCursorToDefault();
+        const screenWidth = window.innerWidth;
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+
+        if (mouseX !== undefined && mouseY !== undefined) {
+            // Left edge snap (Tile left 50%)
+            if (mouseX < 25) {
+                var r = document.querySelector("#" + this.id);
+                if (r) r.style.transform = `translate(0px, 0px)`;
+                this.setState({ width: 49.5, height: 96 }, this.resizeBoundries);
+                playOSSound('snap');
+                return;
+            }
+            // Right edge snap (Tile right 50%)
+            if (mouseX > screenWidth - 25) {
+                var r = document.querySelector("#" + this.id);
+                const leftPos = Math.floor(screenWidth * 0.5);
+                if (r) r.style.transform = `translate(${leftPos}px, 0px)`;
+                this.setState({ width: 49.5, height: 96 }, this.resizeBoundries);
+                playOSSound('snap');
+                return;
+            }
+            // Top edge snap (Maximize)
+            if (mouseY < 15) {
+                this.maximizeWindow();
+                playOSSound('snap');
+                return;
+            }
+        }
+    }
+
     handleVerticleResize = () => { this.setState({ height: this.state.height + 0.1 }, this.resizeBoundries); }
     handleHorizontalResize = () => { this.setState({ width: this.state.width + 0.1 }, this.resizeBoundries); }
 
@@ -99,6 +180,7 @@ export class Window extends Component {
     focusWindow = () => { this.props.focus(this.id); }
 
     minimizeWindow = () => {
+        playOSSound('minimize');
         this.setWinowsPosition();
         var r = document.querySelector("#" + this.id);
         let posx = r.style.getPropertyValue("--window-transform-x");
@@ -108,6 +190,7 @@ export class Window extends Component {
     }
 
     restoreWindow = () => {
+        playOSSound('open');
         var r = document.querySelector("#" + this.id);
         this.setDefaultWindowDimenstion();
         let posx = r.style.getPropertyValue("--window-transform-x");
@@ -117,6 +200,7 @@ export class Window extends Component {
     }
 
     maximizeWindow = () => {
+        playOSSound('snap');
         if (this.state.maximized) { this.restoreWindow(); }
         else {
             this.focusWindow();
@@ -129,6 +213,7 @@ export class Window extends Component {
     }
 
     closeWindow = () => {
+        playOSSound('close');
         this.setWinowsPosition();
         this.setState({ closed: true }, () => {
             this.props.hideSideBar(this.id, false);
@@ -144,7 +229,7 @@ export class Window extends Component {
                 grid={[1, 1]}
                 scale={1}
                 onStart={this.changeCursorToMove}
-                onStop={this.changeCursorToDefault}
+                onStop={this.handleDragStop}
                 onDrag={this.checkOverlap}
                 allowAnyClick={false}
                 defaultPosition={{ x: this.startX, y: this.startY }}

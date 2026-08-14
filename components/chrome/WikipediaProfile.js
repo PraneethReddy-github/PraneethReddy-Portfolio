@@ -303,19 +303,26 @@ export default function WikipediaProfile({ onNavigate, darkMode }) {
                             {/* Skills */}
                             <SectionHeader id="skills_sec" title="Technical Skills" />
                             <ul style={{ margin: '0.3em 0 0.5em 2em' }}>
-                                <li><b>Languages:</b> GoLang, Python, C/C++, Java, SQL, Shell Scripting, JavaScript.</li>
-                                <li><b>Frameworks & Libraries:</b> React.js, Angular, Node.js, Flask, Streamlit, Pandas, NumPy, Keras.</li>
-                                <li><b>Cloud & DevOps:</b> Amazon Web Services (AWS), Docker, Jenkins CI/CD, Git, Linux Systems.</li>
-                                <li><b>Security & Hardware:</b> SSL/TLS, Cryptographic Algorithms, Quantum Key Distribution, Arduino IoT.</li>
+                                <li><b>Languages:</b> GoLang, Python, C/C++, TypeScript, Java, SQL, Shell Scripting, JavaScript, Rust, PHP.</li>
+                                <li><b>AI Systems & Agents:</b> Gemini API/CLI, Model Context Protocol (MCP), Local Whisper AI (@xenova/transformers), PyTorch, TensorFlow/Keras, LangChain, Computer Vision.</li>
+                                <li><b>Desktop & Media Tech:</b> Electron 33, xterm.js, fluent-ffmpeg, pdf-lib / pdf.js, skia canvas, wavesurfer.js, SQLite, IndexedDB.</li>
+                                <li><b>Frameworks & Web:</b> React.js, Next.js, Vite, Express, Tailwind CSS, Framer Motion, Zustand, Node.js, Flask.</li>
+                                <li><b>Cloud & DevOps:</b> Amazon Web Services (AWS), Docker, Podman, Jenkins CI/CD, Git, Linux Systems.</li>
+                                <li><b>Security & Hardware:</b> SSL/TLS, Cryptographic Algorithms, AES-256-GCM, Quantum Key Distribution, Arduino IoT.</li>
                             </ul>
 
                             {/* Projects */}
                             <SectionHeader id="proj_sec" title="Projects" />
                             <ul style={{ margin: '0.3em 0 0.5em 2em' }}>
-                                <li><Link>Real-Time System Resource Monitoring Dashboard</Link> — Designed a real-time tracking interface for virtualization resources using GoLang and React socket interfaces.</li>
-                                <li><Link>Secure Client-Server Communication</Link> — Programmed encrypted terminal sockets in C++ utilizing hybrid RSA-AES and SSL handshake structures.</li>
-                                <li><Link>Road Safety and Accident Prevention Using RF</Link> — Assembled an IoT road safety module that actively controls motor speed based on RF zone warnings.</li>
-                                <li><Link>Genetic Algorithm for Vehicle Routing</Link> — Optimized logistics routing using evolutionary computation approaches.</li>
+                                <li style={{ marginBottom: '0.5em' }}><Link href="https://github.com/Praneethreddy-github/ternix">Ternix</Link> — Cross-platform desktop terminal & remote session manager (SSH, Telnet, Serial, RDP, VNC) with split-pane layout, tab tear-out into floating windows, encrypted SQLite vault (AES-256-GCM / PBKDF2), and dual-pane SFTP manager.</li>
+                                <li style={{ marginBottom: '0.5em' }}><Link href="https://bloom-dial.web.app">Bloom 🌸</Link> — Floating radial glass desktop launcher & focus workspace featuring orbital ring navigation, local Whisper AI voice dictation (@xenova/transformers), OS-native TTS, and depleting ring focus timer.</li>
+                                <li style={{ marginBottom: '0.5em' }}><Link href="https://github.com/Praneethreddy-github/DevFlow">DevFlow 🤖</Link> — Autonomous AI-orchestrated engineering platform connecting Jira & GitHub via Model Context Protocol (MCP) with Gemini CLI FixAgent, live SSE log streaming, and automated PR generation.</li>
+                                <li style={{ marginBottom: '0.5em' }}><Link href="https://github.com/Praneethreddy-github/Morphix">Morphix</Link> — Desktop file conversion & media toolkit for documents, video (fluent-ffmpeg), audio (wavesurfer.js), images (skia canvas), and PDFs (pdfjs-dist).</li>
+                                <li style={{ marginBottom: '0.5em' }}><Link href="https://github.com/Praneethreddy-github/Resume">Resume Screener</Link> — Candidate triage platform featuring a Gemini 2.5 Pro agentic edition with recruiter Q&A assistant ('Why is candidate #1?') and a 100% client-side deterministic rule engine.</li>
+                                <li style={{ marginBottom: '0.5em' }}><Link>Real-Time System Resource Monitoring Dashboard</Link> — Real-time tracking interface for Linux system metrics using Python, Shell, and React socket interfaces.</li>
+                                <li style={{ marginBottom: '0.5em' }}><Link>Road Safety & Accident Prevention Speed Zones</Link> — Speed control and accident prevention system using Arduino Uno, RF transmitters/receivers, ultrasonic sensors, and embedded C to automatically enforce speed limits in restriction zones.</li>
+                                <li style={{ marginBottom: '0.5em' }}><Link>Secure Multi Client-Server Communication (SSL)</Link> — Developed secure client-server communication using SSL/TLS with hybrid RSA-AES encryption, secure key exchange, and digital signatures.</li>
+                                <li style={{ marginBottom: '0.5em' }}><Link>Genetic Algorithm for Intelligent Vehicle Routing</Link> — Implemented genetic algorithm optimization solving the Vehicle Routing Problem (VRP) for logistics networks to reduce routing costs.</li>
                             </ul>
 
                             {/* Publications */}

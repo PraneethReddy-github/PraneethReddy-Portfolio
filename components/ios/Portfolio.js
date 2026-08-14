@@ -87,10 +87,10 @@ function About() {
             <GroupLabel>About</GroupLabel>
             <Card>
                 <p className="text-[15px] leading-relaxed text-black/75 p-4">
-                    Computer Science graduate and Software Developer with a strong foundation in
-                    full-stack engineering, cloud-native deployments, and machine learning systems.
-                    Experienced in automating infrastructure, developing intelligent applications, and
-                    building scalable software solutions. Always eager to learn new technologies.
+                    Software Developer & Systems Engineer building high-performance desktop applications,
+                    autonomous AI agents, developer platforms, and cloud infrastructure. Creator of Ternix,
+                    Bloom 🌸, DevFlow 🤖, Morphix, and Resume Screener AI. Passionate about system efficiency
+                    and local AI.
                 </p>
             </Card>
 
@@ -154,12 +154,12 @@ function Education() {
 
 function Skills() {
     const groups = [
-        { title: 'Programming Languages', skills: ['Python', 'Go', 'Java', 'C', 'C++', 'JavaScript', 'Shell', 'SQL', 'Rust', 'PHP'] },
-        { title: 'Web & Frameworks', skills: ['React', 'Angular', 'HTML', 'CSS', 'Flask', 'Streamlit', 'Node.js', 'Next.js', 'REST API', 'TypeScript'] },
-        { title: 'Cloud & DevOps', skills: ['AWS', 'Docker', 'Jenkins', 'CI/CD', 'Virtualization', 'Linux'] },
-        { title: 'Machine Learning & Data', skills: ['Scikit-learn', 'TensorFlow/Keras', 'NumPy', 'Pandas', 'NLP', 'Computer Vision', 'XGBoost', 'PyTorch', 'LangChain'] },
+        { title: 'Programming Languages', skills: ['Python', 'Go', 'Java', 'C', 'C++', 'TypeScript', 'JavaScript', 'Shell', 'SQL', 'Rust', 'PHP'] },
+        { title: 'AI Systems & Autonomous Agents', skills: ['Gemini API/CLI', 'MCP Protocol', 'Local Whisper AI', 'LangChain', 'PyTorch', 'TensorFlow', 'Scikit-Learn', 'Computer Vision'] },
+        { title: 'Desktop & Media Tech', skills: ['Electron 33', 'xterm.js', 'fluent-ffmpeg', 'pdf-lib / pdf.js', 'skia canvas', 'wavesurfer.js', 'SQLite', 'IndexedDB'] },
+        { title: 'Web & Frameworks', skills: ['React', 'Next.js', 'Vite', 'Express', 'Tailwind CSS', 'Framer Motion', 'Zustand', 'Flask', 'Node.js', 'REST API'] },
+        { title: 'Cloud & DevOps', skills: ['AWS', 'Docker', 'Podman', 'Jenkins', 'CI/CD', 'Virtualization', 'Linux'] },
         { title: 'Networking & Security', skills: ['TCP/IP', 'SSL/TLS', 'RSA-AES', 'Network Simulation', 'Distributed Systems', 'Wireshark'] },
-        { title: 'IoT & Embedded', skills: ['ESP32', 'Arduino', 'Wireless Comm', 'Raspberry Pi', 'Sensor Integration'] },
         { title: 'Tools & Soft Skills', skills: ['Git', 'Jupyter', 'VS Code', 'LaTeX', 'MySQL', 'Firebase', 'Figma', 'Problem Solving', 'Leadership'] },
     ];
     return (
@@ -271,15 +271,23 @@ function Certifications() {
 const TAG_COLORS = {
     python: '#3b82f6', bash: '#9ca3af', react: '#06b6d4', linux: '#eab308',
     'c++': '#6366f1', iot: '#a855f7', arduino: '#14b8a6', cryptography: '#ef4444',
-    distributed: '#10b981', algorithms: '#ec4899',
+    distributed: '#10b981', algorithms: '#ec4899', electron: '#0284c7', typescript: '#2563eb',
+    ssh: '#059669', xterm: '#9333ea', sqlite: '#d97706', ai: '#c026d3', whisper: '#7c3aed',
+    javascript: '#ca8a04', automation: '#0d9488', gemini: '#4f46e5', mcp: '#e11d48',
+    express: '#475569', ffmpeg: '#ea580c', pdf: '#dc2626'
 };
 
 function Projects() {
     const list = [
-        { name: 'Real-Time System Resource Monitoring Dashboard', date: 'Jun – Jul 2025', link: 'https://github.com/PraneethReddy-github', description: 'System monitoring dashboard tracking CPU, memory and network utilization across Linux systems with Python/Shell backend scripts and real-time visualization.', domains: ['python', 'bash', 'react', 'linux'] },
-        { name: 'Road Safety & Accident Prevention Speed Zones', date: 'Sep – Oct 2024', link: 'https://github.com/PraneethReddy-github', description: 'Speed control and accident prevention system using Arduino Uno, RF transmitters/receivers, ultrasonic sensors and embedded C to enforce speed limits in restricted zones.', domains: ['c++', 'iot', 'arduino'] },
-        { name: 'Secure Multi Client-Server Communication (SSL)', date: 'Mar – Apr 2024', link: 'https://github.com/PraneethReddy-github', description: 'Secure client-server communication over SSL/TLS with hybrid RSA-AES encryption, secure key exchange, digital signatures and encrypted transmission.', domains: ['python', 'cryptography', 'distributed'] },
-        { name: 'Genetic Algorithm for Intelligent Vehicle Routing', date: 'Jun – Aug 2023', link: 'https://github.com/PraneethReddy-github', description: 'Genetic-algorithm optimization solving the Vehicle Routing Problem for logistics networks, reducing routing costs and improving efficiency.', domains: ['python', 'algorithms'] },
+        { name: 'Ternix — Remote Session Manager & SSH Terminal', date: '2026', link: 'https://github.com/Praneethreddy-github/ternix', description: 'Cross-platform SSH, Telnet, Serial, RDP & VNC remote manager with split-pane layout, floating windows, AES-256-GCM SQLite vault, and SFTP file manager.', domains: ['electron', 'typescript', 'react', 'ssh', 'sqlite'] },
+        { name: 'Bloom 🌸 — Radial Desktop Launcher & Local AI', date: '2026', link: 'https://bloom-dial.web.app', description: 'Floating glass bud launcher & focus workspace with radial dial navigation, local Whisper AI voice dictation (@xenova/transformers), TTS, and focus timer.', domains: ['electron', 'ai', 'whisper', 'javascript', 'automation'] },
+        { name: 'DevFlow 🤖 — Autonomous AI Engineering Platform', date: '2026', link: 'https://github.com/Praneethreddy-github/DevFlow', description: 'Autonomous platform connecting Jira & GitHub via MCP. Powered by Gemini CLI FixAgent to analyze tickets, repair code, stream diffs via SSE, and raise PRs.', domains: ['react', 'ai', 'gemini', 'mcp', 'express'] },
+        { name: 'Morphix — Desktop File Conversion & Media Suite', date: '2026', link: 'https://github.com/Praneethreddy-github/Morphix', description: 'Desktop conversion toolkit for docs, video, audio, images & PDFs with PDF manipulation, image cropping via skia, video trim via ffmpeg, and audio waveforms.', domains: ['electron', 'react', 'typescript', 'ffmpeg', 'pdf'] },
+        { name: 'Resume Screener — AI Agent Candidate Triage', date: '2026', link: 'https://github.com/Praneethreddy-github/Resume', description: 'Intelligent candidate triage platform with a Gemini 2.5 Pro recruiter agent ("Why is Priya ranked #1?") and a 100% client-side deterministic rule engine.', domains: ['react', 'typescript', 'ai', 'gemini', 'express'] },
+        { name: 'Real-Time System Resource Monitoring Dashboard', date: '2025', link: 'https://github.com/PraneethReddy-github', description: 'System resource monitoring dashboard tracking CPU, memory and network utilization across Linux systems with real-time telemetry visualization.', domains: ['python', 'bash', 'react', 'linux'] },
+        { name: 'Road Safety & Accident Prevention Speed Zones', date: '2024', link: 'https://github.com/PraneethReddy-github', description: 'Speed control and accident prevention system using Arduino Uno, RF transmitters/receivers, ultrasonic sensors and embedded C to enforce speed limits in restricted zones.', domains: ['c++', 'iot', 'arduino'] },
+        { name: 'Secure Multi Client-Server Communication (SSL)', date: '2024', link: 'https://github.com/PraneethReddy-github', description: 'Secure client-server communication over SSL/TLS with hybrid RSA-AES encryption, secure key exchange, digital signatures and encrypted transmission.', domains: ['python', 'cryptography', 'distributed'] },
+        { name: 'Genetic Algorithm for Intelligent Vehicle Routing', date: '2023', link: 'https://github.com/PraneethReddy-github', description: 'Genetic-algorithm optimization solving the Vehicle Routing Problem for logistics networks, reducing routing costs and improving efficiency.', domains: ['python', 'algorithms'] },
     ];
     return (
         <Page>

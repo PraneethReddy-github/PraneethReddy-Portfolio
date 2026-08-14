@@ -153,7 +153,7 @@ export function About({ isDark }) {
                         </span>
                     </div>
                     <p className={`mt-4 text-sm md:text-base leading-relaxed max-w-xl ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                        Computer Science Graduate and Software Developer with a strong foundation in full-stack engineering, cloud-native deployments, and machine learning systems. Experienced in automating infrastructure, developing intelligent applications, and building scalable software solutions. Always eager to learn new technologies.
+                        Software Developer and Systems Engineer specialized in building high-performance desktop tools, autonomous AI agents, developer platforms, and cloud-native infrastructure. Creator of Ternix, Bloom 🌸, DevFlow 🤖, Morphix, and Resume Screener AI. Passionate about system-level efficiency, local AI models, and seamless user experiences.
                     </p>
                 </div>
             </div>
@@ -248,32 +248,32 @@ function Skills({ isDark }) {
         {
             title: "Programming Languages",
             icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>,
-            skills: ["Python", "Go", "Java", "C", "C++", "JavaScript", "Shell Scripting", "SQL", "Rust", "PHP"]
+            skills: ["Python", "Go", "Java", "C", "C++", "TypeScript", "JavaScript", "Shell Scripting", "SQL", "Rust", "PHP"]
+        },
+        {
+            title: "AI Systems & Autonomous Agents",
+            icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>,
+            skills: ["Gemini API/CLI", "Model Context Protocol (MCP)", "Local Whisper AI (@xenova)", "LangChain", "PyTorch", "TensorFlow/Keras", "Scikit-Learn", "YOLOv8", "Computer Vision"]
+        },
+        {
+            title: "Desktop & Media Technologies",
+            icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" /></svg>,
+            skills: ["Electron 33", "xterm.js", "fluent-ffmpeg", "pdf-lib / pdf.js", "skia canvas", "wavesurfer.js", "SQLite", "IndexedDB"]
         },
         {
             title: "Web & Frameworks",
             icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>,
-            skills: ["React", "Angular", "HTML", "CSS", "Flask", "Streamlit", "Node.js", "Next.js", "REST API", "Typescript"]
+            skills: ["React", "Next.js", "Vite", "Express", "Tailwind CSS", "Framer Motion", "Zustand", "Flask", "Node.js", "REST API"]
         },
         {
             title: "Cloud & DevOps",
             icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>,
-            skills: ["AWS", "Docker", "Jenkins", "CI/CD Pipelines", "Virtualization", "Linux"]
-        },
-        {
-            title: "Machine Learning & Data",
-            icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>,
-            skills: ["Scikit-learn", "TensorFlow/Keras", "NumPy", "Pandas", "NLP", "Computer Vision", "XGBoost", "PyTorch", "LangChain"]
+            skills: ["AWS", "Docker", "Podman", "Jenkins", "CI/CD Pipelines", "Virtualization", "Linux Systems"]
         },
         {
             title: "Networking & Security",
             icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" /></svg>,
             skills: ["TCP/IP", "SSL/TLS", "RSA-AES Cryptography", "Network Simulation", "Distributed Systems", "Wireshark"]
-        },
-        {
-            title: "IoT & Embedded Systems",
-            icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" /></svg>,
-            skills: ["ESP32", "Arduino", "Wireless Communication", "Raspberry Pi", "Sensor Integration"]
         },
         {
             title: "Development Tools & Soft Skills",
@@ -418,39 +418,88 @@ function Certifications({ isDark }) {
 export function Projects({ isDark }) {
     const project_list = [
         {
+            name: "Ternix — Privacy-First Desktop Terminal & Remote Manager",
+            date: "2026",
+            link: "https://github.com/Praneethreddy-github/ternix",
+            description: "A modern, cross-platform SSH & remote session manager supporting SSH, Telnet, Serial, local shells, RDP, and VNC with multi-pane splitting (up to 6 panes), tab tear-out into floating windows, encrypted SQLite vault (AES-256-GCM / PBKDF2), SFTP file manager with visual chmod editor, and mobile session syncing.",
+            domains: ["electron", "typescript", "react", "ssh", "xterm", "sqlite"]
+        },
+        {
+            name: "Bloom 🌸 — Radial Glass Desktop Launcher & Local AI Workspace",
+            date: "2026",
+            link: "https://bloom-dial.web.app",
+            description: "A floating, draggable glass bud desktop launcher and focus workspace featuring nested radial dial navigation, local Whisper AI voice dictation (@xenova/transformers - zero network/API calls), OS-native text-to-speech, Eisenhower task matrix, and depleting ring focus timer with procedural synth tones.",
+            domains: ["electron", "ai", "whisper", "javascript", "automation"]
+        },
+        {
+            name: "DevFlow 🤖 — Autonomous AI-Orchestrated Engineering Platform",
+            date: "2026",
+            link: "https://github.com/Praneethreddy-github/DevFlow",
+            description: "Autonomous engineering platform connecting Jira and GitHub via Model Context Protocol (MCP). Features an autonomous FixAgent powered by Gemini CLI to analyze tickets, search codebases, apply repairs, verify changes with shell commands, stream real-time logs/diffs (SSE), and open GitHub Pull Requests.",
+            domains: ["react", "ai", "gemini", "mcp", "express"]
+        },
+        {
+            name: "Morphix — Cross-Platform File Conversion & Media Toolkit",
+            date: "2026",
+            link: "https://github.com/Praneethreddy-github/Morphix",
+            description: "A premium desktop file conversion suite for documents, video, audio, images, and PDFs. Includes universal engine selection, PDF tools (merge/split/compress/watermark via pdfjs-dist), image tools (crop, resize, skia canvas), video tools (trim, compress, burn-in subtitles via fluent-ffmpeg), and audio waveform trim (wavesurfer.js).",
+            domains: ["electron", "react", "typescript", "ffmpeg", "pdf"]
+        },
+        {
+            name: "Resume Screener — AI Agent & Deterministic Triage Platform",
+            date: "2026",
+            link: "https://github.com/Praneethreddy-github/Resume",
+            description: "Intelligent candidate triage platform featuring a Gemini 2.5 Pro agentic edition with recruiter Q&A assistant ('Why is candidate #1?') and a 100% client-side deterministic rule-based edition with client-side text extraction (pdf.js + mammoth.js) and IndexedDB persistence.",
+            domains: ["react", "typescript", "ai", "gemini", "express"]
+        },
+        {
             name: "Real-Time System Resource Monitoring Dashboard",
-            date: "Jun - Jul 2025",
-            link: "https://github.com/PraneethReddy-github/Multi-Language-translator-using-NLP",
-            description: "Built a system monitoring dashboard to track CPU, memory, and network utilization across Linux systems. Developed backend monitoring scripts using Python and Shell scripting and visualized metrics real-time.",
+            date: "2025",
+            link: "https://github.com/PraneethReddy-github",
+            description: "Built a system monitoring dashboard to track CPU, memory, and network utilization across Linux systems. Developed backend monitoring scripts using Python and Shell scripting and visualized metrics in real-time.",
             domains: ["python", "bash", "react", "linux"]
         },
         {
-            name: "Road Safety & Accident Prevention speed zones",
-            date: "Sep - Oct 2024",
-            link: "https://github.com/PraneethReddy-github/Multi-Language-translator-using-NLP",
+            name: "Road Safety & Accident Prevention Speed Zones",
+            date: "2024",
+            link: "https://github.com/PraneethReddy-github",
             description: "Designed a speed control and accident prevention system using Arduino Uno, RF transmitters/receivers, ultrasonic sensors, and embedded C to automatically enforce speed limits in restriction zones.",
             domains: ["c++", "iot", "arduino"]
         },
         {
             name: "Secure Multi Client-Server Communication using SSL",
-            date: "Mar - Apr 2024",
-            link: "https://github.com/PraneethReddy-github/Multi-Language-translator-using-NLP",
+            date: "2024",
+            link: "https://github.com/PraneethReddy-github",
             description: "Developed secure client-server communication using SSL/TLS with hybrid RSA-AES encryption, secure key exchange, digital signatures, and encrypted message transmission.",
             domains: ["python", "cryptography", "distributed"]
         },
         {
             name: "Genetic Algorithm for Intelligent Vehicle Routing",
-            date: "Jun - Aug 2023",
-            link: "https://github.com/PraneethReddy-github/Multi-Language-translator-using-NLP",
+            date: "2023",
+            link: "https://github.com/PraneethReddy-github",
             description: "Implemented genetic algorithm optimization solving the Vehicle Routing Problem (VRP) for logistics networks, reducing routing costs and improving efficiency.",
             domains: ["python", "algorithms"]
         }
     ];
 
     const tag_colors = {
+        "electron": "bg-sky-500/10 text-sky-400 border-sky-500/20",
+        "typescript": "bg-blue-600/10 text-blue-400 border-blue-600/20",
+        "react": "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
+        "ssh": "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+        "xterm": "bg-purple-500/10 text-purple-400 border-purple-500/20",
+        "sqlite": "bg-amber-500/10 text-amber-400 border-amber-500/20",
+        "ai": "bg-fuchsia-500/10 text-fuchsia-400 border-fuchsia-500/20",
+        "whisper": "bg-violet-500/10 text-violet-400 border-violet-500/20",
+        "javascript": "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
+        "automation": "bg-teal-500/10 text-teal-400 border-teal-500/20",
+        "gemini": "bg-indigo-500/10 text-indigo-400 border-indigo-500/20",
+        "mcp": "bg-rose-500/10 text-rose-400 border-rose-500/20",
+        "express": "bg-slate-500/10 text-slate-400 border-slate-500/20",
+        "ffmpeg": "bg-orange-500/10 text-orange-400 border-orange-500/20",
+        "pdf": "bg-red-500/10 text-red-400 border-red-500/20",
         "python": "bg-blue-500/10 text-blue-500 border-blue-500/20",
         "bash": "bg-gray-500/10 text-gray-400 border-gray-500/20",
-        "react": "bg-cyan-500/10 text-cyan-500 border-cyan-500/20",
         "linux": "bg-yellow-500/10 text-yellow-500 border-yellow-500/20",
         "c++": "bg-indigo-500/10 text-indigo-500 border-indigo-500/20",
         "iot": "bg-purple-500/10 text-purple-500 border-purple-500/20",

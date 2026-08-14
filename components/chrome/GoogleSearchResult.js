@@ -78,12 +78,12 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
             siteName: 'Wikipedia',
             favicon: 'https://www.google.com/s2/favicons?sz=64&domain=wikipedia.org',
             title: 'P Praneeth Reddy - Wikipedia',
-            description: 'P Praneeth Reddy is a Software Developer and DevOps Engineer at Simnovus, specializing in high-performance networking simulators, virtualization environment orchestration, CI/CD pipelines, and full-stack development. Explore his skills, education, and portfolio...',
+            description: 'P Praneeth Reddy is a Software Developer and Systems Engineer specializing in high-performance desktop tools, autonomous AI agents (DevFlow, Resume Screener), developer platforms (Ternix, Bloom, Morphix), cloud-native infrastructure, and telemetry. Explore his projects, skills, and research...',
             sitelinks: [
                 { hash: '#edu_section', title: 'Education', desc: 'B.Tech in Computer Science & Engineering from Amrita Vishwa Vidyapeetham, Bangalore (2025) with an 8.01/10 CPI.' },
-                { hash: '#skills_section', title: 'Technical Skills & Web Frameworks', desc: 'Proficient in Python, GoLang, Java, C/C++, SQL, Shell. React, Angular, Node.js, Flask, AWS, Docker, Jenkins.' },
-                { hash: '#project_section', title: 'Projects', desc: 'Real-Time System Resource Monitor, secure client-server communication using SSL/Hybrid RSA-AES, vehicle routing logistics.' },
-                { hash: '#pub_section', title: 'Research Publications & Patents', desc: 'QKD (IIT Indore, 2025), Spark Anomaly Detection, CloudShare, LoRa emergency systems, and Indian Patents.' }
+                { hash: '#skills_section', title: 'Technical Skills & AI Stack', desc: 'Go, Python, TypeScript, C/C++, Electron, Gemini API/CLI, Model Context Protocol (MCP), React, Next.js, Docker, AWS.' },
+                { hash: '#project_section', title: 'Projects', desc: 'Ternix (SSH/Remote Manager), Bloom 🌸 (Local AI Launcher), DevFlow 🤖 (Autonomous MCP Agent), Morphix (Media Suite), Resume Screener AI.' },
+                { hash: '#pub_section', title: 'Research Publications & Patents', desc: 'QKD (IIT Indore, 2025), Spark Anomaly Detection, CloudShare, LoRa emergency systems, and 2 Indian Patents.' }
             ]
         },
         {
@@ -108,7 +108,7 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
             siteName: 'GitHub',
             favicon: 'https://www.google.com/s2/favicons?sz=64&domain=github.com',
             title: 'PraneethReddy-github - Overview',
-            description: 'Key projects include a Real-Time System Resource Monitoring Dashboard (2025), vehicle speed control and accident prevention using RF (2024), secure multi-client server communication with SSL/Hybrid RSA-AES, and Vehicle Routing logistics optimizations...'
+            description: 'Key projects include Ternix (SSH & Remote Session Manager), Bloom 🌸 (Radial Glass AI Launcher), DevFlow 🤖 (Autonomous AI Engineering Platform), Morphix (Desktop Media Suite), Resume Screener AI, and Real-Time Resource Monitor...'
         },
         {
             url: '/chrome/homepage.html#pub_section',
@@ -123,7 +123,7 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
     const paaItems = [
         {
             q: "What is P Praneeth Reddy's specialization?",
-            a: "P Praneeth Reddy is a full-stack developer with experience in building web applications and automation scripts. He specializes in cloud infrastructure, virtualization environment orchestration, CI/CD automated deployment workflows, and building high-performance backend systems utilizing GoLang, React, AWS, Docker, and shell automation scripts."
+            a: "P Praneeth Reddy is a Software Developer & Systems Engineer who builds high-performance desktop tools, autonomous AI agents, developer tools, and cloud infrastructure. He specializes in Electron 33, Model Context Protocol (MCP), Gemini API/CLI, GoLang, TypeScript, React, Docker, and AWS."
         },
         {
             q: "Where does P Praneeth Reddy currently work?",
@@ -301,19 +301,34 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
                     </div>
 
                     {/* Videos */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', paddingBottom: '12px', color: textSecondary, cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.color = textPrimary} onMouseLeave={(e) => e.currentTarget.style.color = textSecondary}>
+                    <div
+                        onClick={() => { setActiveTab('Videos'); window.scrollTo(0, 0); }}
+                        style={{ display: 'flex', alignItems: 'center', gap: '6px', paddingBottom: '12px', borderBottom: activeTab === 'Videos' ? `3px solid ${tabActiveColor}` : '3px solid transparent', color: activeTab === 'Videos' ? tabActiveColor : textSecondary, cursor: 'pointer', position: 'relative', top: '1px' }}
+                        onMouseEnter={(e) => { if (activeTab !== 'Videos') e.currentTarget.style.color = textPrimary; }}
+                        onMouseLeave={(e) => { if (activeTab !== 'Videos') e.currentTarget.style.color = textSecondary; }}
+                    >
                         <svg focusable="false" viewBox="0 0 24 24" style={{ width: '16px', height: '16px', fill: 'currentColor' }}><path d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path></svg>
                         <span>Videos</span>
                     </div>
 
                     {/* News */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', paddingBottom: '12px', color: textSecondary, cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.color = textPrimary} onMouseLeave={(e) => e.currentTarget.style.color = textSecondary}>
+                    <div
+                        onClick={() => { setActiveTab('News'); window.scrollTo(0, 0); }}
+                        style={{ display: 'flex', alignItems: 'center', gap: '6px', paddingBottom: '12px', borderBottom: activeTab === 'News' ? `3px solid ${tabActiveColor}` : '3px solid transparent', color: activeTab === 'News' ? tabActiveColor : textSecondary, cursor: 'pointer', position: 'relative', top: '1px' }}
+                        onMouseEnter={(e) => { if (activeTab !== 'News') e.currentTarget.style.color = textPrimary; }}
+                        onMouseLeave={(e) => { if (activeTab !== 'News') e.currentTarget.style.color = textSecondary; }}
+                    >
                         <svg focusable="false" viewBox="0 0 24 24" style={{ width: '16px', height: '16px', fill: 'currentColor' }}><path d="M21 3H3C1.9 3 1 3.9 1 5v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM8 15h8v-2H8v2zm0-4h8V9H8v2zm-4 4h2v-6H4v6z"></path></svg>
                         <span>News</span>
                     </div>
 
                     {/* Maps */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', paddingBottom: '12px', color: textSecondary, cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.color = textPrimary} onMouseLeave={(e) => e.currentTarget.style.color = textSecondary}>
+                    <div
+                        onClick={() => { setActiveTab('Maps'); window.scrollTo(0, 0); }}
+                        style={{ display: 'flex', alignItems: 'center', gap: '6px', paddingBottom: '12px', borderBottom: activeTab === 'Maps' ? `3px solid ${tabActiveColor}` : '3px solid transparent', color: activeTab === 'Maps' ? tabActiveColor : textSecondary, cursor: 'pointer', position: 'relative', top: '1px' }}
+                        onMouseEnter={(e) => { if (activeTab !== 'Maps') e.currentTarget.style.color = textPrimary; }}
+                        onMouseLeave={(e) => { if (activeTab !== 'Maps') e.currentTarget.style.color = textSecondary; }}
+                    >
                         <svg focusable="false" viewBox="0 0 24 24" style={{ width: '16px', height: '16px', fill: 'currentColor' }}><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path></svg>
                         <span>Maps</span>
                     </div>
@@ -367,6 +382,135 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
                                     </button>
                                 </div>
                             )}
+                        </div>
+                    ) : activeTab === 'Videos' ? (
+                        <div style={{ width: '100%', maxWidth: '850px', padding: '16px 24px' }}>
+                            <div style={{ fontSize: '14px', color: textMuted, marginBottom: '20px' }}>
+                                Video search results for P Praneeth Reddy
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                                {[
+                                    {
+                                        title: "EPIC Club Videography & Production Reel - Amrita Vishwa Vidyapeetham",
+                                        uploader: "P Praneeth Reddy • Lead Videographer",
+                                        views: "12.4K views",
+                                        date: "1 year ago",
+                                        duration: "04:15",
+                                        desc: "Highlight reel of campus events, technical presentations, and video production directed by Praneeth Reddy."
+                                    },
+                                    {
+                                        title: "Autonomous Road Pothole Detection & Repair System Demonstration",
+                                        uploader: "Praneeth Reddy Innovation Labs",
+                                        views: "8.9K views",
+                                        date: "6 months ago",
+                                        duration: "03:42",
+                                        desc: "Real-time computer vision camera feed, GPS tracking, and automated filler dispensing mechanism demonstration."
+                                    },
+                                    {
+                                        title: "4G/5G Network Test Scenario Orchestrator Walkthrough",
+                                        uploader: "Simnovus Telecom Systems",
+                                        views: "5.1K views",
+                                        date: "3 months ago",
+                                        duration: "08:20",
+                                        desc: "Overview of enterprise 4G/5G protocol testing, UE simulation, and DevOps CI/CD integration."
+                                    },
+                                    {
+                                        title: "CloudShare: Passwordless File Storage Framework Architecture",
+                                        uploader: "IEEE Conference Series",
+                                        views: "3.7K views",
+                                        date: "2 months ago",
+                                        duration: "06:10",
+                                        desc: "IEEE research paper presentation on passwordless cloud storage using Shamir Secret Sharing & AES encryption."
+                                    }
+                                ].map((vid, idx) => (
+                                    <div key={idx} style={{ display: 'flex', gap: '16px', alignItems: 'flex-start', borderBottom: `1px solid ${dividerColor}`, paddingBottom: '20px' }}>
+                                        <div style={{ position: 'relative', width: '180px', height: '100px', backgroundColor: sitelinkBg, borderRadius: '12px', overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyCenter: 'center', border: `1px solid ${dividerColor}` }}>
+                                            <div style={{ width: '100%', height: '100%', background: 'linear-[#1e293b, #0f172a]', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                <svg style={{ width: '36px', height: '36px', fill: tabActiveColor }} viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                            </div>
+                                            <span style={{ position: 'absolute', bottom: '6px', right: '6px', backgroundColor: 'rgba(0,0,0,0.8)', color: '#fff', fontSize: '11px', fontWeight: 600, padding: '2px 6px', borderRadius: '4px' }}>{vid.duration}</span>
+                                        </div>
+                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                            <h3 style={{ fontSize: '16px', color: linkColor, fontWeight: 500, margin: '0 0 4px 0', cursor: 'pointer' }}>{vid.title}</h3>
+                                            <div style={{ fontSize: '12px', color: textMuted, marginBottom: '6px' }}>{vid.uploader} • {vid.views} • {vid.date}</div>
+                                            <p style={{ fontSize: '13px', color: textSecondary, margin: 0, lineHeight: '1.5' }}>{vid.desc}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ) : activeTab === 'Maps' ? (
+                        <div style={{ width: '100%', padding: '16px 24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: panelBg, padding: '16px 20px', borderRadius: '16px', border: `1px solid ${panelBorder}` }}>
+                                <div>
+                                    <h2 style={{ fontSize: '20px', fontWeight: 600, color: textPrimary, margin: '0 0 4px 0' }}>Bangalore (Bengaluru), Karnataka, India</h2>
+                                    <div style={{ fontSize: '13px', color: textSecondary }}>Silicon Valley of India • 12.9716° N, 77.5946° E</div>
+                                </div>
+                                <a 
+                                    href="https://maps.google.com/?q=Bangalore,Karnataka,India" 
+                                    target="_blank" 
+                                    rel="noreferrer"
+                                    style={{ padding: '8px 18px', backgroundColor: tabActiveColor, color: '#fff', borderRadius: '20px', textDecoration: 'none', fontSize: '13px', fontWeight: 500 }}
+                                >
+                                    Open in Google Maps ↗
+                                </a>
+                            </div>
+                            <div style={{ width: '100%', height: '520px', borderRadius: '16px', overflow: 'hidden', border: `1px solid ${panelBorder}` }}>
+                                <iframe
+                                    title="Bangalore Map"
+                                    src="https://maps.google.com/maps?q=Bangalore,Karnataka,India&t=&z=12&ie=UTF8&iwloc=&output=embed"
+                                    style={{ width: '100%', height: '100%', border: 'none' }}
+                                />
+                            </div>
+                        </div>
+                    ) : activeTab === 'News' ? (
+                        <div style={{ width: '100%', maxWidth: '850px', padding: '16px 24px' }}>
+                            <div style={{ fontSize: '14px', color: textMuted, marginBottom: '20px' }}>
+                                Top news stories & announcements for P Praneeth Reddy
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                                {[
+                                    {
+                                        source: "Indian Patent Office • Tech & Innovation Digest",
+                                        time: "Published 2025",
+                                        title: "Indian Patent Office Grants Patent for Autonomous Road Pothole Detection & Repair System",
+                                        snippet: "P Praneeth Reddy and research team awarded Indian Patent for real-time computer vision camera feed, GPS hazard logging, and automated filler dispensing mechanisms designed to perform autonomous road repairs.",
+                                        link: "/chrome/homepage.html#pub_section"
+                                    },
+                                    {
+                                        source: "IEEE Xplore Research Publications",
+                                        time: "Published 2025",
+                                        title: "IEEE Xplore Publishes Breakthrough Paper on Quantum Key Distribution & Passwordless CloudShare",
+                                        snippet: "Full-stack engineer P Praneeth Reddy publishes 7 research papers spanning Multi-Client Quantum Key Distribution (QKD), passwordless cloud file storage with Shamir Secret Sharing, and network traffic anomaly detection.",
+                                        link: "/chrome/homepage.html#pub_section"
+                                    },
+                                    {
+                                        source: "Telecom & DevOps Engineering Press",
+                                        time: "Featured 2025",
+                                        title: "Simnovus Automation Team Engineers Next-Gen 4G/5G Test Orchestrator",
+                                        snippet: "Software developer Praneeth Reddy architects scalable distributed orchestrators automating test scenarios across multi-UE 4G/5G simulation platforms using Docker, systemd Quadlets, and AI test agents.",
+                                        link: "/chrome/homepage.html"
+                                    },
+                                    {
+                                        source: "Healthcare & IoT Innovations Journal",
+                                        time: "Published 2024",
+                                        title: "IoT Pharmaceutical Inventory Management Framework Granted Indian Patent",
+                                        snippet: "Smart RFID & ESP32 hospital pharmacy inventory system created by Praneeth Reddy earns Indian Patent recognition for automating stock tracking, preventing medication stockouts, and monitoring expiration dates.",
+                                        link: "/chrome/homepage.html#pub_section"
+                                    }
+                                ].map((news, idx) => (
+                                    <div key={idx} style={{ borderBottom: `1px solid ${dividerColor}`, paddingBottom: '20px' }}>
+                                        <div style={{ fontSize: '12px', color: textMuted, marginBottom: '4px' }}>{news.source} • {news.time}</div>
+                                        <h3 
+                                            onClick={() => onNavigate(news.link, 'https://en.wikipedia.org/wiki/P_Praneeth_Reddy', news.title)}
+                                            style={{ fontSize: '17px', color: linkColor, fontWeight: 500, margin: '0 0 6px 0', cursor: 'pointer', lineHeight: '1.4' }}
+                                        >
+                                            {news.title}
+                                        </h3>
+                                        <p style={{ fontSize: '14px', color: textSecondary, margin: 0, lineHeight: '1.5' }}>{news.snippet}</p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     ) : (
                         // Main Content Area: Left Results + Right Panel
