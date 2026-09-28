@@ -1,5 +1,8 @@
 import React, { useState, useRef } from 'react';
 import StatusBar from './StatusBar';
+import { useSystem, setSystem } from './system';
+import { haptic } from './haptics';
+import { useMedia, toggle as mediaToggle, seek as mediaSeek, restart as mediaRestart, skip as mediaSkip } from './media';
 
 function loadToggle(key, def) {
     try { const v = localStorage.getItem(`cc_${key}`); return v !== null ? JSON.parse(v) : def; }
@@ -52,7 +55,7 @@ function Tile({ on, onColor = '#FFFFFF', onClick, d, label }) {
     return (
         <button
             onClick={onClick}
-            className="w-full h-full flex flex-col items-center justify-center gap-1.5 rounded-[22px] border border-white/[0.06] transition-all duration-200 active:scale-95"
+            className="w-full h-full flex flex-col items-center justify-center gap-1.5 rounded-[22px] border border-white/[0.06] transition-all duration-200 active:scale-[0.88] active:brightness-110"
             style={{
                 background: on ? onColor : 'rgba(118,118,128,0.24)',
                 backdropFilter: 'blur(6px)',
@@ -104,39 +107,27 @@ export default function ControlCenter({ onClose, onBrightnessChange, initialBrig
     const [bluetooth,   setBluetooth]   = useState(() => loadToggle('bluetooth', true));
     const [airplane,    setAirplane]    = useState(() => loadToggle('airplane',  false));
     const [cellular,    setCellular]    = useState(() => loadToggle('cellular',  true));
-    const [flashlight,  setFlashlight]  = useState(() => loadToggle('flashlight', false));
+    const flashlight = useSystem((st) => st.flashlight);
     const [rotate,      setRotate]      = useState(() => loadToggle('rotate',    false));
     const [silent,      setSilent]      = useState(() => loadToggle('silent',    false));
     const [dnd,         setDnd]         = useState(() => loadToggle('dnd',       false));
     const [nightLight,  setNightLight]  = useState(initialNightLight); // owned by parent
-    const [playing,     setPlaying]     = useState(false);
-    const [progress,    setProgress]    = useState(0);
+    const media = useMedia();
+    const { playing, progress } = media;
     const [brightness,  setBrightness]  = useState(initialBrightness);
     const [volume,      setVolume]      = useState(() => loadToggle('volume', 55));
     const [startY,      setStartY]      = useState(null);
     const [translateY,  setTranslateY]  = useState(0);
 
-    const audioRef = useRef(null);
-
-    const toggleMusic = async () => {
-        const a = audioRef.current;
-        if (!a) return;
-        if (playing) { a.pause(); setPlaying(false); }
-        else { try { await a.play(); setPlaying(true); } catch {} }
-    };
-    const onTimeUpdate = () => {
-        const a = audioRef.current;
-        if (a && a.duration) setProgress((a.currentTime / a.duration) * 100);
-    };
+    const toggleMusic = () => { haptic('light'); mediaToggle(); };
     const seek = (e) => {
-        const a = audioRef.current;
-        if (!a || !a.duration) return;
         const rect = e.currentTarget.getBoundingClientRect();
         const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-        a.currentTime = Math.max(0, Math.min(1, x / rect.width)) * a.duration;
+        mediaSeek(x / rect.width);
     };
 
-    const toggle = (key, setter, val) => { setter(val); saveToggle(key, val); };
+    const toggle = (key, setter, val) => { haptic('selection'); setter(val); saveToggle(key, val); };
+    const toggleFlashlight = () => { haptic('selection'); setSystem({ flashlight: !flashlight }); };
 
     const dispatchConnectivity = (wifiVal, cellularVal) => {
         window.dispatchEvent(new CustomEvent('cc-connectivity', { detail: { wifi: wifiVal, cellular: cellularVal } }));
@@ -171,12 +162,13 @@ export default function ControlCenter({ onClose, onBrightnessChange, initialBrig
     };
 
     const handleNightLight = () => {
+        haptic('selection');
         const next = !nightLight;
         setNightLight(next);
         if (onNightLightChange) onNightLightChange(next);
     };
 
-    const handleClose = (appId) => { if (onClose) onClose(appId); };
+    const handleClose = (appId) => { if (appId) haptic('selection'); if (onClose) onClose(appId); };
 
     const handleSwipeStart = (e) => setStartY(e.touches[0].clientY);
     const handleSwipeMove  = (e) => {
@@ -218,7 +210,7 @@ export default function ControlCenter({ onClose, onBrightnessChange, initialBrig
                     </div>
 
                     <div className="grid grid-cols-2 grid-rows-2 gap-2.5">
-                        <Tile on={flashlight} onColor="#FFF8DC" onClick={() => toggle('flashlight', setFlashlight, !flashlight)} d={ICONS.flashlight} label="Flash"  />
+                        <Tile on={flashlight} onColor="#FFF8DC" onClick={toggleFlashlight} d={ICONS.flashlight} label="Flash"  />
                         <Tile on={rotate}     onColor="#FFFFFF" onClick={() => toggle('rotate', setRotate, !rotate)}         d={ICONS.rotate}     label="Rotate" />
                         <Tile on={false} onClick={() => handleClose('timer')}  d={ICONS.timer}  label="Timer"  />
                         <Tile on={false} onClick={() => handleClose('camera')} d={ICONS.camera} label="Camera" />
@@ -239,23 +231,16 @@ export default function ControlCenter({ onClose, onBrightnessChange, initialBrig
 
                 <div className="rounded-[26px] p-3 flex flex-col gap-2 border border-white/[0.08]"
                     style={{ background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(12px)', boxShadow: 'inset 0 0.5px 0 rgba(255,255,255,0.14)' }}>
-                    <audio
-                        ref={audioRef}
-                        src="/audio/song.mp3"
-                        preload="metadata"
-                        onTimeUpdate={onTimeUpdate}
-                        onEnded={() => { setPlaying(false); setProgress(0); }}
-                    />
                     <div className="flex items-center gap-3">
                         <div className="w-11 h-11 rounded-[10px] overflow-hidden flex-shrink-0 ring-1 ring-white/10">
-                            <img src="/images/logos/song-cover.png" alt="" className="w-full h-full object-cover" />
+                            <img src={media.cover} alt="" className="w-full h-full object-cover" />
                         </div>
                         <div className="min-w-0 flex-1">
-                            <div className="text-white text-[13px] font-semibold truncate leading-tight">God&apos;s Plan</div>
-                            <div className="text-white/45 text-[11px] truncate mt-0.5">Drake · Scorpion</div>
+                            <div className="text-white text-[13px] font-semibold truncate leading-tight">{media.title}</div>
+                            <div className="text-white/45 text-[11px] truncate mt-0.5">{media.artist}</div>
                         </div>
                         <div className="flex items-center gap-1.5 flex-shrink-0">
-                            <button className="p-1.5 active:opacity-50 transition-opacity">
+                            <button onClick={() => { haptic('light'); mediaRestart(); }} className="p-1.5 active:opacity-50 transition-opacity">
                                 <svg className="w-[20px] h-[20px] fill-white/70" viewBox="0 0 24 24"><path d={ICONS.skipPrev} /></svg>
                             </button>
                             <button onClick={toggleMusic} className="p-1.5 active:scale-90 transition-transform">
@@ -263,12 +248,12 @@ export default function ControlCenter({ onClose, onBrightnessChange, initialBrig
                                     <path d={playing ? ICONS.pause : ICONS.play} />
                                 </svg>
                             </button>
-                            <button className="p-1.5 active:opacity-50 transition-opacity">
+                            <button onClick={() => { haptic('light'); mediaSkip(); }} className="p-1.5 active:opacity-50 transition-opacity">
                                 <svg className="w-[20px] h-[20px] fill-white/70" viewBox="0 0 24 24"><path d={ICONS.skipNext} /></svg>
                             </button>
                         </div>
                     </div>
-                    <div className="h-[3px] bg-white/15 rounded-full overflow-hidden mx-0.5 cursor-pointer" onPointerDown={seek}>
+                    <div className="h-[3px] bg-white/15 rounded-full overflow-hidden mx-0.5 cursor-pointer" onPointerDown={seek} onTouchStart={(e) => { e.stopPropagation(); seek(e); }} onTouchMove={(e) => { e.stopPropagation(); seek(e); }}>
                         <div className="h-full bg-white/70 rounded-full" style={{ width: `${progress}%` }} />
                     </div>
                 </div>

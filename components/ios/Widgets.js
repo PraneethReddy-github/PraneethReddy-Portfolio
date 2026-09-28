@@ -1,4 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useMedia, toggle as mediaToggle, seek as mediaSeek, restart as mediaRestart } from './media';
+import { haptic } from './haptics';
 import { createPortal } from 'react-dom';
 import useWeather from '../hooks/useWeather';
 import WeatherScene, { gradientFor } from './WeatherScene';
@@ -76,23 +78,13 @@ export function WeatherWidget({ onOpen }) {
 }
 
 /* ---------- Now-Playing song widget (big, full width) ----------
- * Plays the real track at /audio/song.mp3 with its cover art. If that file is
- * ever missing, it falls back to a synthesised royalty-free loop so the button
- * always does something.
+ * Drives the shared media player (media.js) so the widget, Control Center and
+ * the Dynamic Island all stay in sync.
  */
-
-const SCALE = [261.63, 293.66, 329.63, 392.0, 440.0, 523.25];
-const PATTERN = [0, 2, 4, 5, 4, 2, 3, 1, 0, 2, 4, 5, 4, 5, 3, 2];
-const BASS = [130.81, 130.81, 174.61, 196.0];
-const BEAT_MS = 300;
-
 export function SongWidget() {
-    const [playing, setPlaying] = useState(false);
-    const [progress, setProgress] = useState(0);
+    const media = useMedia();
+    const { playing, progress, cur, dur, title, artist, cover } = media;
     const [expanded, setExpanded] = useState(false);
-    const [cur, setCur] = useState(0);
-    const [dur, setDur] = useState(0);
-    const audioRef = useRef(null);
 
     const fmt = (s) => {
         if (!s || isNaN(s)) return '0:00';
@@ -101,97 +93,13 @@ export function SongWidget() {
         return `${m}:${ss}`;
     };
 
-    const ctxRef = useRef(null);
-    const masterRef = useRef(null);
-    const timerRef = useRef(null);
-    const stepRef = useRef(0);
-    const usingSynthRef = useRef(false);
-    const fileBrokenRef = useRef(false);
-
-    useEffect(() => () => stopSynth(true), []);
-
-    const ensureCtx = () => {
-        if (!ctxRef.current) {
-            const AC = window.AudioContext || window.webkitAudioContext;
-            const ctx = new AC();
-            const master = ctx.createGain();
-            master.gain.value = 0.0001;
-            const filter = ctx.createBiquadFilter();
-            filter.type = 'lowpass';
-            filter.frequency.value = 1400;
-            master.connect(filter); filter.connect(ctx.destination);
-            ctxRef.current = ctx; masterRef.current = master;
-        }
-        return ctxRef.current;
-    };
-    const blip = (freq, when, dur, vol, type = 'sine') => {
-        const ctx = ctxRef.current;
-        const osc = ctx.createOscillator(); osc.type = type; osc.frequency.value = freq;
-        const g = ctx.createGain();
-        g.gain.setValueAtTime(0.0001, when);
-        g.gain.linearRampToValueAtTime(vol, when + 0.04);
-        g.gain.exponentialRampToValueAtTime(0.0001, when + dur);
-        osc.connect(g); g.connect(masterRef.current);
-        osc.start(when); osc.stop(when + dur + 0.05);
-    };
-    const startSynth = () => {
-        const ctx = ensureCtx();
-        if (ctx.state === 'suspended') ctx.resume();
-        usingSynthRef.current = true;
-        masterRef.current.gain.cancelScheduledValues(ctx.currentTime);
-        masterRef.current.gain.setValueAtTime(masterRef.current.gain.value, ctx.currentTime);
-        masterRef.current.gain.linearRampToValueAtTime(0.5, ctx.currentTime + 0.4);
-        const tick = () => {
-            const step = stepRef.current % PATTERN.length;
-            const t = ctxRef.current.currentTime + 0.02;
-            blip(SCALE[PATTERN[step]], t, 0.45, 0.22, 'triangle');
-            if (step % 4 === 0) blip(BASS[(step / 4) % BASS.length], t, 0.9, 0.18, 'sine');
-            stepRef.current = step + 1;
-        };
-        tick();
-        timerRef.current = setInterval(tick, BEAT_MS);
-    };
-    const stopSynth = (immediate) => {
-        if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
-        const ctx = ctxRef.current;
-        if (ctx && masterRef.current) {
-            masterRef.current.gain.cancelScheduledValues(ctx.currentTime);
-            masterRef.current.gain.setValueAtTime(masterRef.current.gain.value, ctx.currentTime);
-            masterRef.current.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + (immediate ? 0.01 : 0.25));
-        }
-        usingSynthRef.current = false;
-    };
-
-    const onTimeUpdate = () => {
-        const a = audioRef.current;
-        if (a && a.duration) {
-            setProgress((a.currentTime / a.duration) * 100);
-            setCur(a.currentTime);
-            setDur(a.duration);
-        }
-    };
     const seek = (e) => {
-        const a = audioRef.current;
-        if (!a || !a.duration || usingSynthRef.current) return;
         const rect = e.currentTarget.getBoundingClientRect();
         const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-        a.currentTime = Math.max(0, Math.min(1, x / rect.width)) * a.duration;
+        mediaSeek(x / rect.width);
     };
 
-    const toggle = async () => {
-        if (playing) {
-            if (usingSynthRef.current) stopSynth(false);
-            else if (audioRef.current) audioRef.current.pause();
-            setPlaying(false);
-            return;
-        }
-        if (audioRef.current && !fileBrokenRef.current) {
-            try { await audioRef.current.play(); setPlaying(true); return; }
-            catch { fileBrokenRef.current = true; }
-        }
-        startSynth();
-        setPlaying(true);
-    };
+    const toggle = () => { haptic('light'); mediaToggle(); };
 
     return (
         <>
@@ -199,22 +107,14 @@ export function SongWidget() {
                 className="rounded-[28px] border border-white/20 shadow-2xl select-none overflow-hidden bg-black/45 backdrop-blur-2xl p-3.5 cursor-pointer"
                 onClick={() => setExpanded(true)}
             >
-                <audio
-                    ref={audioRef}
-                    src="/audio/song.mp3"
-                    preload="metadata"
-                    onLoadedMetadata={onTimeUpdate}
-                    onTimeUpdate={onTimeUpdate}
-                    onEnded={() => { setPlaying(false); setProgress(0); setCur(0); }}
-                />
                 <div className="flex items-center gap-4">
                     <div className="w-[70px] h-[70px] rounded-[16px] overflow-hidden flex-shrink-0 shadow-lg ring-1 ring-white/10">
-                        <img src="/images/logos/song-cover.png" alt="cover" className="w-full h-full object-cover" />
+                        <img src={cover} alt="cover" className="w-full h-full object-cover" />
                     </div>
 
                     <div className="min-w-0 flex-1">
-                        <div className="text-white text-[17px] font-semibold truncate leading-tight">God&apos;s Plan</div>
-                        <div className="text-white/55 text-[13px] truncate mt-0.5">Drake · Scorpion</div>
+                        <div className="text-white text-[17px] font-semibold truncate leading-tight">{title}</div>
+                        <div className="text-white/55 text-[13px] truncate mt-0.5">{artist}</div>
 
                         <div className="mt-2.5 flex items-center gap-2">
                             <div
@@ -251,10 +151,13 @@ export function SongWidget() {
                     progress={progress}
                     cur={cur}
                     dur={dur}
+                    title={title}
+                    artist={artist}
+                    cover={cover}
                     fmt={fmt}
                     onToggle={toggle}
                     onSeek={seek}
-                    onRestart={() => { const a = audioRef.current; if (a) a.currentTime = 0; setProgress(0); setCur(0); }}
+                    onRestart={() => mediaRestart()}
                     onClose={() => setExpanded(false)}
                 />,
                 document.body
@@ -278,7 +181,7 @@ function PlayPauseIcon({ playing, className }) {
 }
 
 /* Apple-style Now Playing popup — centered card, tap outside to dismiss */
-function NowPlaying({ playing, progress, cur, dur, fmt, onToggle, onSeek, onRestart, onClose }) {
+function NowPlaying({ playing, progress, cur, dur, title, artist, cover, fmt, onToggle, onSeek, onRestart, onClose }) {
     const [shown, setShown] = useState(false);
     useEffect(() => {
         const r = requestAnimationFrame(() => setShown(true));
@@ -314,7 +217,7 @@ function NowPlaying({ playing, progress, cur, dur, fmt, onToggle, onSeek, onRest
             >
                 <div
                     className="absolute inset-0 bg-cover bg-center scale-110"
-                    style={{ backgroundImage: 'url(/images/logos/song-cover.png)', filter: 'blur(34px) brightness(0.5)' }}
+                    style={{ backgroundImage: `url(${cover})`, filter: 'blur(34px) brightness(0.5)' }}
                 />
                 <div className="absolute inset-0 bg-black/35" />
 
@@ -323,13 +226,13 @@ function NowPlaying({ playing, progress, cur, dur, fmt, onToggle, onSeek, onRest
                         className="rounded-[18px] overflow-hidden shadow-2xl ring-1 ring-white/10 transition-all duration-300"
                         style={{ width: playing ? '82%' : '68%', aspectRatio: '1' }}
                     >
-                        <img src="/images/logos/song-cover.png" alt="cover" className="w-full h-full object-cover" />
+                        <img src={cover} alt="cover" className="w-full h-full object-cover" />
                     </div>
 
                     <div className="w-full mt-7 flex items-center justify-between">
                         <div className="min-w-0">
-                            <div className="text-white text-[21px] font-bold truncate leading-tight">God&apos;s Plan</div>
-                            <div className="text-white/60 text-[16px] truncate">Drake · Scorpion</div>
+                            <div className="text-white text-[21px] font-bold truncate leading-tight">{title}</div>
+                            <div className="text-white/60 text-[16px] truncate">{artist}</div>
                         </div>
                         <button className="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center flex-shrink-0 active:scale-90 transition-transform">
                             <svg className="w-5 h-5 fill-white/90" viewBox="0 0 24 24"><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg>

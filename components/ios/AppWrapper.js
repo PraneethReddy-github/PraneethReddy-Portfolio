@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import StatusBar from './StatusBar';
+import { haptic } from './haptics';
+import { useWallpaper } from './system';
 import { GALLERY, GALLERY_DATES } from './galleryPhotos';
 import Portfolio, { PortfolioApp } from './Portfolio';
 import MailApp from './MailApp';
@@ -11,17 +13,18 @@ import WeatherApp from './WeatherApp';
 import TimerApp from './TimerApp';
 import Varshion from './apps/Varshion';
 import Safari from './apps/Safari';
+import SettingsApp from './SettingsApp';
 
 const PORTFOLIO_SECTIONS = new Set([
     'about', 'education', 'skills', 'learning',
     'certifications', 'projects', 'publications', 'resume'
 ]);
 
-const APP_SURFACE = {
+export const APP_SURFACE = {
     camera: '#000000', timer: '#0c0c0e', varshion: '#0a0f1e', weather: '#1f6fd1',
-    calendar: '#ffffff', photos: '#ffffff', safari: '#ffffff', games: '#0b0b0f',
+    calendar: '#ffffff', photos: '#ffffff', settings: '#f2f2f7', safari: '#ffffff', games: '#0b0b0f',
 };
-const LIGHT_STATUS = new Set(['camera', 'timer', 'varshion', 'weather', 'games']);
+export const LIGHT_STATUS = new Set(['camera', 'timer', 'varshion', 'weather', 'games']);
 const FULL_BLEED = new Set(['photos']);
 
 /* ---------- Contact ---------- */
@@ -399,31 +402,61 @@ function PhotosApp({ initialPhoto = null }) {
 
 /* ---------- App shell with iOS swipe gestures ---------- */
 
-export default function AppWrapper({ appId, onClose, params, onOpenApp }) {
+export default function AppWrapper({ appId, onClose, params, onOpenApp, onSwitcher }) {
+    const wallpaper = useWallpaper();
     const [entered, setEntered] = useState(false);
     const [dragX, setDragX] = useState(0);
+    const [homeX, setHomeX] = useState(0);   // slight horizontal follow during the home gesture
     const [homeProg, setHomeProg] = useState(0);
     const [dragging, setDragging] = useState(false);
     const [closing, setClosing] = useState(null); // 'left' | 'right' | 'home'
 
     const g = useRef(null);
     const dragXRef = useRef(0);
+    const homeProgRef = useRef(0);
+    const pauseTimer = useRef(null);
+    const switcherFired = useRef(false);
+
+    const clearPause = () => { if (pauseTimer.current) { clearTimeout(pauseTimer.current); pauseTimer.current = null; } };
+    useEffect(() => () => clearPause(), []);
+
+    const resetGesture = () => {
+        clearPause();
+        g.current = null;
+        dragXRef.current = 0;
+        homeProgRef.current = 0;
+        setDragging(false);
+        setDragX(0);
+        setHomeX(0);
+        setHomeProg(0);
+    };
+
+    const fireSwitcher = () => {
+        if (switcherFired.current || !onSwitcher) return;
+        switcherFired.current = true;
+        haptic('medium');
+        resetGesture();
+        onSwitcher();
+        setTimeout(() => { switcherFired.current = false; }, 400);
+    };
 
     useEffect(() => {
         const t = setTimeout(() => setEntered(true), 460);
         return () => clearTimeout(t);
     }, []);
 
-    const closeSlide = (dir) => { setClosing(dir); setTimeout(onClose, 300); };
-    const closeHome = () => { setClosing('home'); setTimeout(onClose, 300); };
+    const closeSlide = (dir) => { haptic('light'); setClosing(dir); setTimeout(onClose, 300); };
+    const closeHome = () => { haptic('light'); setClosing('home'); setTimeout(onClose, 300); };
 
     const onStart = (e) => {
         const x = e.touches[0].clientX, y = e.touches[0].clientY;
         const w = window.innerWidth, h = window.innerHeight;
+        clearPause();
         g.current = {
             x, y, mode: null,
             edge: x < 30 ? 'left' : x > w - 30 ? 'right' : null,
             bottom: y > h - 80,
+            lastX: x, lastY: y, h,
         };
     };
     const onMove = (e) => {
@@ -442,28 +475,49 @@ export default function AppWrapper({ appId, onClose, params, onOpenApp }) {
             setDragX(v);
             setDragging(true);
         } else if (s.mode === 'home') {
-            setHomeProg(Math.max(0, Math.min(1, -ddy / 170)));
+            const prog = Math.max(0, Math.min(1, -ddy / 170));
+            homeProgRef.current = prog;
+            setHomeProg(prog);
+            setHomeX(ddx * 0.3);
             setDragging(true);
+
+            if (onSwitcher) {
+                const cx = e.touches[0].clientX, cy = e.touches[0].clientY;
+                /* Dragged more than ~45% of the screen → switcher right away */
+                if (-ddy > s.h * 0.45) { fireSwitcher(); return; }
+                /* Otherwise: pause (finger nearly still for ~160ms) after ≥60px */
+                const moved = Math.abs(cx - s.lastX) > 4 || Math.abs(cy - s.lastY) > 4;
+                if (moved) {
+                    s.lastX = cx; s.lastY = cy;
+                    clearPause();
+                    if (-ddy >= 60) pauseTimer.current = setTimeout(fireSwitcher, 160);
+                } else if (-ddy >= 60 && !pauseTimer.current) {
+                    pauseTimer.current = setTimeout(fireSwitcher, 160);
+                }
+            }
         }
     };
     const onEnd = () => {
         const s = g.current;
+        clearPause();
         g.current = null;
         setDragging(false);
         if (s && s.mode === 'h') {
             if (Math.abs(dragXRef.current) > 95) { closeSlide(dragXRef.current > 0 ? 'right' : 'left'); return; }
         } else if (s && s.mode === 'home') {
-            if (homeProg > 0.32) { closeHome(); return; }
+            if (homeProgRef.current > 0.32) { closeHome(); return; }
         }
         dragXRef.current = 0;
+        homeProgRef.current = 0;
         setDragX(0);
+        setHomeX(0);
         setHomeProg(0);
     };
 
     const renderContent = () => {
         if (PORTFOLIO_SECTIONS.has(appId)) return <div className="h-full overflow-y-auto ios-scroll"><Portfolio section={appId} /></div>;
         switch (appId) {
-            case 'portfolio': return <div className="h-full overflow-hidden"><PortfolioApp /></div>;
+            case 'portfolio': return <div className="h-full overflow-y-auto ios-scroll"><PortfolioApp /></div>;
             case 'mail': return <div className="h-full"><MailApp /></div>;
             case 'camera': return <div className="h-full"><CameraApp onOpenPhotos={(i) => onOpenApp && onOpenApp('photos', { photo: i })} /></div>;
             case 'games': return <div className="h-full"><GamesApp /></div>;
@@ -473,6 +527,7 @@ export default function AppWrapper({ appId, onClose, params, onOpenApp }) {
             case 'safari': return <div className="h-full bg-white"><Safari /></div>;
             case 'phone': return <div className="h-full overflow-y-auto ios-scroll"><ContactCard /></div>;
             case 'photos': return <div className="h-full overflow-y-auto ios-scroll"><PhotosApp initialPhoto={params?.photo ?? null} /></div>;
+            case 'settings': return <div className="h-full overflow-hidden"><SettingsApp onOpenApp={(id) => onOpenApp && onOpenApp(id)} /></div>;
             case 'timer': return <div className="h-full overflow-hidden bg-black"><TimerApp /></div>;
             default: return (
                 <div className="flex flex-col items-center justify-center bg-[#f2f2f7] h-full ios-font">
@@ -492,7 +547,7 @@ export default function AppWrapper({ appId, onClose, params, onOpenApp }) {
     else if (closing === 'right') { transform = 'translateX(115%)'; opacity = 0; radius = '32px'; }
     else if (closing === 'home') { transform = 'scale(0.82) translateY(10px)'; opacity = 0; radius = '46px'; }
     else if (dragX !== 0) { transform = `translateX(${dragX}px)`; opacity = Math.max(0, 1 - Math.abs(dragX) / 520); radius = '32px'; }
-    else if (homeProg > 0) { transform = `scale(${1 - homeProg * 0.12}) translateY(${homeProg * 6}px)`; opacity = 1 - homeProg * 0.45; radius = `${homeProg * 46}px`; }
+    else if (homeProg > 0) { transform = `translateX(${homeX}px) scale(${1 - homeProg * 0.12}) translateY(${homeProg * 6}px)`; opacity = 1 - homeProg * 0.45; radius = `${homeProg * 46}px`; }
 
     return (
         <div
@@ -506,7 +561,7 @@ export default function AppWrapper({ appId, onClose, params, onOpenApp }) {
             onTouchMove={onMove}
             onTouchEnd={onEnd}
         >
-            <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: 'url(/images/wallpapers/iphone.jpg)', filter: 'blur(24px)', transform: 'scale(1.15)' }} />
+            <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${wallpaper})`, filter: 'blur(24px)', transform: 'scale(1.15)' }} />
             <div className="absolute inset-0 bg-black/35" />
 
             {/* App window — like a real iPhone screen: status bar on top, the app

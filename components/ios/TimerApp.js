@@ -1,4 +1,21 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { getSystem, setSystem, subscribe } from "./system";
+
+const IDLE_TIMER = { phase: "idle", remaining: 0, total: 0, endsAt: null };
+const publishTimer = (phase, remaining, total) =>
+  setSystem({ timer: { phase, remaining, total, endsAt: phase === "running" ? Date.now() + remaining * 1000 : null } });
+
+/* Resume a timer that is still counting in the Dynamic Island */
+function restoreTimer() {
+  const t = getSystem().timer;
+  if (!t || t.phase === "idle") return null;
+  if (t.phase === "running" && t.endsAt) {
+    const rem = Math.max(0, Math.round((t.endsAt - Date.now()) / 1000));
+    return rem > 0 ? { phase: "running", remaining: rem, total: t.total } : null;
+  }
+  if (t.phase === "paused") return { phase: "paused", remaining: t.remaining, total: t.total };
+  return null;
+}
 
 const CLOCK_FONT = "'SF Pro Rounded', ui-rounded, 'SF Pro Display', -apple-system, system-ui, sans-serif";
 
@@ -114,6 +131,16 @@ function StopwatchTab({ audioRef }) {
   };
 
   useEffect(() => () => cancelAnimationFrame(rafRef.current), []);
+
+  /* Live activity → Dynamic Island (throttled to ~4/s) */
+  const lastPubRef = useRef(0);
+  useEffect(() => {
+    const now = Date.now();
+    if (running && now - lastPubRef.current < 250) return;
+    lastPubRef.current = now;
+    setSystem({ stopwatch: { running, elapsed } });
+  }, [running, elapsed]);
+  useEffect(() => () => setSystem({ stopwatch: { running: false, elapsed: 0 } }), []);
 
   return (
     <div className="flex flex-col h-full">
@@ -262,9 +289,10 @@ function TimerTab({ audioRef }) {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
-  const [phase, setPhase] = useState("idle"); // idle | running | paused | done
-  const [remaining, setRemaining] = useState(0);
-  const [total, setTotal] = useState(0);
+  const restoredRef = useRef(restoreTimer());
+  const [phase, setPhase] = useState(restoredRef.current?.phase || "idle"); // idle | running | paused | done
+  const [remaining, setRemaining] = useState(restoredRef.current?.remaining || 0);
+  const [total, setTotal] = useState(restoredRef.current?.total || 0);
   const intervalRef = useRef(null);
 
   const totalSec = hours * 3600 + minutes * 60 + seconds;
@@ -325,6 +353,24 @@ function TimerTab({ audioRef }) {
     }
     return () => clearTimer();
   }, [phase]);
+
+  /* Live activity → Dynamic Island. A running timer keeps counting there via
+     endsAt, so on unmount only clear the store when nothing is in flight. */
+  useEffect(() => {
+    if (phase === "idle") setSystem({ timer: IDLE_TIMER });
+    else if (phase === "done") setSystem({ timer: { phase: "done", remaining: 0, total, endsAt: null } });
+    else publishTimer(phase, remaining, total);
+  }, [phase, remaining, total]);
+  useEffect(() => () => {
+    const t = getSystem().timer;
+    if (t.phase !== "running" && t.phase !== "paused") setSystem({ timer: IDLE_TIMER });
+  }, []);
+  /* Cancelled from the Dynamic Island → drop back to idle here too */
+  useEffect(() => subscribe((st) => {
+    if (st.timer.phase === "idle") {
+      setPhase((p) => (p === "running" || p === "paused" ? "idle" : p));
+    }
+  }), []);
 
   const progress = total > 0 ? (total - remaining) / total : 0;
 

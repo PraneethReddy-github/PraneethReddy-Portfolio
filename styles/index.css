@@ -1,4 +1,4 @@
-body{
+body {
     font-family: 'Ubuntu', sans-serif;
     font-display: swap
 }
@@ -121,6 +121,7 @@ input[type=range].ubuntu-slider::-webkit-slider-thumb {
         opacity: 0;
         scale: 0.85;
     }
+
     100% {
         opacity: 1;
         scale: 1;
@@ -171,9 +172,11 @@ input[type=range].ubuntu-slider::-webkit-slider-thumb {
     ::-webkit-scrollbar-track {
         background-color: rgba(255, 255, 255, 0.05);
     }
+
     ::-webkit-scrollbar-thumb {
         background-color: rgba(120, 120, 120, 0.6);
     }
+
     ::-webkit-scrollbar-thumb:hover {
         background-color: rgba(160, 160, 160, 0.8);
     }
@@ -183,9 +186,12 @@ input[type=range].ubuntu-slider::-webkit-slider-thumb {
 .no-scrollbar::-webkit-scrollbar {
     display: none;
 }
+
 .no-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
 /* SideBarApp Scale image onClick */
@@ -254,6 +260,7 @@ input[type=range].ubuntu-slider::-webkit-slider-thumb {
         opacity: 0;
         transform: translateY(12px) scale(0.98);
     }
+
     100% {
         opacity: 1;
         transform: translateY(0px) scale(1);
@@ -265,6 +272,7 @@ input[type=range].ubuntu-slider::-webkit-slider-thumb {
         opacity: 1;
         transform: translateY(0px) scale(1);
     }
+
     100% {
         opacity: 0;
         transform: translateY(10px) scale(0.98);
@@ -300,10 +308,13 @@ input[type=range].ubuntu-slider::-webkit-slider-thumb {
         margin-right: 0px;
         transform: scale(0.5);
     }
+
     100% {
         opacity: 1;
-        width: 3rem; /* w-12 */
-        margin-left: 0.25rem; /* m-1 */
+        width: 3rem;
+        /* w-12 */
+        margin-left: 0.25rem;
+        /* m-1 */
         margin-right: 0.25rem;
         transform: scale(1);
     }
@@ -331,6 +342,7 @@ input[type=range].ubuntu-slider::-webkit-slider-thumb {
     -ms-overflow-style: none;
     overscroll-behavior: contain;
 }
+
 .ios-scroll::-webkit-scrollbar {
     display: none;
     width: 0;
@@ -345,24 +357,53 @@ input[type=range].ubuntu-slider::-webkit-slider-thumb {
 
 /* Fade in (referenced by the lock screen) */
 @keyframes ios-fade-in {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
-.animate-ios-fade-in { animation: ios-fade-in 0.5s var(--ios-ease-out) both; }
+
+.animate-ios-fade-in {
+    animation: ios-fade-in 0.5s var(--ios-ease-out) both;
+}
 
 /* Gentle bounce for the "swipe up" hint */
 @keyframes ios-gentle-bounce {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-7px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-7px);
+    }
 }
-.animate-ios-bounce { animation: ios-gentle-bounce 2.2s var(--ios-ease-in-out) infinite; }
+
+.animate-ios-bounce {
+    animation: ios-gentle-bounce 2.2s var(--ios-ease-in-out) infinite;
+}
 
 /* App launch — zoom up from the icon, the way iOS opens an app */
 @keyframes ios-app-open {
-    0%   { opacity: 0; transform: scale(0.84); }
-    60%  { opacity: 1; }
-    100% { opacity: 1; transform: scale(1); }
+    0% {
+        opacity: 0;
+        transform: scale(0.84);
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
+
 .animate-ios-app-open {
     animation: ios-app-open 0.42s var(--ios-spring) both;
     transform-origin: center center;
@@ -370,81 +411,389 @@ input[type=range].ubuntu-slider::-webkit-slider-thumb {
 
 /* Lock screen lifting away on unlock */
 @keyframes ios-unlock {
-    from { opacity: 1; transform: scale(1)    translateY(0); filter: blur(0); }
-    to   { opacity: 0; transform: scale(1.08) translateY(-12px); filter: blur(4px); }
+    from {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(1.08) translateY(-12px);
+        filter: blur(4px);
+    }
 }
-.animate-ios-unlock { animation: ios-unlock 0.5s var(--ios-spring) forwards; }
+
+.animate-ios-unlock {
+    animation: ios-unlock 0.5s var(--ios-spring) forwards;
+}
 
 /* Sheet / panel sliding down from the top (control + notification center) */
 @keyframes ios-slide-down {
-    from { transform: translateY(-100%); }
-    to   { transform: translateY(0); }
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
 }
-.animate-ios-slide-down { animation: ios-slide-down 0.45s var(--ios-spring) both; }
+
+.animate-ios-slide-down {
+    animation: ios-slide-down 0.45s var(--ios-spring) both;
+}
 
 /* Content fade + lift used when a view mounts */
 @keyframes ios-rise {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
-.animate-ios-rise { animation: ios-rise 0.45s var(--ios-ease-out) both; }
+
+.animate-ios-rise {
+    animation: ios-rise 0.45s var(--ios-ease-out) both;
+}
 
 /* Subtle wallpaper breathing on the home screen */
 @keyframes ios-wallpaper-breathe {
-    0%, 100% { transform: scale(1.06); }
-    50%      { transform: scale(1.1); }
+
+    0%,
+    100% {
+        transform: scale(1.06);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
 }
 
 /* Staggered icon entrance on the home grid */
 @keyframes ios-icon-pop {
-    0%   { opacity: 0; transform: scale(0.6); }
-    100% { opacity: 1; transform: scale(1); }
+    0% {
+        opacity: 0;
+        transform: scale(0.6);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
-.animate-ios-icon-pop { animation: ios-icon-pop 0.4s var(--ios-spring) both; }
+
+.animate-ios-icon-pop {
+    animation: ios-icon-pop 0.4s var(--ios-spring) both;
+}
 
 /* Tap feedback shared by every tappable iOS surface */
-.ios-tap { transition: transform 0.18s var(--ios-ease-out); }
-.ios-tap:active { transform: scale(0.92); }
+.ios-tap {
+    transition: transform 0.18s var(--ios-ease-out);
+}
+
+.ios-tap:active {
+    transform: scale(0.92);
+}
 
 /* Now-playing equalizer bars */
 @keyframes ios-eq {
-    0%, 100% { transform: scaleY(0.35); }
-    50%      { transform: scaleY(1); }
+
+    0%,
+    100% {
+        transform: scaleY(0.35);
+    }
+
+    50% {
+        transform: scaleY(1);
+    }
 }
-.ios-eq-bar { transform-origin: bottom; animation: ios-eq 0.8s ease-in-out infinite; }
+
+.ios-eq-bar {
+    transform-origin: bottom;
+    animation: ios-eq 0.8s ease-in-out infinite;
+}
 
 /* ───────────── Weather scenes (widget + Weather app) ───────────── */
 
 /* Sun: slow rotating ray halo + soft breathing glow */
-@keyframes wx-spin     { to { transform: rotate(360deg); } }
-@keyframes wx-glow     { 0%,100% { opacity: 0.55; transform: scale(1); } 50% { opacity: 0.9; transform: scale(1.08); } }
-.wx-rays  { animation: wx-spin 26s linear infinite; transform-origin: center; }
-.wx-glow  { animation: wx-glow 4.5s ease-in-out infinite; transform-origin: center; }
+@keyframes wx-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes wx-glow {
+
+    0%,
+    100% {
+        opacity: 0.55;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.9;
+        transform: scale(1.08);
+    }
+}
+
+.wx-rays {
+    animation: wx-spin 26s linear infinite;
+    transform-origin: center;
+}
+
+.wx-glow {
+    animation: wx-glow 4.5s ease-in-out infinite;
+    transform-origin: center;
+}
 
 /* Clouds drifting across */
-@keyframes wx-drift    { from { transform: translateX(-30%); } to { transform: translateX(130%); } }
-.wx-cloud { animation: wx-drift linear infinite; }
+@keyframes wx-drift {
+    from {
+        transform: translateX(-30%);
+    }
+
+    to {
+        transform: translateX(130%);
+    }
+}
+
+.wx-cloud {
+    animation: wx-drift linear infinite;
+}
 
 /* Rain / snow falling */
-@keyframes wx-fall     { from { transform: translateY(-20%); } to { transform: translateY(120%); } }
-@keyframes wx-fall-sway{ 0% { transform: translate(0,-20%); } 50% { transform: translate(6px,50%); } 100% { transform: translate(0,120%); } }
-.wx-rain  { animation: wx-fall linear infinite; }
-.wx-snow  { animation: wx-fall-sway linear infinite; }
+@keyframes wx-fall {
+    from {
+        transform: translateY(-20%);
+    }
+
+    to {
+        transform: translateY(120%);
+    }
+}
+
+@keyframes wx-fall-sway {
+    0% {
+        transform: translate(0, -20%);
+    }
+
+    50% {
+        transform: translate(6px, 50%);
+    }
+
+    100% {
+        transform: translate(0, 120%);
+    }
+}
+
+.wx-rain {
+    animation: wx-fall linear infinite;
+}
+
+.wx-snow {
+    animation: wx-fall-sway linear infinite;
+}
 
 /* Lightning flash */
-@keyframes wx-flash    { 0%,93%,100% { opacity: 0; } 94%,97% { opacity: 0.85; } 95% { opacity: 0.2; } }
-.wx-flash { animation: wx-flash 6s ease-in-out infinite; }
+@keyframes wx-flash {
+
+    0%,
+    93%,
+    100% {
+        opacity: 0;
+    }
+
+    94%,
+    97% {
+        opacity: 0.85;
+    }
+
+    95% {
+        opacity: 0.2;
+    }
+}
+
+.wx-flash {
+    animation: wx-flash 6s ease-in-out infinite;
+}
 
 /* Twinkling stars */
-@keyframes wx-twinkle  { 0%,100% { opacity: 0.25; } 50% { opacity: 1; } }
-.wx-star  { animation: wx-twinkle ease-in-out infinite; }
+@keyframes wx-twinkle {
+
+    0%,
+    100% {
+        opacity: 0.25;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.wx-star {
+    animation: wx-twinkle ease-in-out infinite;
+}
 
 /* Soft drifting fog band */
-@keyframes wx-haze     { 0%,100% { transform: translateX(-8%); opacity: 0.45; } 50% { transform: translateX(8%); opacity: 0.75; } }
-.wx-haze  { animation: wx-haze 9s ease-in-out infinite; }
+@keyframes wx-haze {
+
+    0%,
+    100% {
+        transform: translateX(-8%);
+        opacity: 0.45;
+    }
+
+    50% {
+        transform: translateX(8%);
+        opacity: 0.75;
+    }
+}
+
+.wx-haze {
+    animation: wx-haze 9s ease-in-out infinite;
+}
 
 /* Calendar widget: gentle moving sheen + today-dot pulse */
-@keyframes wx-sheen    { 0% { transform: translateX(-120%); } 60%,100% { transform: translateX(220%); } }
-.wx-sheen { animation: wx-sheen 6.5s ease-in-out infinite; }
-@keyframes wx-dot-pulse{ 0%,100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,69,58,0.55); } 50% { transform: scale(1.18); box-shadow: 0 0 0 5px rgba(255,69,58,0); } }
-.wx-dot-pulse { animation: wx-dot-pulse 2.4s ease-in-out infinite; }
+@keyframes wx-sheen {
+    0% {
+        transform: translateX(-120%);
+    }
+
+    60%,
+    100% {
+        transform: translateX(220%);
+    }
+}
+
+.wx-sheen {
+    animation: wx-sheen 6.5s ease-in-out infinite;
+}
+
+@keyframes wx-dot-pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 69, 58, 0.55);
+    }
+
+    50% {
+        transform: scale(1.18);
+        box-shadow: 0 0 0 5px rgba(255, 69, 58, 0);
+    }
+}
+
+.wx-dot-pulse {
+    animation: wx-dot-pulse 2.4s ease-in-out infinite;
+}
+
+/* ───────────── iOS shell: system-level helpers ───────────── */
+
+.ios-shell {
+    height: 100vh;
+    height: 100dvh;
+    overscroll-behavior: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    font-size: calc(16px * var(--ios-text-scale, 1));
+    padding-top: env(safe-area-inset-top, 0px);
+}
+
+html:has(.ios-shell),
+body:has(.ios-shell) {
+    overscroll-behavior: none;
+    overflow: hidden;
+    background: #000;
+}
+
+/* Reduce Motion (Settings › Display, or OS preference) — collapse every
+   decorative animation/transition inside the shell to (near) instant. */
+.ios-reduce-motion *,
+.ios-reduce-motion *::before,
+.ios-reduce-motion *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .ios-shell .animate-ios-bounce,
+    .ios-shell .wx-sheen,
+    .ios-shell .wx-dot-pulse {
+        animation: none !important;
+    }
+}
+
+/* Flashlight — the whole screen goes white (LockScreen + Control Center) */
+@keyframes ios-flash-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.ios-flashlight {
+    position: absolute;
+    inset: 0;
+    z-index: 52;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.96) 0%, rgba(251, 251, 246, 0.94) 60%, rgba(240, 239, 230, 0.93) 100%);
+    animation: ios-flash-in 0.18s ease-out both;
+}
+
+/* Icon jiggle (edit mode / long-press feedback) */
+@keyframes ios-jiggle {
+    0% {
+        transform: rotate(-1.6deg);
+    }
+
+    50% {
+        transform: rotate(1.6deg);
+    }
+
+    100% {
+        transform: rotate(-1.6deg);
+    }
+}
+
+.ios-jiggle {
+    animation: ios-jiggle 0.28s ease-in-out infinite;
+}
+
+/* Pull-down indicator on the home screen (Spotlight) */
+@keyframes ios-pull-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Spring pop for banners / island */
+@keyframes ios-banner-in {
+    from {
+        transform: translateY(-120%) scale(0.96);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.animate-ios-banner-in {
+    animation: ios-banner-in 0.5s var(--ios-spring) both;
+}
+
+/* True Tone — warm the whole screen very slightly */
+.ios-true-tone {
+    filter: sepia(0.08) saturate(1.05);
+}

@@ -4,6 +4,7 @@ import {
     CertificationsIcon, PublicationsIcon, LearningIcon,
     CameraIcon, GamesIcon, PhotosIcon, CalendarIcon,
     PhoneIcon, MailIcon, SafariIcon, VarshionIcon, GitHubIcon, LinkedInIcon,
+    SettingsIcon,
 } from './Icons';
 
 /* Icons the home screen doesn't already define */
@@ -28,7 +29,7 @@ const WeatherIcon = () => (
     </div>
 );
 
-const CATEGORIES = [
+export const CATEGORIES = [
     {
         name: 'Portfolio',
         apps: [
@@ -48,7 +49,7 @@ const CATEGORIES = [
             { id: 'timer',      name: 'Clock',      Icon: ClockIcon },
             { id: 'calendar',   name: 'Calendar',   Icon: CalendarIcon },
             { id: 'weather',    name: 'Weather',    Icon: WeatherIcon },
-            { id: 'camera',     name: 'Camera',     Icon: CameraIcon },
+            { id: 'settings',   name: 'Settings',   Icon: SettingsIcon },
         ],
     },
     {
@@ -56,6 +57,7 @@ const CATEGORIES = [
         apps: [
             { id: 'games',  name: 'Arcade', Icon: GamesIcon },
             { id: 'photos', name: 'Photos', Icon: PhotosIcon },
+            { id: 'camera', name: 'Camera', Icon: CameraIcon },
         ],
     },
     {
@@ -76,7 +78,7 @@ const CATEGORIES = [
     },
 ];
 
-const ALL_APPS = CATEGORIES.flatMap((c) => c.apps);
+export const ALL_APPS = CATEGORIES.flatMap((c) => c.apps);
 
 /* Icon scaled (no label) — used inside the folder boxes */
 function ScaledIcon({ Icon, scale }) {

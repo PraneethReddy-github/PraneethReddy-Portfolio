@@ -237,6 +237,61 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
                             </div>
                         )}
                     </div>
+                ) : activeTab === 'Videos' ? (
+                    <div style={{ padding: '12px 16px 32px' }}>
+                        <div style={{ fontSize: '13px', color: textMuted, marginBottom: '14px' }}>Video results for P Praneeth Reddy</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                            {[
+                                { title: 'EPIC Club Videography & Production Reel - Amrita Vishwa Vidyapeetham', uploader: 'P Praneeth Reddy • Lead Videographer', views: '12.4K views', date: '1 year ago', duration: '04:15', desc: 'Highlight reel of campus events, technical presentations, and video production directed by Praneeth Reddy.' },
+                                { title: 'Autonomous Road Pothole Detection & Repair System Demonstration', uploader: 'Praneeth Reddy Innovation Labs', views: '8.9K views', date: '6 months ago', duration: '03:42', desc: 'Real-time computer vision camera feed, GPS tracking, and automated filler dispensing mechanism demonstration.' },
+                                { title: '4G/5G Network Test Scenario Orchestrator Walkthrough', uploader: 'Simnovus Telecom Systems', views: '5.1K views', date: '3 months ago', duration: '08:20', desc: 'Overview of enterprise 4G/5G protocol testing, UE simulation, and DevOps CI/CD integration.' },
+                                { title: 'CloudShare: Passwordless File Storage Framework Architecture', uploader: 'IEEE Conference Series', views: '3.7K views', date: '2 months ago', duration: '06:10', desc: 'IEEE research paper presentation on passwordless cloud storage using Shamir Secret Sharing & AES encryption.' },
+                            ].map((vid, idx) => (
+                                <div key={idx} style={{ borderBottom: `1px solid ${dividerColor}`, paddingBottom: '16px' }}>
+                                    <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', borderRadius: '12px', overflow: 'hidden', background: darkMode ? 'linear-gradient(135deg,#1e293b,#0f172a)' : 'linear-gradient(135deg,#dbe4f0,#f1f3f4)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px solid ${dividerColor}`, marginBottom: '10px' }}>
+                                        <div style={{ width: '52px', height: '52px', borderRadius: '50%', backgroundColor: 'rgba(0,0,0,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <svg style={{ width: '26px', height: '26px', fill: '#fff', marginLeft: '3px' }} viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                                        </div>
+                                        <span style={{ position: 'absolute', bottom: '8px', right: '8px', backgroundColor: 'rgba(0,0,0,0.8)', color: '#fff', fontSize: '11px', fontWeight: 600, padding: '2px 6px', borderRadius: '4px' }}>{vid.duration}</span>
+                                    </div>
+                                    <h3 style={{ fontSize: '16px', color: linkColor, fontWeight: 500, margin: '0 0 4px 0', lineHeight: 1.35 }}>{vid.title}</h3>
+                                    <div style={{ fontSize: '12px', color: textMuted, marginBottom: '6px' }}>{vid.uploader} • {vid.views} • {vid.date}</div>
+                                    <p style={{ fontSize: '13px', color: textSecondary, margin: 0, lineHeight: 1.5 }}>{vid.desc}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ) : activeTab === 'News' ? (
+                    <div style={{ padding: '12px 16px 32px' }}>
+                        <div style={{ fontSize: '13px', color: textMuted, marginBottom: '14px' }}>Top stories for P Praneeth Reddy</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                            {[
+                                { source: 'Indian Patent Office • Tech & Innovation Digest', time: '2025', title: 'Indian Patent Office Grants Patent for Autonomous Road Pothole Detection & Repair System', snippet: 'P Praneeth Reddy and research team awarded Indian Patent for real-time computer vision camera feed, GPS hazard logging, and automated filler dispensing mechanisms designed to perform autonomous road repairs.', link: '/chrome/homepage.html#pub_section' },
+                                { source: 'IEEE Xplore Research Publications', time: '2025', title: 'IEEE Xplore Publishes Breakthrough Paper on Quantum Key Distribution & Passwordless CloudShare', snippet: 'Full-stack engineer P Praneeth Reddy publishes 7 research papers spanning Multi-Client Quantum Key Distribution (QKD), passwordless cloud file storage with Shamir Secret Sharing, and network traffic anomaly detection.', link: '/chrome/homepage.html#pub_section' },
+                                { source: 'Telecom & DevOps Engineering Press', time: '2025', title: 'Simnovus Automation Team Engineers Next-Gen 4G/5G Test Orchestrator', snippet: 'Software developer Praneeth Reddy architects scalable distributed orchestrators automating test scenarios across multi-UE 4G/5G simulation platforms using Docker, systemd Quadlets, and AI test agents.', link: '/chrome/homepage.html' },
+                                { source: 'Healthcare & IoT Innovations Journal', time: '2024', title: 'IoT Pharmaceutical Inventory Management Framework Granted Indian Patent', snippet: 'Smart RFID & ESP32 hospital pharmacy inventory system created by Praneeth Reddy earns Indian Patent recognition for automating stock tracking, preventing medication stockouts, and monitoring expiration dates.', link: '/chrome/homepage.html#pub_section' },
+                            ].map((news, idx) => (
+                                <div key={idx} onClick={() => onNavigate(news.link, 'https://en.wikipedia.org/wiki/P_Praneeth_Reddy', news.title)} style={{ borderBottom: `1px solid ${dividerColor}`, paddingBottom: '16px', cursor: 'pointer' }}>
+                                    <div style={{ fontSize: '12px', color: textMuted, marginBottom: '4px' }}>{news.source} • {news.time}</div>
+                                    <h3 style={{ fontSize: '16px', color: linkColor, fontWeight: 500, margin: '0 0 6px 0', lineHeight: 1.35 }}>{news.title}</h3>
+                                    <p style={{ fontSize: '13px', color: textSecondary, margin: 0, lineHeight: 1.5 }}>{news.snippet}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ) : activeTab === 'Maps' ? (
+                    <div style={{ padding: '12px 16px 32px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        <div style={{ backgroundColor: panelBg, padding: '14px 16px', borderRadius: '14px', border: `1px solid ${panelBorder}` }}>
+                            <h2 style={{ fontSize: '17px', fontWeight: 600, color: textPrimary, margin: '0 0 3px 0' }}>Bangalore (Bengaluru), Karnataka</h2>
+                            <div style={{ fontSize: '12px', color: textSecondary, marginBottom: '10px' }}>Silicon Valley of India • 12.9716° N, 77.5946° E</div>
+                            <a href="https://maps.google.com/?q=Bangalore,Karnataka,India" target="_blank" rel="noreferrer" style={{ display: 'inline-block', padding: '7px 14px', backgroundColor: tabActiveColor, color: '#fff', borderRadius: '20px', textDecoration: 'none', fontSize: '13px', fontWeight: 500 }}>
+                                Open in Google Maps ↗
+                            </a>
+                        </div>
+                        <div style={{ width: '100%', height: '380px', borderRadius: '14px', overflow: 'hidden', border: `1px solid ${panelBorder}` }}>
+                            <iframe title="Bangalore Map" src="https://maps.google.com/maps?q=Bangalore,Karnataka,India&t=&z=12&ie=UTF8&iwloc=&output=embed" style={{ width: '100%', height: '100%', border: 'none' }} loading="lazy" />
+                        </div>
+                    </div>
                 ) : (
                     <div style={{ backgroundColor: darkMode ? '#171717' : '#f2f2f2', paddingBottom: '32px' }}>
                         
