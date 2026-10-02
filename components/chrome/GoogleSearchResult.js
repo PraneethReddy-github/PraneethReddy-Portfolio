@@ -23,7 +23,35 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
         'gallery-8.jpeg',
         'gallery-9.jpeg',
         'gallery-10.jpeg',
-        'gallery-11.jpeg'
+        'gallery-11.jpeg',
+        'gallery-12.jpeg',
+        'gallery-13.jpeg',
+        'gallery-14.jpeg',
+        'gallery-15.jpeg',
+        'gallery-16.jpeg',
+        'gallery-17.jpeg',
+        'gallery-18.jpeg',
+        'gallery-19.jpeg',
+        'gallery-20.jpeg',
+        'gallery-21.jpeg',
+        'gallery-22.jpeg',
+        'gallery-23.jpeg',
+        'gallery-24.jpeg',
+        'gallery-25.jpeg',
+        'gallery-26.jpeg',
+        'gallery-27.jpeg',
+        'gallery-28.jpeg',
+        'gallery-29.jpeg',
+        'gallery-30.jpeg',
+        'gallery-31.jpeg',
+        'gallery-32.jpeg',
+        'gallery-33.jpeg',
+        'gallery-34.jpeg',
+        'gallery-35.jpeg',
+        'gallery-36.jpeg',
+        'gallery-37.jpeg',
+        'gallery-38.jpeg',
+        'gallery-39.jpeg'
     ];
 
     const handleKeyDown = (e) => {
@@ -300,7 +328,8 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
                         <span>Images</span>
                     </div>
 
-                    {/* Videos */}
+                    {/* Videos tab commented out */}
+                    {/*
                     <div
                         onClick={() => { setActiveTab('Videos'); window.scrollTo(0, 0); }}
                         style={{ display: 'flex', alignItems: 'center', gap: '6px', paddingBottom: '12px', borderBottom: activeTab === 'Videos' ? `3px solid ${tabActiveColor}` : '3px solid transparent', color: activeTab === 'Videos' ? tabActiveColor : textSecondary, cursor: 'pointer', position: 'relative', top: '1px' }}
@@ -310,6 +339,7 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
                         <svg focusable="false" viewBox="0 0 24 24" style={{ width: '16px', height: '16px', fill: 'currentColor' }}><path d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path></svg>
                         <span>Videos</span>
                     </div>
+                    */}
 
                     {/* News */}
                     <div
@@ -383,7 +413,7 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
                                 </div>
                             )}
                         </div>
-                    ) : activeTab === 'Videos' ? (
+                    ) : /* activeTab === 'Videos' ? (
                         <div style={{ width: '100%', maxWidth: '850px', padding: '16px 24px' }}>
                             <div style={{ fontSize: '14px', color: textMuted, marginBottom: '20px' }}>
                                 Video search results for P Praneeth Reddy
@@ -439,7 +469,7 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
                                 ))}
                             </div>
                         </div>
-                    ) : activeTab === 'Maps' ? (
+                    ) : */ activeTab === 'Maps' ? (
                         <div style={{ width: '100%', padding: '16px 24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: panelBg, padding: '16px 20px', borderRadius: '16px', border: `1px solid ${panelBorder}` }}>
                                 <div>
@@ -502,8 +532,7 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
                                     <div key={idx} style={{ borderBottom: `1px solid ${dividerColor}`, paddingBottom: '20px' }}>
                                         <div style={{ fontSize: '12px', color: textMuted, marginBottom: '4px' }}>{news.source} • {news.time}</div>
                                         <h3 
-                                            onClick={() => onNavigate(news.link, 'https://en.wikipedia.org/wiki/P_Praneeth_Reddy', news.title)}
-                                            style={{ fontSize: '17px', color: linkColor, fontWeight: 500, margin: '0 0 6px 0', cursor: 'pointer', lineHeight: '1.4' }}
+                                            style={{ fontSize: '17px', color: linkColor, fontWeight: 500, margin: '0 0 6px 0', lineHeight: '1.4' }}
                                         >
                                             {news.title}
                                         </h3>

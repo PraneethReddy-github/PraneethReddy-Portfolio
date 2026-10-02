@@ -23,7 +23,35 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
         'gallery-8.jpeg',
         'gallery-9.jpeg',
         'gallery-10.jpeg',
-        'gallery-11.jpeg'
+        'gallery-11.jpeg',
+        'gallery-12.jpeg',
+        'gallery-13.jpeg',
+        'gallery-14.jpeg',
+        'gallery-15.jpeg',
+        'gallery-16.jpeg',
+        'gallery-17.jpeg',
+        'gallery-18.jpeg',
+        'gallery-19.jpeg',
+        'gallery-20.jpeg',
+        'gallery-21.jpeg',
+        'gallery-22.jpeg',
+        'gallery-23.jpeg',
+        'gallery-24.jpeg',
+        'gallery-25.jpeg',
+        'gallery-26.jpeg',
+        'gallery-27.jpeg',
+        'gallery-28.jpeg',
+        'gallery-29.jpeg',
+        'gallery-30.jpeg',
+        'gallery-31.jpeg',
+        'gallery-32.jpeg',
+        'gallery-33.jpeg',
+        'gallery-34.jpeg',
+        'gallery-35.jpeg',
+        'gallery-36.jpeg',
+        'gallery-37.jpeg',
+        'gallery-38.jpeg',
+        'gallery-39.jpeg'
     ];
 
     const handleKeyDown = (e) => {
@@ -188,7 +216,7 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
                     <style>{`
                         .google-tabs::-webkit-scrollbar { display: none; }
                     `}</style>
-                    {['All', 'Images', 'Videos', 'News', 'Maps'].map(tab => (
+                    {['All', 'Images', /* 'Videos', */ 'News', 'Maps'].map(tab => (
                         <div
                             key={tab}
                             onClick={() => { setActiveTab(tab); setSelectedImage(null); window.scrollTo(0, 0); }}
@@ -237,7 +265,7 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
                             </div>
                         )}
                     </div>
-                ) : activeTab === 'Videos' ? (
+                ) : /* activeTab === 'Videos' ? (
                     <div style={{ padding: '12px 16px 32px' }}>
                         <div style={{ fontSize: '13px', color: textMuted, marginBottom: '14px' }}>Video results for P Praneeth Reddy</div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
@@ -261,7 +289,7 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
                             ))}
                         </div>
                     </div>
-                ) : activeTab === 'News' ? (
+                ) : */ activeTab === 'News' ? (
                     <div style={{ padding: '12px 16px 32px' }}>
                         <div style={{ fontSize: '13px', color: textMuted, marginBottom: '14px' }}>Top stories for P Praneeth Reddy</div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
@@ -271,7 +299,7 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
                                 { source: 'Telecom & DevOps Engineering Press', time: '2025', title: 'Simnovus Automation Team Engineers Next-Gen 4G/5G Test Orchestrator', snippet: 'Software developer Praneeth Reddy architects scalable distributed orchestrators automating test scenarios across multi-UE 4G/5G simulation platforms using Docker, systemd Quadlets, and AI test agents.', link: '/chrome/homepage.html' },
                                 { source: 'Healthcare & IoT Innovations Journal', time: '2024', title: 'IoT Pharmaceutical Inventory Management Framework Granted Indian Patent', snippet: 'Smart RFID & ESP32 hospital pharmacy inventory system created by Praneeth Reddy earns Indian Patent recognition for automating stock tracking, preventing medication stockouts, and monitoring expiration dates.', link: '/chrome/homepage.html#pub_section' },
                             ].map((news, idx) => (
-                                <div key={idx} onClick={() => onNavigate(news.link, 'https://en.wikipedia.org/wiki/P_Praneeth_Reddy', news.title)} style={{ borderBottom: `1px solid ${dividerColor}`, paddingBottom: '16px', cursor: 'pointer' }}>
+                                <div key={idx} style={{ borderBottom: `1px solid ${dividerColor}`, paddingBottom: '16px' }}>
                                     <div style={{ fontSize: '12px', color: textMuted, marginBottom: '4px' }}>{news.source} • {news.time}</div>
                                     <h3 style={{ fontSize: '16px', color: linkColor, fontWeight: 500, margin: '0 0 6px 0', lineHeight: 1.35 }}>{news.title}</h3>
                                     <p style={{ fontSize: '13px', color: textSecondary, margin: 0, lineHeight: 1.5 }}>{news.snippet}</p>
