@@ -219,7 +219,7 @@ function PhotosApp({ initialPhoto = null }) {
                             onClick={() => setViewer(i)}
                             className="aspect-square overflow-hidden bg-black/5 active:opacity-70 transition-opacity"
                         >
-                            <img src={src} alt="" loading="lazy" className="w-full h-full object-cover" />
+                            <img src={src.replace('/images/gallery/', '/images/gallery/thumbnails/')} alt="" loading="lazy" className="w-full h-full object-cover" />
                         </button>
                     ))}
                 </div>
@@ -242,7 +242,7 @@ function PhotosApp({ initialPhoto = null }) {
                                         onClick={() => setViewer(idx)}
                                         className="aspect-square overflow-hidden bg-black/5 active:opacity-80 transition-opacity"
                                     >
-                                        <img src={photos[idx]} alt="" loading="lazy" className="w-full h-full object-cover" />
+                                        <img src={photos[idx].replace('/images/gallery/', '/images/gallery/thumbnails/')} alt="" loading="lazy" className="w-full h-full object-cover" />
                                     </button>
                                 ))}
                             </div>
@@ -263,7 +263,7 @@ function PhotosApp({ initialPhoto = null }) {
                             onClick={() => setViewer(0)}
                             className="relative block w-full aspect-[4/3] rounded-[20px] overflow-hidden bg-black/5 active:opacity-90 transition-opacity"
                         >
-                            <img src={photos[0]} alt="" loading="lazy" className="w-full h-full object-cover" />
+                            <img src={photos[0].replace('/images/gallery/', '/images/gallery/thumbnails/')} alt="" loading="lazy" className="w-full h-full object-cover" />
                             <div
                                 className="absolute inset-x-0 bottom-0 h-1/2"
                                 style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent)' }}

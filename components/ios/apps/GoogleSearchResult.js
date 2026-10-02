@@ -243,7 +243,7 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
                                     <div style={{ fontSize: '14px', color: textSecondary }}>Images may be subject to copyright.</div>
                                     <svg onClick={() => setSelectedImage(null)} viewBox="0 0 24 24" style={{ width: '24px', height: '24px', fill: iconColor, cursor: 'pointer' }}><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" /></svg>
                                 </div>
-                                <img src={`/images/gallery/${selectedImage}`} alt="Selected" style={{ width: '100%', maxHeight: '60vh', objectFit: 'contain', backgroundColor: darkMode ? '#000' : '#f1f3f4' }} />
+                                <img src={`/images/gallery/${selectedImage}`} alt="Selected" onDoubleClick={() => onNavigate(`/chrome/image_viewer.html?img=${selectedImage}`, `/images/gallery/${selectedImage}`, 'Gallery Viewer', true)} style={{ width: '100%', maxHeight: '60vh', objectFit: 'contain', backgroundColor: darkMode ? '#000' : '#f1f3f4', cursor: 'pointer' }} />
                                 <div style={{ padding: '16px' }}>
                                     <h2 style={{ fontSize: '18px', fontWeight: 500, margin: '0 0 8px 0', color: textPrimary }}>P Praneeth Reddy</h2>
                                     <div style={{ fontSize: '14px', color: textSecondary, marginBottom: '16px' }}>Praneeth's Gallery</div>
@@ -258,8 +258,8 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
                         ) : (
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                                 {galleryImages.map((img, idx) => (
-                                    <div key={idx} onClick={() => setSelectedImage(img)} style={{ aspectRatio: '1', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', backgroundColor: panelBg }}>
-                                        <img src={`/images/gallery/${img}`} alt="Gallery" style={{ height: '100%', width: '100%', objectFit: 'cover' }} />
+                                    <div key={idx} onClick={() => setSelectedImage(img)} onDoubleClick={() => onNavigate(`/chrome/image_viewer.html?img=${img}`, `/images/gallery/${img}`, 'Gallery Viewer', true)} style={{ aspectRatio: '1', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', backgroundColor: panelBg }}>
+                                        <img src={`/images/gallery/thumbnails/${img}`} alt="Gallery" loading="lazy" style={{ height: '100%', width: '100%', objectFit: 'cover' }} />
                                     </div>
                                 ))}
                             </div>

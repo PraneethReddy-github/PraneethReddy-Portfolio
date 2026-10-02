@@ -110,7 +110,7 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
             sitelinks: [
                 { hash: '#edu_section', title: 'Education', desc: 'B.Tech in Computer Science & Engineering from Amrita Vishwa Vidyapeetham, Bangalore (2025) with an 8.01/10 CPI.' },
                 { hash: '#skills_section', title: 'Technical Skills & AI Stack', desc: 'Go, Python, TypeScript, C/C++, Electron, Gemini API/CLI, Model Context Protocol (MCP), React, Next.js, Docker, AWS.' },
-                { hash: '#project_section', title: 'Projects', desc: 'Ternix (SSH/Remote Manager), Bloom 🌸 (Local AI Launcher), DevFlow 🤖 (Autonomous MCP Agent), Morphix (Media Suite), Resume Screener AI.' },
+                { hash: '#project_section', title: 'Projects', desc: 'Ternix (SSH/Remote Manager), Bloom (Local AI Launcher), DevFlow (Autonomous MCP Agent), Morphix (Media Suite), Resume Screener AI.' },
                 { hash: '#pub_section', title: 'Research Publications & Patents', desc: 'QKD (IIT Indore, 2025), Spark Anomaly Detection, CloudShare, LoRa emergency systems, and 2 Indian Patents.' }
             ]
         },
@@ -136,7 +136,7 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
             siteName: 'GitHub',
             favicon: 'https://www.google.com/s2/favicons?sz=64&domain=github.com',
             title: 'PraneethReddy-github - Overview',
-            description: 'Key projects include Ternix (SSH & Remote Session Manager), Bloom 🌸 (Radial Glass AI Launcher), DevFlow 🤖 (Autonomous AI Engineering Platform), Morphix (Desktop Media Suite), Resume Screener AI, and Real-Time Resource Monitor...'
+            description: 'Key projects include Ternix (SSH & Remote Session Manager), Bloom (Radial Glass AI Launcher), DevFlow (Autonomous AI Engineering Platform), Morphix (Desktop Media Suite), Resume Screener AI, and Real-Time Resource Monitor...'
         },
         {
             url: '/chrome/homepage.html#pub_section',
@@ -385,8 +385,8 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
                             {/* Images Grid */}
                             <div style={{ flex: selectedImage ? '1 1 calc(100% - 416px)' : '1 1 100%', display: 'flex', flexWrap: 'wrap', gap: '16px', alignContent: 'flex-start', transition: 'flex 0.3s' }}>
                                 {galleryImages.map((img, idx) => (
-                                    <div key={idx} onClick={() => setSelectedImage(img)} style={{ height: '180px', flexGrow: 1, minWidth: '200px', cursor: 'pointer', backgroundColor: panelBg, borderRadius: '8px', overflow: 'hidden', border: `2px solid ${selectedImage === img ? tabActiveColor : 'transparent'}` }}>
-                                        <img src={`/images/gallery/${img}`} alt="Gallery" style={{ height: '100%', width: '100%', objectFit: 'cover' }} />
+                                    <div key={idx} onClick={() => setSelectedImage(img)} onDoubleClick={() => onNavigate(`/chrome/image_viewer.html?img=${img}`, `/images/gallery/${img}`, 'Gallery Viewer', true)} style={{ height: '180px', flexGrow: 1, minWidth: '200px', cursor: 'pointer', backgroundColor: panelBg, borderRadius: '8px', overflow: 'hidden', border: `2px solid ${selectedImage === img ? tabActiveColor : 'transparent'}` }}>
+                                        <img src={`/images/gallery/thumbnails/${img}`} alt="Gallery" loading="lazy" style={{ height: '100%', width: '100%', objectFit: 'cover' }} />
                                     </div>
                                 ))}
                             </div>
@@ -398,7 +398,7 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
                                         <div style={{ fontSize: '14px', color: textSecondary }}>Images may be subject to copyright.</div>
                                         <svg onClick={() => setSelectedImage(null)} viewBox="0 0 24 24" style={{ width: '24px', height: '24px', fill: iconColor, cursor: 'pointer', padding: '4px', borderRadius: '50%', backgroundColor: sitelinkBg }}><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" /></svg>
                                     </div>
-                                    <img src={`/images/gallery/${selectedImage}`} alt="Selected" style={{ width: '100%', maxHeight: '400px', objectFit: 'contain', backgroundColor: darkMode ? '#000' : '#f1f3f4', borderRadius: '8px' }} />
+                                    <img src={`/images/gallery/${selectedImage}`} alt="Selected" onDoubleClick={() => onNavigate(`/chrome/image_viewer.html?img=${selectedImage}`, `/images/gallery/${selectedImage}`, 'Gallery Viewer', true)} style={{ width: '100%', maxHeight: '400px', objectFit: 'contain', backgroundColor: darkMode ? '#000' : '#f1f3f4', borderRadius: '8px', cursor: 'pointer' }} />
                                     <h2 style={{ fontSize: '18px', fontWeight: 500, margin: '16px 0 8px 0', color: textPrimary, wordBreak: 'break-word' }}>P Praneeth Reddy</h2>
                                     <div style={{ fontSize: '14px', color: textSecondary, marginBottom: '24px' }}>Praneeth's Gallery</div>
                                     <button
@@ -470,382 +470,382 @@ export default function GoogleSearchResult({ query, onSearch, onNavigate, darkMo
                             </div>
                         </div>
                     ) : */ activeTab === 'Maps' ? (
-                        <div style={{ width: '100%', padding: '16px 24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: panelBg, padding: '16px 20px', borderRadius: '16px', border: `1px solid ${panelBorder}` }}>
-                                <div>
-                                    <h2 style={{ fontSize: '20px', fontWeight: 600, color: textPrimary, margin: '0 0 4px 0' }}>Bangalore (Bengaluru), Karnataka, India</h2>
-                                    <div style={{ fontSize: '13px', color: textSecondary }}>Silicon Valley of India • 12.9716° N, 77.5946° E</div>
-                                </div>
-                                <a 
-                                    href="https://maps.google.com/?q=Bangalore,Karnataka,India" 
-                                    target="_blank" 
-                                    rel="noreferrer"
-                                    style={{ padding: '8px 18px', backgroundColor: tabActiveColor, color: '#fff', borderRadius: '20px', textDecoration: 'none', fontSize: '13px', fontWeight: 500 }}
-                                >
-                                    Open in Google Maps ↗
-                                </a>
-                            </div>
-                            <div style={{ width: '100%', height: '520px', borderRadius: '16px', overflow: 'hidden', border: `1px solid ${panelBorder}` }}>
-                                <iframe
-                                    title="Bangalore Map"
-                                    src="https://maps.google.com/maps?q=Bangalore,Karnataka,India&t=&z=12&ie=UTF8&iwloc=&output=embed"
-                                    style={{ width: '100%', height: '100%', border: 'none' }}
-                                />
-                            </div>
-                        </div>
-                    ) : activeTab === 'News' ? (
-                        <div style={{ width: '100%', maxWidth: '850px', padding: '16px 24px' }}>
-                            <div style={{ fontSize: '14px', color: textMuted, marginBottom: '20px' }}>
-                                Top news stories & announcements for P Praneeth Reddy
-                            </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                                {[
-                                    {
-                                        source: "Indian Patent Office • Tech & Innovation Digest",
-                                        time: "Published 2025",
-                                        title: "Indian Patent Office Grants Patent for Autonomous Road Pothole Detection & Repair System",
-                                        snippet: "P Praneeth Reddy and research team awarded Indian Patent for real-time computer vision camera feed, GPS hazard logging, and automated filler dispensing mechanisms designed to perform autonomous road repairs.",
-                                        link: "/chrome/homepage.html#pub_section"
-                                    },
-                                    {
-                                        source: "IEEE Xplore Research Publications",
-                                        time: "Published 2025",
-                                        title: "IEEE Xplore Publishes Breakthrough Paper on Quantum Key Distribution & Passwordless CloudShare",
-                                        snippet: "Full-stack engineer P Praneeth Reddy publishes 7 research papers spanning Multi-Client Quantum Key Distribution (QKD), passwordless cloud file storage with Shamir Secret Sharing, and network traffic anomaly detection.",
-                                        link: "/chrome/homepage.html#pub_section"
-                                    },
-                                    {
-                                        source: "Telecom & DevOps Engineering Press",
-                                        time: "Featured 2025",
-                                        title: "Simnovus Automation Team Engineers Next-Gen 4G/5G Test Orchestrator",
-                                        snippet: "Software developer Praneeth Reddy architects scalable distributed orchestrators automating test scenarios across multi-UE 4G/5G simulation platforms using Docker, systemd Quadlets, and AI test agents.",
-                                        link: "/chrome/homepage.html"
-                                    },
-                                    {
-                                        source: "Healthcare & IoT Innovations Journal",
-                                        time: "Published 2024",
-                                        title: "IoT Pharmaceutical Inventory Management Framework Granted Indian Patent",
-                                        snippet: "Smart RFID & ESP32 hospital pharmacy inventory system created by Praneeth Reddy earns Indian Patent recognition for automating stock tracking, preventing medication stockouts, and monitoring expiration dates.",
-                                        link: "/chrome/homepage.html#pub_section"
-                                    }
-                                ].map((news, idx) => (
-                                    <div key={idx} style={{ borderBottom: `1px solid ${dividerColor}`, paddingBottom: '20px' }}>
-                                        <div style={{ fontSize: '12px', color: textMuted, marginBottom: '4px' }}>{news.source} • {news.time}</div>
-                                        <h3 
-                                            style={{ fontSize: '17px', color: linkColor, fontWeight: 500, margin: '0 0 6px 0', lineHeight: '1.4' }}
-                                        >
-                                            {news.title}
-                                        </h3>
-                                        <p style={{ fontSize: '14px', color: textSecondary, margin: 0, lineHeight: '1.5' }}>{news.snippet}</p>
+                            <div style={{ width: '100%', padding: '16px 24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: panelBg, padding: '16px 20px', borderRadius: '16px', border: `1px solid ${panelBorder}` }}>
+                                    <div>
+                                        <h2 style={{ fontSize: '20px', fontWeight: 600, color: textPrimary, margin: '0 0 4px 0' }}>Bangalore (Bengaluru), Karnataka, India</h2>
+                                        <div style={{ fontSize: '13px', color: textSecondary }}>Silicon Valley of India • 12.9716° N, 77.5946° E</div>
                                     </div>
-                                ))}
-                            </div>
-                        </div>
-                    ) : (
-                        // Main Content Area: Left Results + Right Panel
-                        <div className="google-results-container">
-
-                            {/* LEFT: Results */}
-                            <div className="google-left-col">
-                                {/* Result count */}
-                                <div style={{ fontSize: '14px', color: textMuted, marginBottom: '24px', paddingTop: '6px' }}>
-                                    About 6,969,000 results (0.32 seconds)
-                                </div>
-
-                                {/* Result 1 (Main Profile) */}
-                                <div style={{ marginBottom: '32px' }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', gap: '12px' }}>
-                                        <div style={{ width: '28px', height: '28px', backgroundColor: sitelinkBg, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: `1px solid ${dividerColor}` }}>
-                                            <img src={results[0].favicon} alt={results[0].siteName} style={{ width: '16px', height: '16px', borderRadius: '50%' }} />
-                                        </div>
-                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                            <div style={{ fontSize: '14px', color: textPrimary, lineHeight: '20px' }}>
-                                                {results[0].siteName}
-                                            </div>
-                                            <div style={{ fontSize: '12px', color: urlColor, lineHeight: '18px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                                {results[0].displayUrl}
-                                            </div>
-                                        </div>
-                                        <div style={{ marginLeft: 'auto', color: iconColor, cursor: 'pointer' }}>
-                                            <svg viewBox="0 0 24 24" style={{ width: '18px', height: '18px', fill: 'currentColor' }}><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg>
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        onClick={() => onNavigate(results[0].url, 'https://en.wikipedia.org/wiki/P_Praneeth_Reddy', results[0].title)}
-                                        style={{ fontSize: '20px', lineHeight: '26px', color: linkColor, cursor: 'pointer', marginBottom: '4px', fontWeight: 400, display: 'inline-block' }}
-                                        onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
-                                        onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
+                                    <a
+                                        href="https://maps.google.com/?q=Bangalore,Karnataka,India"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        style={{ padding: '8px 18px', backgroundColor: tabActiveColor, color: '#fff', borderRadius: '20px', textDecoration: 'none', fontSize: '13px', fontWeight: 500 }}
                                     >
-                                        {results[0].title}
-                                    </div>
-                                    <div style={{ fontSize: '14px', lineHeight: '22px', color: textSecondary, wordBreak: 'break-word', marginTop: '4px' }}>
-                                        {results[0].description}
-                                    </div>
-
-                                    {/* Sitelinks Grid */}
-                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px 24px', marginTop: '16px', marginLeft: '24px' }}>
-                                        {results[0].sitelinks.map((sl, j) => (
-                                            <div key={j} style={{ display: 'flex', flexDirection: 'column' }}>
-                                                <div
-                                                    onClick={() => onNavigate(`${results[0].url}${sl.hash}`, `https://en.wikipedia.org/wiki/P_Praneeth_Reddy`, results[0].title)}
-                                                    style={{ fontSize: '16px', color: linkColor, cursor: 'pointer', marginBottom: '4px', fontWeight: 400, lineHeight: '24px' }}
-                                                    onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
-                                                    onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
-                                                >
-                                                    {sl.title}
-                                                </div>
-                                                <div style={{ fontSize: '14px', lineHeight: '22px', color: textSecondary }}>{sl.desc}</div>
-                                            </div>
-                                        ))}
-                                    </div>
+                                        Open in Google Maps ↗
+                                    </a>
                                 </div>
-
-                                {/* ===== INTERACTIVE PEOPLE ALSO ASK SECTION ===== */}
-                                <div style={{ marginBottom: '32px' }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px', gap: '8px' }}>
-                                        <span style={{ fontSize: '22px', color: textPrimary, fontWeight: 400 }}>People also ask</span>
-                                        <div style={{ marginLeft: 'auto', color: iconColor, cursor: 'pointer' }}>
-                                            <svg viewBox="0 0 24 24" style={{ width: '18px', height: '18px', fill: 'currentColor' }}><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg>
+                                <div style={{ width: '100%', height: '520px', borderRadius: '16px', overflow: 'hidden', border: `1px solid ${panelBorder}` }}>
+                                    <iframe
+                                        title="Bangalore Map"
+                                        src="https://maps.google.com/maps?q=Bangalore,Karnataka,India&t=&z=12&ie=UTF8&iwloc=&output=embed"
+                                        style={{ width: '100%', height: '100%', border: 'none' }}
+                                    />
+                                </div>
+                            </div>
+                        ) : activeTab === 'News' ? (
+                            <div style={{ width: '100%', maxWidth: '850px', padding: '16px 24px' }}>
+                                <div style={{ fontSize: '14px', color: textMuted, marginBottom: '20px' }}>
+                                    Top news stories & announcements for P Praneeth Reddy
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                                    {[
+                                        {
+                                            source: "Indian Patent Office • Tech & Innovation Digest",
+                                            time: "Published 2025",
+                                            title: "Indian Patent Office Grants Patent for Autonomous Road Pothole Detection & Repair System",
+                                            snippet: "P Praneeth Reddy and research team awarded Indian Patent for real-time computer vision camera feed, GPS hazard logging, and automated filler dispensing mechanisms designed to perform autonomous road repairs.",
+                                            link: "/chrome/homepage.html#pub_section"
+                                        },
+                                        {
+                                            source: "IEEE Xplore Research Publications",
+                                            time: "Published 2025",
+                                            title: "IEEE Xplore Publishes Breakthrough Paper on Quantum Key Distribution & Passwordless CloudShare",
+                                            snippet: "Full-stack engineer P Praneeth Reddy publishes 7 research papers spanning Multi-Client Quantum Key Distribution (QKD), passwordless cloud file storage with Shamir Secret Sharing, and network traffic anomaly detection.",
+                                            link: "/chrome/homepage.html#pub_section"
+                                        },
+                                        {
+                                            source: "Telecom & DevOps Engineering Press",
+                                            time: "Featured 2025",
+                                            title: "Simnovus Automation Team Engineers Next-Gen 4G/5G Test Orchestrator",
+                                            snippet: "Software developer Praneeth Reddy architects scalable distributed orchestrators automating test scenarios across multi-UE 4G/5G simulation platforms using Docker, systemd Quadlets, and AI test agents.",
+                                            link: "/chrome/homepage.html"
+                                        },
+                                        {
+                                            source: "Healthcare & IoT Innovations Journal",
+                                            time: "Published 2024",
+                                            title: "IoT Pharmaceutical Inventory Management Framework Granted Indian Patent",
+                                            snippet: "Smart RFID & ESP32 hospital pharmacy inventory system created by Praneeth Reddy earns Indian Patent recognition for automating stock tracking, preventing medication stockouts, and monitoring expiration dates.",
+                                            link: "/chrome/homepage.html#pub_section"
+                                        }
+                                    ].map((news, idx) => (
+                                        <div key={idx} style={{ borderBottom: `1px solid ${dividerColor}`, paddingBottom: '20px' }}>
+                                            <div style={{ fontSize: '12px', color: textMuted, marginBottom: '4px' }}>{news.source} • {news.time}</div>
+                                            <h3
+                                                style={{ fontSize: '17px', color: linkColor, fontWeight: 500, margin: '0 0 6px 0', lineHeight: '1.4' }}
+                                            >
+                                                {news.title}
+                                            </h3>
+                                            <p style={{ fontSize: '14px', color: textSecondary, margin: 0, lineHeight: '1.5' }}>{news.snippet}</p>
                                         </div>
-                                    </div>
-                                    <div style={{ borderTop: `1px solid ${dividerColor}` }}>
-                                        {paaItems.map((item, idx) => {
-                                            const isOpen = openPaa[idx];
-                                            return (
-                                                <div key={idx} style={{ borderBottom: `1px solid ${dividerColor}` }}>
-                                                    <div
-                                                        onClick={() => togglePaa(idx)}
-                                                        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0 12px 0', cursor: 'pointer', userSelect: 'none' }}
-                                                    >
-                                                        <span style={{ fontSize: '16px', color: textPrimary, lineHeight: '24px' }}>{item.q}</span>
-                                                        <div style={{
-                                                            width: '32px', height: '32px', borderRadius: '50%',
-                                                            backgroundColor: sitelinkBg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
-                                                        }}>
-                                                            <svg
-                                                                style={{ width: '20px', height: '20px', fill: textPrimary, transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}
-                                                                viewBox="0 0 24 24"
-                                                            >
-                                                                <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" />
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                    {isOpen && (
-                                                        <div style={{ padding: '0 0 16px 0', fontSize: '14px', lineHeight: '22px', color: textSecondary, animation: 'fadeIn 0.2s ease-in' }}>
-                                                            {item.a}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
+                                    ))}
                                 </div>
+                            </div>
+                        ) : (
+                            // Main Content Area: Left Results + Right Panel
+                            <div className="google-results-container">
 
-                                {/* Other Search Results */}
-                                {results.slice(1).map((res, i) => (
-                                    <div key={i} style={{ marginBottom: '32px' }}>
+                                {/* LEFT: Results */}
+                                <div className="google-left-col">
+                                    {/* Result count */}
+                                    <div style={{ fontSize: '14px', color: textMuted, marginBottom: '24px', paddingTop: '6px' }}>
+                                        About 6,969,000 results (0.32 seconds)
+                                    </div>
+
+                                    {/* Result 1 (Main Profile) */}
+                                    <div style={{ marginBottom: '32px' }}>
                                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', gap: '12px' }}>
                                             <div style={{ width: '28px', height: '28px', backgroundColor: sitelinkBg, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: `1px solid ${dividerColor}` }}>
-                                                <img src={res.favicon} alt={res.siteName} style={{ width: '16px', height: '16px', borderRadius: '50%' }} />
+                                                <img src={results[0].favicon} alt={results[0].siteName} style={{ width: '16px', height: '16px', borderRadius: '50%' }} />
                                             </div>
                                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                                 <div style={{ fontSize: '14px', color: textPrimary, lineHeight: '20px' }}>
-                                                    {res.siteName}
+                                                    {results[0].siteName}
                                                 </div>
                                                 <div style={{ fontSize: '12px', color: urlColor, lineHeight: '18px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                                    {res.displayUrl}
+                                                    {results[0].displayUrl}
                                                 </div>
                                             </div>
                                             <div style={{ marginLeft: 'auto', color: iconColor, cursor: 'pointer' }}>
                                                 <svg viewBox="0 0 24 24" style={{ width: '18px', height: '18px', fill: 'currentColor' }}><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg>
                                             </div>
                                         </div>
+
                                         <div
-                                            onClick={() => {
-                                                if (res.url.startsWith('http')) {
-                                                    window.open(res.url, '_blank');
-                                                } else {
-                                                    onNavigate(res.url, `https://en.wikipedia.org/wiki/P_Praneeth_Reddy`, res.title);
-                                                }
-                                            }}
+                                            onClick={() => onNavigate(results[0].url, 'https://en.wikipedia.org/wiki/P_Praneeth_Reddy', results[0].title)}
                                             style={{ fontSize: '20px', lineHeight: '26px', color: linkColor, cursor: 'pointer', marginBottom: '4px', fontWeight: 400, display: 'inline-block' }}
                                             onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
                                             onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
                                         >
-                                            {res.title}
+                                            {results[0].title}
                                         </div>
                                         <div style={{ fontSize: '14px', lineHeight: '22px', color: textSecondary, wordBreak: 'break-word', marginTop: '4px' }}>
-                                            {res.description}
+                                            {results[0].description}
+                                        </div>
+
+                                        {/* Sitelinks Grid */}
+                                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px 24px', marginTop: '16px', marginLeft: '24px' }}>
+                                            {results[0].sitelinks.map((sl, j) => (
+                                                <div key={j} style={{ display: 'flex', flexDirection: 'column' }}>
+                                                    <div
+                                                        onClick={() => onNavigate(`${results[0].url}${sl.hash}`, `https://en.wikipedia.org/wiki/P_Praneeth_Reddy`, results[0].title)}
+                                                        style={{ fontSize: '16px', color: linkColor, cursor: 'pointer', marginBottom: '4px', fontWeight: 400, lineHeight: '24px' }}
+                                                        onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
+                                                        onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
+                                                    >
+                                                        {sl.title}
+                                                    </div>
+                                                    <div style={{ fontSize: '14px', lineHeight: '22px', color: textSecondary }}>{sl.desc}</div>
+                                                </div>
+                                            ))}
                                         </div>
                                     </div>
-                                ))}
 
-                                {/* Related Searches */}
-                                <div style={{ marginBottom: '40px' }}>
-                                    <div style={{ fontSize: '22px', color: textPrimary, marginBottom: '16px', fontWeight: 400 }}>Related searches</div>
-                                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                                        {[
-                                            'Drop me a message on Gmail',
-                                            'Reach out to me on LinkedIn',
-                                            'Get in touch on Instagram',
-                                            'Ping me on Twitter',
-                                            'Check out my Github',
-                                            'Rank on Leetcode',
-                                            'View my HackerRank',
-                                        ].map((s, i) => (
-                                            <div key={i} style={{
-                                                display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 16px',
-                                                borderRadius: '24px', backgroundColor: sitelinkBg, fontSize: '14px',
-                                                color: textPrimary, cursor: 'pointer', fontWeight: 500,
-                                                transition: 'background-color 0.2s'
-                                            }} onMouseEnter={(e) => e.target.style.backgroundColor = darkMode ? '#3c4043' : '#e8eaed'} onMouseLeave={(e) => e.target.style.backgroundColor = sitelinkBg}>
-                                                <svg style={{ width: '16px', height: '16px', fill: textPrimary, flexShrink: 0 }} viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" /></svg>
-                                                {s}
+                                    {/* ===== INTERACTIVE PEOPLE ALSO ASK SECTION ===== */}
+                                    <div style={{ marginBottom: '32px' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px', gap: '8px' }}>
+                                            <span style={{ fontSize: '22px', color: textPrimary, fontWeight: 400 }}>People also ask</span>
+                                            <div style={{ marginLeft: 'auto', color: iconColor, cursor: 'pointer' }}>
+                                                <svg viewBox="0 0 24 24" style={{ width: '18px', height: '18px', fill: 'currentColor' }}><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg>
                                             </div>
-                                        ))}
+                                        </div>
+                                        <div style={{ borderTop: `1px solid ${dividerColor}` }}>
+                                            {paaItems.map((item, idx) => {
+                                                const isOpen = openPaa[idx];
+                                                return (
+                                                    <div key={idx} style={{ borderBottom: `1px solid ${dividerColor}` }}>
+                                                        <div
+                                                            onClick={() => togglePaa(idx)}
+                                                            style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0 12px 0', cursor: 'pointer', userSelect: 'none' }}
+                                                        >
+                                                            <span style={{ fontSize: '16px', color: textPrimary, lineHeight: '24px' }}>{item.q}</span>
+                                                            <div style={{
+                                                                width: '32px', height: '32px', borderRadius: '50%',
+                                                                backgroundColor: sitelinkBg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
+                                                            }}>
+                                                                <svg
+                                                                    style={{ width: '20px', height: '20px', fill: textPrimary, transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}
+                                                                    viewBox="0 0 24 24"
+                                                                >
+                                                                    <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" />
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                        {isOpen && (
+                                                            <div style={{ padding: '0 0 16px 0', fontSize: '14px', lineHeight: '22px', color: textSecondary, animation: 'fadeIn 0.2s ease-in' }}>
+                                                                {item.a}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+
+                                    {/* Other Search Results */}
+                                    {results.slice(1).map((res, i) => (
+                                        <div key={i} style={{ marginBottom: '32px' }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', gap: '12px' }}>
+                                                <div style={{ width: '28px', height: '28px', backgroundColor: sitelinkBg, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: `1px solid ${dividerColor}` }}>
+                                                    <img src={res.favicon} alt={res.siteName} style={{ width: '16px', height: '16px', borderRadius: '50%' }} />
+                                                </div>
+                                                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                                    <div style={{ fontSize: '14px', color: textPrimary, lineHeight: '20px' }}>
+                                                        {res.siteName}
+                                                    </div>
+                                                    <div style={{ fontSize: '12px', color: urlColor, lineHeight: '18px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                                        {res.displayUrl}
+                                                    </div>
+                                                </div>
+                                                <div style={{ marginLeft: 'auto', color: iconColor, cursor: 'pointer' }}>
+                                                    <svg viewBox="0 0 24 24" style={{ width: '18px', height: '18px', fill: 'currentColor' }}><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg>
+                                                </div>
+                                            </div>
+                                            <div
+                                                onClick={() => {
+                                                    if (res.url.startsWith('http')) {
+                                                        window.open(res.url, '_blank');
+                                                    } else {
+                                                        onNavigate(res.url, `https://en.wikipedia.org/wiki/P_Praneeth_Reddy`, res.title);
+                                                    }
+                                                }}
+                                                style={{ fontSize: '20px', lineHeight: '26px', color: linkColor, cursor: 'pointer', marginBottom: '4px', fontWeight: 400, display: 'inline-block' }}
+                                                onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
+                                                onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
+                                            >
+                                                {res.title}
+                                            </div>
+                                            <div style={{ fontSize: '14px', lineHeight: '22px', color: textSecondary, wordBreak: 'break-word', marginTop: '4px' }}>
+                                                {res.description}
+                                            </div>
+                                        </div>
+                                    ))}
+
+                                    {/* Related Searches */}
+                                    <div style={{ marginBottom: '40px' }}>
+                                        <div style={{ fontSize: '22px', color: textPrimary, marginBottom: '16px', fontWeight: 400 }}>Related searches</div>
+                                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                                            {[
+                                                'Drop me a message on Gmail',
+                                                'Reach out to me on LinkedIn',
+                                                'Get in touch on Instagram',
+                                                'Ping me on Twitter',
+                                                'Check out my Github',
+                                                'Rank on Leetcode',
+                                                'View my HackerRank',
+                                            ].map((s, i) => (
+                                                <div key={i} style={{
+                                                    display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 16px',
+                                                    borderRadius: '24px', backgroundColor: sitelinkBg, fontSize: '14px',
+                                                    color: textPrimary, cursor: 'pointer', fontWeight: 500,
+                                                    transition: 'background-color 0.2s'
+                                                }} onMouseEnter={(e) => e.target.style.backgroundColor = darkMode ? '#3c4043' : '#e8eaed'} onMouseLeave={(e) => e.target.style.backgroundColor = sitelinkBg}>
+                                                    <svg style={{ width: '16px', height: '16px', fill: textPrimary, flexShrink: 0 }} viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" /></svg>
+                                                    {s}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* Pagination (Classic Goooogle) */}
+                                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '40px 0 60px 0' }}>
+                                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
+                                            <div style={{ display: 'flex', alignItems: 'flex-end', userSelect: 'none' }}>
+                                                {/* G */}
+                                                <span style={{ fontSize: '40px', fontWeight: 'bold', color: '#4285f4', lineHeight: '1' }}>G</span>
+                                                {/* o's */}
+                                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
+                                                    <span key={n} style={{ fontSize: '40px', fontWeight: 'bold', color: n === 1 ? '#ea4335' : '#fbbc05', lineHeight: '1', margin: '0 -2px' }}>o</span>
+                                                ))}
+                                                {/* gle */}
+                                                <span style={{ fontSize: '40px', fontWeight: 'bold', color: '#4285f4', lineHeight: '1' }}>g</span>
+                                                <span style={{ fontSize: '40px', fontWeight: 'bold', color: '#34a853', lineHeight: '1' }}>l</span>
+                                                <span style={{ fontSize: '40px', fontWeight: 'bold', color: '#ea4335', lineHeight: '1' }}>e</span>
+                                            </div>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', marginTop: '8px', paddingLeft: '32px', paddingRight: '48px', boxSizing: 'border-box' }}>
+                                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
+                                                    <span key={n} style={{ fontSize: '14px', color: n === 1 ? textPrimary : linkColor, cursor: 'pointer' }}>{n}</span>
+                                                ))}
+                                                <span style={{ fontSize: '14px', color: linkColor, cursor: 'pointer', marginLeft: '16px' }}>Next</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                {/* Pagination (Classic Goooogle) */}
-                                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '40px 0 60px 0' }}>
-                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
-                                        <div style={{ display: 'flex', alignItems: 'flex-end', userSelect: 'none' }}>
-                                            {/* G */}
-                                            <span style={{ fontSize: '40px', fontWeight: 'bold', color: '#4285f4', lineHeight: '1' }}>G</span>
-                                            {/* o's */}
-                                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
-                                                <span key={n} style={{ fontSize: '40px', fontWeight: 'bold', color: n === 1 ? '#ea4335' : '#fbbc05', lineHeight: '1', margin: '0 -2px' }}>o</span>
-                                            ))}
-                                            {/* gle */}
-                                            <span style={{ fontSize: '40px', fontWeight: 'bold', color: '#4285f4', lineHeight: '1' }}>g</span>
-                                            <span style={{ fontSize: '40px', fontWeight: 'bold', color: '#34a853', lineHeight: '1' }}>l</span>
-                                            <span style={{ fontSize: '40px', fontWeight: 'bold', color: '#ea4335', lineHeight: '1' }}>e</span>
-                                        </div>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', marginTop: '8px', paddingLeft: '32px', paddingRight: '48px', boxSizing: 'border-box' }}>
-                                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
-                                                <span key={n} style={{ fontSize: '14px', color: n === 1 ? textPrimary : linkColor, cursor: 'pointer' }}>{n}</span>
-                                            ))}
-                                            <span style={{ fontSize: '14px', color: linkColor, cursor: 'pointer', marginLeft: '16px' }}>Next</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                {/* RIGHT: Knowledge Panel */}
+                                <div className="google-right-col">
+                                    <div style={{ border: `1px solid ${panelBorder}`, borderRadius: '16px', overflow: 'hidden', backgroundColor: panelBg }}>
 
-                            {/* RIGHT: Knowledge Panel */}
-                            <div className="google-right-col">
-                                <div style={{ border: `1px solid ${panelBorder}`, borderRadius: '16px', overflow: 'hidden', backgroundColor: panelBg }}>
-
-                                    {/* Images Grid */}
-                                    <div style={{ display: 'flex', height: '140px', gap: '2px', backgroundColor: panelBg, padding: '2px', borderRadius: '16px 16px 0 0', overflow: 'hidden' }}>
-                                        <div style={{ flex: 1, height: '100%' }}>
-                                            <img src="/images/gallery/wiki-profile.jpeg" alt="P Praneeth Reddy" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '14px 0 0 0' }} onError={(e) => { e.target.src = 'https://www.google.com/s2/favicons?sz=128&domain=google.com'; }} />
-                                        </div>
-                                        <div style={{ flex: 1, height: '100%' }}>
-                                            <img src="/images/gallery/gallery-1.jpeg" alt="Gallery" style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={(e) => { e.target.src = 'https://www.google.com/s2/favicons?sz=64&domain=google.com'; }} />
-                                        </div>
-                                        <div
-                                            onClick={() => { setActiveTab('Images'); window.scrollTo(0, 0); }}
-                                            style={{ flex: 1, height: '100%', backgroundColor: darkMode ? '#3c4043' : '#e8eaed', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', borderRadius: '0 14px 0 0' }}
-                                        >
-                                            <span style={{ color: textPrimary, fontSize: '13px', fontWeight: 500, textAlign: 'center', padding: '0 4px' }}>More images</span>
-                                        </div>
-                                    </div>
-
-                                    <div style={{ padding: '20px 16px' }}>
-                                        {/* Name + subtitle + share */}
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4px' }}>
-                                            <div>
-                                                <h2 style={{ fontSize: '32px', color: textPrimary, fontWeight: 400, margin: '0 0 4px 0', lineHeight: '36px' }}>P Praneeth Reddy</h2>
-                                                <div style={{ fontSize: '14px', color: textSecondary }}>Software Developer</div>
+                                        {/* Images Grid */}
+                                        <div style={{ display: 'flex', height: '140px', gap: '2px', backgroundColor: panelBg, padding: '2px', borderRadius: '16px 16px 0 0', overflow: 'hidden' }}>
+                                            <div style={{ flex: 1, height: '100%' }}>
+                                                <img src="/images/gallery/wiki-profile.jpeg" alt="P Praneeth Reddy" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '14px 0 0 0' }} onError={(e) => { e.target.src = 'https://www.google.com/s2/favicons?sz=128&domain=google.com'; }} />
                                             </div>
-                                            <div style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: sitelinkBg, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-                                                <svg style={{ width: '18px', height: '18px', fill: textPrimary }} viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92zM18 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 13c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm12 7.02c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"></path></svg>
+                                            <div style={{ flex: 1, height: '100%' }}>
+                                                <img src="/images/gallery/gallery-1.jpeg" alt="Gallery" style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={(e) => { e.target.src = 'https://www.google.com/s2/favicons?sz=64&domain=google.com'; }} />
+                                            </div>
+                                            <div
+                                                onClick={() => { setActiveTab('Images'); window.scrollTo(0, 0); }}
+                                                style={{ flex: 1, height: '100%', backgroundColor: darkMode ? '#3c4043' : '#e8eaed', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', borderRadius: '0 14px 0 0' }}
+                                            >
+                                                <span style={{ color: textPrimary, fontSize: '13px', fontWeight: 500, textAlign: 'center', padding: '0 4px' }}>More images</span>
                                             </div>
                                         </div>
 
-                                        {/* Bio */}
-                                        <div style={{ fontSize: '14px', lineHeight: '22px', color: textSecondary, margin: '16px 0', wordBreak: 'break-word' }}>
-                                            Praneeth Reddy is a Software Developer and DevOps Engineer. He specializes in cloud infrastructure, virtualization environment orchestration, CI/CD automated deployment workflows, and building high-performance backend systems utilizing GoLang, React, AWS, Docker, and shell automation scripts.
-                                            <span style={{ marginLeft: '4px', color: textSecondary }}>
-                                                <span style={{ cursor: 'pointer' }}>Wikipedia</span>
-                                            </span>
-                                        </div>
-
-                                        {/* Quick Facts */}
-                                        <div style={{ fontSize: '14px', lineHeight: '22px', borderTop: `1px solid ${dividerColor}`, paddingTop: '12px' }}>
-                                            <div style={{ marginBottom: '8px' }}>
-                                                <span style={{ color: textPrimary, fontWeight: 500 }}>Born: </span>
-                                                <span style={{ color: textSecondary }}>June 7, 2003 (age 23 years), Bengaluru</span>
+                                        <div style={{ padding: '20px 16px' }}>
+                                            {/* Name + subtitle + share */}
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4px' }}>
+                                                <div>
+                                                    <h2 style={{ fontSize: '32px', color: textPrimary, fontWeight: 400, margin: '0 0 4px 0', lineHeight: '36px' }}>P Praneeth Reddy</h2>
+                                                    <div style={{ fontSize: '14px', color: textSecondary }}>Software Developer</div>
+                                                </div>
+                                                <div style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: sitelinkBg, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+                                                    <svg style={{ width: '18px', height: '18px', fill: textPrimary }} viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92zM18 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 13c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm12 7.02c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"></path></svg>
+                                                </div>
                                             </div>
-                                            <div style={{ marginBottom: '8px' }}>
-                                                <span style={{ color: textPrimary, fontWeight: 500 }}>Education: </span>
+
+                                            {/* Bio */}
+                                            <div style={{ fontSize: '14px', lineHeight: '22px', color: textSecondary, margin: '16px 0', wordBreak: 'break-word' }}>
+                                                Praneeth Reddy is a Software Developer and DevOps Engineer. He specializes in cloud infrastructure, virtualization environment orchestration, CI/CD automated deployment workflows, and building high-performance backend systems utilizing GoLang, React, AWS, Docker, and shell automation scripts.
+                                                <span style={{ marginLeft: '4px', color: textSecondary }}>
+                                                    <span style={{ cursor: 'pointer' }}>Wikipedia</span>
+                                                </span>
+                                            </div>
+
+                                            {/* Quick Facts */}
+                                            <div style={{ fontSize: '14px', lineHeight: '22px', borderTop: `1px solid ${dividerColor}`, paddingTop: '12px' }}>
+                                                <div style={{ marginBottom: '8px' }}>
+                                                    <span style={{ color: textPrimary, fontWeight: 500 }}>Born: </span>
+                                                    <span style={{ color: textSecondary }}>June 7, 2003 (age 23 years), Bengaluru</span>
+                                                </div>
+                                                <div style={{ marginBottom: '8px' }}>
+                                                    <span style={{ color: textPrimary, fontWeight: 500 }}>Education: </span>
+                                                    <span
+                                                        onClick={() => onNavigate('/chrome/homepage.html#edu_section', 'https://en.wikipedia.org/wiki/P_Praneeth_Reddy', 'Praneeth Reddy - Wikipedia')}
+                                                        style={{ color: linkColor, cursor: 'pointer' }}
+                                                    >Amrita Vishwa Vidyapeetham</span>
+                                                </div>
+                                                <div style={{ marginBottom: '8px' }}>
+                                                    <span style={{ color: textPrimary, fontWeight: 500 }}>Employer: </span>
+                                                    <span style={{ color: textSecondary }}>Simnovus</span>
+                                                </div>
+                                            </div>
+
+                                            {/* Profiles */}
+                                            <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: `1px solid ${dividerColor}` }}>
+                                                <div style={{ fontSize: '18px', color: textPrimary, marginBottom: '12px' }}>Profiles</div>
+                                                <div style={{ display: 'flex', gap: '16px' }}>
+                                                    <div onClick={() => window.open('https://github.com/PraneethReddy-github', '_blank')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer', gap: '8px' }}>
+                                                        <img src="https://www.google.com/s2/favicons?sz=64&domain=github.com" alt="GitHub" style={{ width: '32px', height: '32px', borderRadius: '50%' }} />
+                                                        <span style={{ fontSize: '12px', color: textSecondary }}>GitHub</span>
+                                                    </div>
+                                                    <div onClick={() => window.open('https://www.linkedin.com/in/connectwithpraneeth/', '_blank')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer', gap: '8px' }}>
+                                                        <img src="https://www.google.com/s2/favicons?sz=64&domain=linkedin.com" alt="LinkedIn" style={{ width: '32px', height: '32px', borderRadius: '50%' }} />
+                                                        <span style={{ fontSize: '12px', color: textSecondary }}>LinkedIn</span>
+                                                    </div>
+                                                    <div onClick={() => window.open('https://x.com/Praneeth_on_X', '_blank')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer', gap: '8px' }}>
+                                                        <img src="https://www.google.com/s2/favicons?sz=64&domain=x.com" alt="Twitter" style={{ width: '32px', height: '32px', borderRadius: '50%' }} />
+                                                        <span style={{ fontSize: '12px', color: textSecondary }}>Twitter</span>
+                                                    </div>
+                                                    <div onClick={() => window.open('https://ieeexplore.ieee.org/author/677775936439100', '_blank')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer', gap: '8px' }}>
+                                                        <img src="/images/logos/IEEE.png" alt="IEEE" style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'contain', backgroundColor: '#fff', padding: '4px' }} />
+                                                        <span style={{ fontSize: '12px', color: textSecondary }}>IEEE</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {/* Buttons / Contact */}
+                                            <div style={{ display: 'flex', gap: '8px', marginTop: '24px' }}>
                                                 <span
-                                                    onClick={() => onNavigate('/chrome/homepage.html#edu_section', 'https://en.wikipedia.org/wiki/P_Praneeth_Reddy', 'Praneeth Reddy - Wikipedia')}
-                                                    style={{ color: linkColor, cursor: 'pointer' }}
-                                                >Amrita Vishwa Vidyapeetham</span>
+                                                    onClick={() => onNavigate('/chrome/homepage.html', 'https://en.wikipedia.org/wiki/P_Praneeth_Reddy', 'Praneeth Reddy - Wikipedia')}
+                                                    style={{
+                                                        flex: 1, textAlign: 'center', padding: '8px 16px', borderRadius: '16px', fontSize: '14px', fontWeight: 500,
+                                                        cursor: 'pointer', backgroundColor: sitelinkBg, color: textPrimary,
+                                                        transition: 'background-color 0.2s'
+                                                    }}
+                                                    onMouseEnter={(e) => e.target.style.backgroundColor = darkMode ? '#3c4043' : '#e8eaed'}
+                                                    onMouseLeave={(e) => e.target.style.backgroundColor = sitelinkBg}
+                                                >
+                                                    View Wikipedia
+                                                </span>
+                                                <a
+                                                    href="mailto:connectwithpraneeth@gmail.com"
+                                                    style={{
+                                                        flex: 1, textAlign: 'center', padding: '8px 16px', borderRadius: '16px', fontSize: '14px', fontWeight: 500,
+                                                        cursor: 'pointer', backgroundColor: sitelinkBg, color: textPrimary, textDecoration: 'none',
+                                                        transition: 'background-color 0.2s'
+                                                    }}
+                                                    onMouseEnter={(e) => e.target.style.backgroundColor = darkMode ? '#3c4043' : '#e8eaed'}
+                                                    onMouseLeave={(e) => e.target.style.backgroundColor = sitelinkBg}
+                                                >
+                                                    Contact Me
+                                                </a>
                                             </div>
-                                            <div style={{ marginBottom: '8px' }}>
-                                                <span style={{ color: textPrimary, fontWeight: 500 }}>Employer: </span>
-                                                <span style={{ color: textSecondary }}>Simnovus</span>
-                                            </div>
-                                        </div>
-
-                                        {/* Profiles */}
-                                        <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: `1px solid ${dividerColor}` }}>
-                                            <div style={{ fontSize: '18px', color: textPrimary, marginBottom: '12px' }}>Profiles</div>
-                                            <div style={{ display: 'flex', gap: '16px' }}>
-                                                <div onClick={() => window.open('https://github.com/PraneethReddy-github', '_blank')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer', gap: '8px' }}>
-                                                    <img src="https://www.google.com/s2/favicons?sz=64&domain=github.com" alt="GitHub" style={{ width: '32px', height: '32px', borderRadius: '50%' }} />
-                                                    <span style={{ fontSize: '12px', color: textSecondary }}>GitHub</span>
-                                                </div>
-                                                <div onClick={() => window.open('https://www.linkedin.com/in/connectwithpraneeth/', '_blank')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer', gap: '8px' }}>
-                                                    <img src="https://www.google.com/s2/favicons?sz=64&domain=linkedin.com" alt="LinkedIn" style={{ width: '32px', height: '32px', borderRadius: '50%' }} />
-                                                    <span style={{ fontSize: '12px', color: textSecondary }}>LinkedIn</span>
-                                                </div>
-                                                <div onClick={() => window.open('https://x.com/Praneeth_on_X', '_blank')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer', gap: '8px' }}>
-                                                    <img src="https://www.google.com/s2/favicons?sz=64&domain=x.com" alt="Twitter" style={{ width: '32px', height: '32px', borderRadius: '50%' }} />
-                                                    <span style={{ fontSize: '12px', color: textSecondary }}>Twitter</span>
-                                                </div>
-                                                <div onClick={() => window.open('https://ieeexplore.ieee.org/author/677775936439100', '_blank')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer', gap: '8px' }}>
-                                                    <img src="/images/logos/IEEE.png" alt="IEEE" style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'contain', backgroundColor: '#fff', padding: '4px' }} />
-                                                    <span style={{ fontSize: '12px', color: textSecondary }}>IEEE</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Buttons / Contact */}
-                                        <div style={{ display: 'flex', gap: '8px', marginTop: '24px' }}>
-                                            <span
-                                                onClick={() => onNavigate('/chrome/homepage.html', 'https://en.wikipedia.org/wiki/P_Praneeth_Reddy', 'Praneeth Reddy - Wikipedia')}
-                                                style={{
-                                                    flex: 1, textAlign: 'center', padding: '8px 16px', borderRadius: '16px', fontSize: '14px', fontWeight: 500,
-                                                    cursor: 'pointer', backgroundColor: sitelinkBg, color: textPrimary,
-                                                    transition: 'background-color 0.2s'
-                                                }}
-                                                onMouseEnter={(e) => e.target.style.backgroundColor = darkMode ? '#3c4043' : '#e8eaed'}
-                                                onMouseLeave={(e) => e.target.style.backgroundColor = sitelinkBg}
-                                            >
-                                                View Wikipedia
-                                            </span>
-                                            <a
-                                                href="mailto:connectwithpraneeth@gmail.com"
-                                                style={{
-                                                    flex: 1, textAlign: 'center', padding: '8px 16px', borderRadius: '16px', fontSize: '14px', fontWeight: 500,
-                                                    cursor: 'pointer', backgroundColor: sitelinkBg, color: textPrimary, textDecoration: 'none',
-                                                    transition: 'background-color 0.2s'
-                                                }}
-                                                onMouseEnter={(e) => e.target.style.backgroundColor = darkMode ? '#3c4043' : '#e8eaed'}
-                                                onMouseLeave={(e) => e.target.style.backgroundColor = sitelinkBg}
-                                            >
-                                                Contact Me
-                                            </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    )}
+                        )}
                 </div>
 
                 {/* Footer */}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GoogleSearchResult from '../chrome/GoogleSearchResult';
 import WikipediaProfile from '../chrome/WikipediaProfile';
+import ImageViewer from '../chrome/ImageViewer';
 
 export class Chrome extends Component {
     constructor() {
@@ -564,6 +565,11 @@ export class Chrome extends Component {
         );
     }
 
+    isImageViewer = (url) => {
+        if (!url) return false;
+        return url.toLowerCase().includes('/chrome/image_viewer.html');
+    };
+
     isGoogleSearchForPraneeth = (url) => {
         if (!url) return false;
         const lowercaseUrl = url.toLowerCase();
@@ -612,8 +618,25 @@ export class Chrome extends Component {
                                         const display_url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
                                         this.loadTabUrl(tab.id, url, display_url);
                                     }}
-                                    onNavigate={(targetUrl, targetDisplay, targetTitle) => {
-                                        this.loadTabUrl(tab.id, targetUrl, targetDisplay, targetTitle);
+                                    onNavigate={(targetUrl, targetDisplay, targetTitle, targetBlank) => {
+                                        if (targetBlank) {
+                                            const newId = Date.now().toString();
+                                            const newTab = {
+                                                id: newId,
+                                                url: targetUrl,
+                                                display_url: targetDisplay,
+                                                title: targetTitle || 'New Tab',
+                                                historyStack: [targetUrl],
+                                                historyPointer: 0
+                                            };
+                                            this.setState({
+                                                tabs: [...this.state.tabs, newTab],
+                                                activeTabId: newId,
+                                                display_url: targetDisplay
+                                            });
+                                        } else {
+                                            this.loadTabUrl(tab.id, targetUrl, targetDisplay, targetTitle);
+                                        }
                                     }}
                                     darkMode={isDark}
                                 />
@@ -634,6 +657,18 @@ export class Chrome extends Component {
                                     }}
                                     darkMode={isDark}
                                 />
+                            </div>
+                        );
+                    }
+
+                    if (this.isImageViewer(tab.url)) {
+                        return (
+                            <div
+                                key={tab.id}
+                                className={`flex-grow overflow-hidden ${isActive ? 'flex flex-col' : 'hidden'}`}
+                                id={`chrome-screen-${tab.id}`}
+                            >
+                                <ImageViewer url={tab.url} />
                             </div>
                         );
                     }

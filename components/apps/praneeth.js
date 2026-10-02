@@ -84,8 +84,8 @@ export class AboutPraneeth extends Component {
                             tabIndex="0"
                             onFocus={this.changeScreen}
                             className={`w-28 md:w-full md:rounded-none rounded-sm cursor-default outline-none focus:outline-none duration-100 my-0.5 flex justify-start items-center pl-2 md:pl-3.5 transition-colors ${this.props.isMobile ? 'min-h-[44px] py-2.5' : 'py-2'} ${isActive
-                                    ? "bg-ub-orange text-white"
-                                    : (isDark ? "text-gray-300 hover:bg-white/5" : "text-gray-700 hover:bg-black/5")
+                                ? "bg-ub-orange text-white"
+                                : (isDark ? "text-gray-300 hover:bg-white/5" : "text-gray-700 hover:bg-black/5")
                                 }`}
                         >
                             <img className="w-3.5 md:w-4 flex-shrink-0" alt={link.label} src={`./themes/Yaru/status/${link.icon}`} />
@@ -153,7 +153,7 @@ export function About({ isDark }) {
                         </span>
                     </div>
                     <p className={`mt-4 text-sm md:text-base leading-relaxed max-w-xl ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                        Software Developer and Systems Engineer specialized in building high-performance desktop tools, autonomous AI agents, developer platforms, and cloud-native infrastructure. Creator of Ternix, Bloom 🌸, DevFlow 🤖, Morphix, and Resume Screener AI. Passionate about system-level efficiency, local AI models, and seamless user experiences.
+                        Software Developer and Systems Engineer specialized in building high-performance desktop tools, autonomous AI agents, developer platforms, and cloud-native infrastructure. Creator of Ternix, Bloom, DevFlow, Morphix, and Resume Screener AI. Passionate about system-level efficiency, local AI models, and seamless user experiences.
                     </p>
                 </div>
             </div>
@@ -304,8 +304,8 @@ function Skills({ isDark }) {
                                 <span
                                     key={sIdx}
                                     className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${isDark
-                                            ? 'bg-white/5 border-white/10 text-gray-300'
-                                            : 'bg-gray-50 border-gray-200 text-gray-700'
+                                        ? 'bg-white/5 border-white/10 text-gray-300'
+                                        : 'bg-gray-50 border-gray-200 text-gray-700'
                                         }`}
                                 >
                                     {skill}
@@ -523,8 +523,8 @@ export function Projects({ isDark }) {
                         target="_blank"
                         rel="noreferrer"
                         className={`group block p-5 rounded-2xl border transition-all duration-300 ${isDark
-                                ? 'bg-white/5 border-white/10 hover:border-white/20'
-                                : 'bg-white border-gray-200 shadow-sm'
+                            ? 'bg-white/5 border-white/10 hover:border-white/20'
+                            : 'bg-white border-gray-200 shadow-sm'
                             }`}
                     >
                         <div className="flex justify-between items-start flex-wrap gap-2 mb-2">
@@ -639,8 +639,8 @@ function Publications({ isDark }) {
                         <div
                             key={idx}
                             className={`p-5 rounded-2xl border ${isDark
-                                    ? 'bg-white/5 border-white/10'
-                                    : 'bg-white border-gray-200'
+                                ? 'bg-white/5 border-white/10'
+                                : 'bg-white border-gray-200'
                                 }`}
                         >
                             <div className="flex justify-between items-start flex-wrap gap-2 mb-2">
@@ -681,8 +681,8 @@ function Publications({ isDark }) {
                             target={pub.link ? "_blank" : "_self"}
                             rel={pub.link ? "noreferrer" : ""}
                             className={`group block p-5 rounded-2xl border transition-all duration-300 ${isDark
-                                    ? 'bg-white/5 border-white/10 hover:border-white/20'
-                                    : 'bg-white border-gray-200 shadow-sm'
+                                ? 'bg-white/5 border-white/10 hover:border-white/20'
+                                : 'bg-white border-gray-200 shadow-sm'
                                 }`}
                         >
                             <div className="flex justify-between items-start flex-wrap gap-2 mb-2">
